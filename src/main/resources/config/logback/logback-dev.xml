@@ -1,0 +1,47 @@
+<configuration>
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level]\(%file:%line\) %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="nelo" class="com.naver.nelo2.logback.ThriftAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+        <param name="projectName" value="P4ce633_hook-killer-be" />
+        <param name="collectorUrl" value="elsa-col.ncloud.com" />
+        <param name="encoding" value="utf-8" />
+        <param name="timeout" value="1200" />
+        <param name="enable" value="true" />
+        <param name="debug" value="false" />
+        <param name="version" value="1.0.0" />
+        <param name="errorCodeType" value="default" />
+        <param name="port" value="10006" />
+        <param name="isBulkEnabled" value="true" />
+    </appender>
+
+    <appender name="nelo-logback-async" class="ch.qos.logback.classic.AsyncAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <param name="neverBlock" value="true" />
+        <param name="includeCallerData" value="true" />
+        <param name="queueSize" value="2048" />
+        <appender-ref ref="nelo" />
+    </appender>
+
+
+    <!-- Logger -->
+    <logger name="HookKiller.server" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="nelo-logback-async" />
+    </logger>
+    <!-- Root Logger -->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="nelo-logback-async" />
+    </root>
+</configuration>

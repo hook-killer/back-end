@@ -1,0 +1,28 @@
+# DB접속 그래봐야 못해서 공개되도 상관없음
+hook:
+  db:
+    url: db-isp7b.vpc-cdb.ntruss.com
+    database: hook
+    username: hook
+    password: hook1234!
+    port: 3306
+
+
+spring:
+  datasource:
+    hikari:
+      maxLifetime: 580000
+      maximum-pool-size: 10
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+
+
+#로그파일 설정 필요 (Naver Log System으로 발송하기 위함)
+logging:
+  config: classpath:config/logback/logback-${spring.profiles.active}.xml

@@ -10,10 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,8 +21,8 @@ public class SecurityConfig {
     // TODO : 추후 WhiteList 항목 코드 변경 필요
     private static String[] tempWhiteListArray = {
             "/health",
-            "/hello",
-            "/h2-console/**"};
+            "/hello"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector intorsepector) throws Exception {
@@ -33,9 +31,8 @@ public class SecurityConfig {
                         authorizationManagerRequestMatcherRegistry -> {
                             authorizationManagerRequestMatcherRegistry
                                     .requestMatchers(
-                                            new MvcRequestMatcher(intorsepector, "/health"),
-                                            new MvcRequestMatcher(intorsepector, "/hello"),
-                                            new MvcRequestMatcher(intorsepector, "/h2-console/**")
+                                            new MvcRequestMatcher(intorsepector,  "/hello"),
+                                            new MvcRequestMatcher(intorsepector, "/health")
                                     )
                                     .permitAll()
                                     .anyRequest().authenticated();

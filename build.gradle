@@ -11,8 +11,8 @@ java {
     sourceCompatibility = '17'
 }
 
-jar{
-    enabled=true
+jar {
+    enabled = true
 }
 
 configurations {
@@ -27,8 +27,20 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // libs하위 전체 jar 추가방법
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+
+    //Naver Effective Log Search & Analytics Log4j SDK 의존성 추가 (네이버 로그쓰기 존나더럽네)
+    implementation files("libs/nelo2-java-sdk-core-1.6.6.jar")
+    //implementation files("libs/nelo2-java-sdk-log4j2-2.8.5.jar")
+    implementation files("libs/nelo2-java-sdk-logback-1.6.6.jar")
+    implementation('org.apache.thrift:libthrift:0.9.3') {
+        //Commons-logging 충돌로인한 삭제
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -50,10 +62,14 @@ dependencies {
 
     // Amazon AWS Java SDK s3 And File
     implementation 'commons-io:commons-io:2.13.0'
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.530'
+    implementation('com.amazonaws:aws-java-sdk-s3:1.12.530') {
+        //Commons-logging 충돌로인한 삭제
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
 
     // IAMPORT
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.23'
+
 
     // Lombok And Annotation Processor
     compileOnly 'org.projectlombok:lombok'
@@ -62,12 +78,31 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-
-
-    runtimeOnly 'com.h2database:h2'
-
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+/*
+tasks {
+    // https://derveljunit.tistory.com/336 (ISSUE : Entry local/application-local.yml is a duplicate but no duplicate handling strategy has been set~)
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+}
+
+// profile 값이 없을 경우 local 설정
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+
+
+// 리소스 디렉토리 추가
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources","src/main/resources-env/${profile}"
+        }
+    }
+}
+*/

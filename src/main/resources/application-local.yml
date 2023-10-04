@@ -1,0 +1,41 @@
+# TODO : 각자 개발용 URL, 개인 Database명 입력 필요, 해당 2개의 속성은 커밋 제외 필수!!!!!
+#hook:
+#  db:
+#    url:
+#    database:
+#    username: hooklocal
+#    password: hooklocal1234!
+#    port: 3306
+
+# Test용 (Mr.재운DB)
+hook:
+  db:
+    url: db-i28dv-kr.vpc-pub-cdb.ntruss.com
+    database: studydb
+    username: study
+    password: bitcamp!@#123
+    port: 3306
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+        dialect: org.hibernate.dialect.MySQLDialect
+
+    hibernate:
+      # 매번 create생성 시키기 위함
+      ddl-auto: create
+
+    # DDL(CREATE TABLE) 등의 문구를 직접 보기 위한 설정
+    generate-ddl: true
+    # sql init mode를 활용시 해당 설정이 필요하다.
+    defer-datasource-initialization: true
+    open-in-view: off
+
+  # resources/data.sql의 파일을 매번 입력한다.
+  sql:
+    init:
+      mode: always

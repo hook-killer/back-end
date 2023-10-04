@@ -14,11 +14,11 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 @RequiredArgsConstructor
 public class CorsConfig implements WebMvcConfigurer {
     // TODO : 추후 Cors도메인 리스트 추가 필요함
-    private static String[] tempAllowedArray = {};
+    private static String[] tempAllowedArray = {"http://localhost:8080"};
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("*")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                 .allowedOriginPatterns(tempAllowedArray)
                 .exposedHeaders(LOCATION, SET_COOKIE)
                 .allowCredentials(true);

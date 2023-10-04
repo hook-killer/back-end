@@ -83,8 +83,14 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+//Plain생성을 막기 위함
+jar.enabled=false
 
 
+bootJar{
+    archivesBaseName = 'app'
+    archiveFileName = 'app.jar'
+}
 /*
 tasks {
     // https://derveljunit.tistory.com/336 (ISSUE : Entry local/application-local.yml is a duplicate but no duplicate handling strategy has been set~)

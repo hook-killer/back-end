@@ -24,5 +24,5 @@ spring:
 
 
 #로그파일 설정 필요 (Naver Log System으로 발송하기 위함)
-logging:
-  config: classpath:config/logback/logback-${spring.profiles.active}.xml
+#logging:
+#  config: classpath:config/logback/logback-${spring.profiles.active}.xml

@@ -4,7 +4,7 @@ ARG ACTIVE_PROFILES=dev
 RUN mkdir /pinpoint
 
 COPY ${JAR_FILE} /
-COPY pinpoint/* /pinpoint
+COPY pinpoint/* /pinpoint/
 
 USER root
 EXPOSE 8080

@@ -10,10 +10,10 @@
 # Test용 (Mr.재운DB)
 hook:
   db:
-    url: db-i28dv-kr.vpc-pub-cdb.ntruss.com
-    database: studydb
-    username: study
-    password: bitcamp!@#123
+    url: db-it7f7-kr.vpc-pub-cdb.ntruss.com
+    database: jh
+    username: hooklocal
+    password: hooklocal1234!
     port: 3306
 
 spring:

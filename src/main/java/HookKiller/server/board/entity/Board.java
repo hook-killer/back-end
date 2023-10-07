@@ -1,6 +1,7 @@
 package HookKiller.server.board.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "Board")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
@@ -25,8 +27,12 @@ public class Board {
     @OneToMany
     private List<Article> article;
 
+    @NotNull
     private String name;
+
     private String boardType;
+
+    @NotNull
     private String description;
 
 }

@@ -5,3 +5,11 @@ spring:
       - security
       - db
 
+auth:
+  jwt:
+    header: "Authorization"
+    prefix: "Bearer "
+    secret-key: hokasdofkoasdkfoafjasdlkfjsadlkfjeijflasdkfjasdfasdfasdfaefargagstrghehasdfasfaegargasfsadfdaga
+    access-exp: 36000
+    refresh-exp: 3600
+    issuer: hookkiller

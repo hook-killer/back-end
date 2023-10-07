@@ -1,10 +1,12 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.board.type.BoardType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "Board")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +32,8 @@ public class Board {
     @NotNull
     private String name;
 
-    private String boardType;
+    @Enumerated(EnumType.STRING)
+    private BoardType boardType;
 
     @NotNull
     private String description;

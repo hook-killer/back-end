@@ -1,9 +1,7 @@
 package HookKiller.server.board.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -22,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
 public class Article {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,4 +48,6 @@ public class Article {
     private long createdUser;
     private DateTime updatedAt;
     private long updatedUser;
+
+
 }

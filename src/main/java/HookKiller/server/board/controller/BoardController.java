@@ -1,5 +1,6 @@
 package HookKiller.server.board.controller;
 
+import HookKiller.server.board.dto.BoardDto;
 import HookKiller.server.board.entity.Board;
 import HookKiller.server.board.service.BoardService;
 import lombok.Getter;
@@ -19,8 +20,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String boardList() {
-         List<Board> boards = boardService.findAll();
-
+    public List<BoardDto> getBoardList() {
+         List<BoardDto> dto = boardService.getBoardList();
+         return dto;
     }
 }

@@ -18,7 +18,7 @@ public class BoardDto {
   private String boardType;
   private String description;
 
-  public BoardDto from(Board board) {
+  public static BoardDto from(Board board) {
     return BoardDto.builder()
             .id(board.getId())
             .name(board.getName())

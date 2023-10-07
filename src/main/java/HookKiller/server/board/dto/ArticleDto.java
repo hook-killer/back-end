@@ -9,23 +9,21 @@ import org.joda.time.DateTime;
 @Getter
 @Builder
 public class ArticleDto {
-  private Long id;
+
+  private Long articleId;
   private String title;
-  private Long createdUser;
   private DateTime createdAt;
+  private Long createdUser;
   private int likeCount;
 
-public static ArticleDto of(Article article, ArticleContent articleContent) {
+  public static ArticleDto of(Article article, ArticleContent articleContent) {
     return ArticleDto.builder()
-            .id(article.getId())
+            .articleId(article.getId())
             .title(articleContent.getTitle())
-            .createdUser(article.getCreatedUser())
             .createdAt(article.getCreatedAt())
+            .createdUser(article.getCreatedUser())
             .likeCount(article.getLikeCount())
             .build();
   }
-
-
-
 
 }

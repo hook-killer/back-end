@@ -21,3 +21,7 @@ auth:
     access-exp: 36000
     refresh-exp: 3600
     issuer: hookkiller
+    exclude-path: [
+      "/api/**",
+      "/user/**"
+    ]

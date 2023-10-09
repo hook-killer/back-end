@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // Filter에서 제외할 URL 설정
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        jwtProperties.getExcludePath().forEach(path -> log.error("path: {}\n", path));
+        jwtProperties.getExcludePath().forEach(path -> log.info("path: {}\n", path));
         return jwtProperties.getExcludePath().stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
     }
 }

@@ -2,8 +2,8 @@ spring:
   profiles:
     active: local
     include:
-      - security
       - db
+      - auth
 
 auth:
   jwt:

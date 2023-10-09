@@ -85,8 +85,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw e;
                 // TODO: custom exception 던지도록 바꾸기
             }
-        } else {
-            log.error("Username is null or context is not null !!");
         }
         filterChain.doFilter(request, response);
     }

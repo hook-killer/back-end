@@ -5,6 +5,14 @@ spring:
       - db
       - auth
 
+naver:
+  storage:
+    end-point: https://kr.object.ncloudstorage.com
+    region-name: kr-standard
+    bucket-name: hook-killer-file-bucket
+
+
+
 auth:
   jwt:
     header: "Authorization"

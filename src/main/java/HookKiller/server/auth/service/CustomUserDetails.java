@@ -1,4 +1,4 @@
-package HookKiller.server.config.auth;
+package HookKiller.server.auth.service;
 
 import HookKiller.server.user.entity.User;
 import lombok.RequiredArgsConstructor;

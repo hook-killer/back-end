@@ -1,5 +1,6 @@
 package HookKiller.server.jwt;
 
+import HookKiller.server.auth.service.CustomUserDetails;
 import HookKiller.server.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -45,8 +46,7 @@ public class JwtTokenProvider {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
-
-
+    
     // 토근 만료 여부 체크
     private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
@@ -54,28 +54,33 @@ public class JwtTokenProvider {
     }
 
     // id를 입력받아 accessToken 생성
-    public String generateToken(String userId) {
-        return generateAccessToken(userId, new HashMap<>());
+    public String generateToken(String email, String password, String role) {
+        Map<String, String> claimMap = new HashMap<>();
+        claimMap.put("email", email);
+        claimMap.put("password", password);
+        claimMap.put("role", role);
+        return generateAccessToken(email, claimMap);
     }
 
     // id, 속성정보를 이용해 accessToken 생성
-    public String generateAccessToken(String userId, Map<String, Object> claims) {
-        return doGenerateAccessToken(userId, claims);
+    public String generateAccessToken(String email, Map<String, String> claims) {
+        return doGenerateAccessToken(email, claims);
     }
 
     // JWT accessToken 생성
-    private String doGenerateAccessToken(String userId, Map<String, Object> claims) {
+    // UsernamePasswordAuthenticationToken
+    private String doGenerateAccessToken(String email, Map<String, String> claims) {
         log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", this.secretKey, this.accessExp);
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userId)
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + this.accessExp * 1000))
                 .signWith(SignatureAlgorithm.HS512, this.secretKey)
                 .compact();
     }
 
-    // 토근 검증
+    // 토큰 검증
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

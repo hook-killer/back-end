@@ -1,15 +1,12 @@
 package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
-import HookKiller.server.user.type.LoginType;
-import HookKiller.server.user.type.Status;
 import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -21,12 +18,6 @@ public class User extends AbstractTimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    private Long certificateKeyId;
-
-//    private OauthInfo oauthInfo;
-
-    private String expoToken;
 
     @NotNull
     @Column(unique = true)
@@ -42,6 +33,13 @@ public class User extends AbstractTimeStamp {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+//    private Long certificateKeyId;
+
+//    private OauthInfo oauthInfo;
+
+//    private String expoToken;
+
 
 //    @Enumerated(EnumType.STRING)
 //    @ColumnDefault(value = "NOT_ACTIVE")

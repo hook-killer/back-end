@@ -18,10 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -29,12 +26,14 @@ import java.util.Set;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final CustomUserDetailsService customUserDetailsService;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    private Set<String> whiteList = new HashSet<>(){{
-       add("/login");
-       add("/admin");
-    }};
+    private static final List<String> EXCLUDE_URL =
+            Collections.unmodifiableList(
+                    Arrays.asList(
+                            "/api/**",
+                            "/user/**"
+                    ));
 
     @Value("${auth.jwt.header}") private String HEADER_STRING;
     @Value("${auth.jwt.prefix}") private String TOKEN_PREFIX;
@@ -42,23 +41,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.error("JwtAuthenticionFilter탐");
+
         // 토근을 가져옴
         String header = request.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
 
-        String dispatcherPath = request.getRequestURI();
-        if(whiteList.stream().anyMatch(dispatcherPath::startsWith)){
-            filterChain.doFilter(request,response);
-            return;
-        }
-
-
+        // Bearer token인 경우 JWT 토큰 유효성 검사 진행
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX," ");
             try {
-                username = this.jwtTokenUtil.getUsernameFromToken(authToken);
+                username = this.jwtTokenProvider.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException ex) {
                 log.info("fail get user id");
             } catch (ExpiredJwtException ex) {
@@ -72,9 +65,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("JWT does not begin with Bearer !!");
         }
 
+        // token 검증이 되고 인증 정보가 존재하지 않는 경우 spring security 인증 정보 저장
         if ((username != null) && (SecurityContextHolder.getContext().getAuthentication() == null)) {
             UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
-            if (this.jwtTokenUtil.validateToken(authToken, userDetails)) {
+            if (this.jwtTokenProvider.validateToken(authToken, userDetails)) {
 
                 // 유저아이디 비밀번호 토큰 인증
                 UsernamePasswordAuthenticationToken authenticationToken =
@@ -91,7 +85,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } else {
             log.info("Username is null or context is not null !!");
         }
-        log.error("악악악악악악");
         filterChain.doFilter(request, response);
+    }
+
+    // Filter에서 제외할 URL 설정
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
     }
 }

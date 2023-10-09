@@ -13,13 +13,9 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private final UserRepository userRepository;
-    private final JwtTokenUtil jwtTokenUtil;
-
-    // Response에 401이 떨어질만한 에러가 발생할 경우, commence 메소드를 실행
+    // 인증이 되지 않은 사용자가 요청을 한 경우 동작 에러코드를 반환하는 역할을 한다.
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {

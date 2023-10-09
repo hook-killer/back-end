@@ -1,6 +1,9 @@
 package HookKiller.server.jwt;
 
+import HookKiller.server.auth.exception.TokenNotFoundException;
+import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.service.CustomUserDetails;
+import HookKiller.server.auth.service.CustomUserDetailsService;
 import HookKiller.server.properties.JwtProperties;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -13,11 +16,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -41,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
-        
+
         // Bearer token인 경우 JWT 토큰 유효성 검사 진행
         // AuthenticationManager 역할을 함. -> 토큰이 인증되어있으면 필터로 보내서 context에 저장. 토큰이 인증되어있지 않다면 AuthenticationProvider로 보내어 인증하도록 함.
         // token 검증이 되고 인증 정보가 존재하지 않는 경우 spring security 인증 정보 저장
@@ -52,23 +59,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         jwtTokenProvider.getUserIdFromToken(authToken),
                         jwtTokenProvider.getUserRoleFromToken(authToken)
                 );
-                
+
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken(userDetails, "user", userDetails.getAuthorities())
                 );
             } catch (IllegalArgumentException ex) {
-                log.info("fail get user id");
+                throw UserNotFoundException.EXCEPTION;
             } catch (ExpiredJwtException ex) {
-                log.info("Token expired");
+                throw TokenNotFoundException.EXCEPTION;
             } catch (MalformedJwtException ex) {
-                log.info("Invalid JWT !!");
+                throw TokenNotFoundException.EXCEPTION;
             } catch (Exception e) {
-                log.info("Unable to get JWT Token !!");
+                throw TokenNotFoundException.EXCEPTION;
             }
         } else {
             log.info("JWT does not begin with Bearer !!");
         }
-        
+
         filterChain.doFilter(request, response);
     }
 

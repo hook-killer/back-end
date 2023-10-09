@@ -1,6 +1,7 @@
 package HookKiller.server.jwt;
 
 import HookKiller.server.auth.service.CustomUserDetails;
+import HookKiller.server.common.constants.StaticVariable;
 import HookKiller.server.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static HookKiller.server.common.constants.StaticVariable.*;
 
 @Slf4j
 @Component
@@ -56,9 +59,9 @@ public class JwtTokenProvider {
     // id를 입력받아 accessToken 생성
     public String generateToken(String email, String password, String role) {
         Map<String, String> claimMap = new HashMap<>();
-        claimMap.put("email", email);
-        claimMap.put("password", password);
-        claimMap.put("role", role);
+        claimMap.put(TOKEN_EMAIL, email);
+        claimMap.put(TOKEN_PASSWORD, password);
+        claimMap.put(TOKEN_ROLE, role);
         return generateAccessToken(email, claimMap);
     }
 

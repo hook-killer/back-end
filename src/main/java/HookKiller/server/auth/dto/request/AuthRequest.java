@@ -15,7 +15,7 @@ public class AuthRequest {
   private String email;
 
   @NotEmpty(message = "패스워드 입력은 필수 입니다.")
-  @Size(min = 3, max = 15)
+  @Size(min = 8)
 //  @Pattern(등등 추가)
   private String password;
 

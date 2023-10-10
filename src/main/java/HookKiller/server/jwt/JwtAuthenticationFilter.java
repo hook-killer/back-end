@@ -70,10 +70,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (Exception e) {
                 throw TokenException.EXCEPTION;
             }
-        } else {
-            log.info("JWT does not begin with Bearer !!");
         }
-
         filterChain.doFilter(request, response);
     }
 

@@ -14,7 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static HookKiller.server.jwt.ClaimVal.*;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_ID;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_EMAIL;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_NICKNAME;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_ROLE;
 
 @Slf4j
 @Component

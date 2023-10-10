@@ -8,6 +8,7 @@ import HookKiller.server.user.exception.AlreadyExistUserException;
 import HookKiller.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ public class UserService {
     
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     
     @Transactional
     public ResponseEntity<AuthResponse> registerUser(RegisterRequest request) {
@@ -26,7 +28,7 @@ public class UserService {
         
         User user = userRepository.save(User.builder()
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .nickName(request.getNickName())
                 .role(request.getRole())
                 .build());

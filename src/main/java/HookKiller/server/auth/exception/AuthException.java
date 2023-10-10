@@ -2,7 +2,6 @@ package HookKiller.server.auth.exception;
 
 import HookKiller.server.common.dto.ErrorDetail;
 import HookKiller.server.common.exception.BaseErrorCode;
-import HookKiller.server.common.exception.InvalidTokenException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,8 @@ import static org.springframework.http.HttpStatus.*;
 @Getter
 @AllArgsConstructor
 public enum AuthException implements BaseErrorCode {
-  INVALID_TOKEN_ERROR(UNAUTHORIZED.value(), "Token_403_1", "토큰이 만료되었거나 형식에 맞지않은 토큰입니다."),
+  TOKEN_ERROR(UNAUTHORIZED.value(), "Token_403_1", "토큰 관련 에러입니다. 에러에 대한 구체적인 정의가 필요합니다."),
+  INVALID_TOKEN_ERROR(UNAUTHORIZED.value(), "Token_403_2", "토큰이 만료되었거나 형식에 맞지않은 토큰입니다."),
   USER_NOT_FOUND_ERROR(NOT_FOUND.value(), "User_404_1", "유저를 찾을 수 없습니다."),
   TOKEN_NOT_FOUND_ERROR(NOT_FOUND.value(), "Token_404_1", "토큰을 찾을 수 없습니다.")
   ;

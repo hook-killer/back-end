@@ -14,16 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static HookKiller.server.jwt.ClaimVal.*;
+
 @Slf4j
 @Component
 public class JwtTokenProvider {
     private final String secretKey;
     private final Long accessExp;
-    
-    public static final String TOKEN_ID = "userId";
-    public static final String TOKEN_EMAIL = "email";
-    public static final String TOKEN_PASSWORD = "password";
-    public static final String TOKEN_ROLE = "role";
 
     public JwtTokenProvider(JwtProperties jwtProperties) {
         this.secretKey = jwtProperties.getSecretKey();
@@ -31,16 +28,20 @@ public class JwtTokenProvider {
     }
     
     public String getUserIdFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_ID);
+        return getValueByFieldName(token, TOKEN_ID.getValue());
     }
 
     // token으로 사용자 id 조회
     public String getUsernameFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_EMAIL);
+        return getValueByFieldName(token, TOKEN_EMAIL.getValue());
     }
     
     public String getUserRoleFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_ROLE);
+        return getValueByFieldName(token, TOKEN_ROLE.getValue());
+    }
+    
+    public String getUserNickNameFromToken(String token) {
+        return getValueByFieldName(token, TOKEN_NICKNAME.getValue());
     }
     
     private String getValueByFieldName(String token, String claimName) {
@@ -71,11 +72,12 @@ public class JwtTokenProvider {
     }
 
     // id를 입력받아 accessToken 생성
-    public String generateToken(Long id, String email,  UserRole role) {
+    public String generateToken(Long id, String email, String nickname, UserRole role) {
         Map<String, String> claimMap = new HashMap<>();
-        claimMap.put(TOKEN_ID, id.toString());
-        claimMap.put(TOKEN_EMAIL, email);
-        claimMap.put(TOKEN_ROLE, role.name());
+        claimMap.put(TOKEN_ID.getValue(), id.toString());
+        claimMap.put(TOKEN_EMAIL.getValue(), email);
+        claimMap.put(TOKEN_ROLE.getValue(), role.name());
+        claimMap.put(TOKEN_NICKNAME.getValue(), nickname);
         return generateAccessToken(email, claimMap);
     }
 

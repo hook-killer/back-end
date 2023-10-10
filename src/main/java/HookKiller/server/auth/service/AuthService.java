@@ -24,7 +24,7 @@ public class AuthService {
   public ResponseEntity<AuthResponse> login(AuthRequest body) {
     User user  = userRepository.findByEmailAndPassword(body.getEmail(), body.getPassword()).orElseThrow(()-> UserNotFoundException.EXCEPTION );
     AuthResponse res = AuthResponse.builder()
-            .token(jwtTokenProvider.generateToken(user.getId(), user.getEmail(),user.getRole()))
+            .token(jwtTokenProvider.generateToken(user.getId(), user.getEmail(),user.getNickName(), user.getRole()))
             .build();
     return ResponseEntity.ok(res);
   }

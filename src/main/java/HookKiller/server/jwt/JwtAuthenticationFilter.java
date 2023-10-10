@@ -1,5 +1,7 @@
 package HookKiller.server.jwt;
 
+import HookKiller.server.auth.exception.InvalidTokenException;
+import HookKiller.server.auth.exception.TokenException;
 import HookKiller.server.auth.exception.TokenNotFoundException;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.service.CustomUserDetails;
@@ -52,7 +54,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 CustomUserDetails userDetails = CustomUserDetails.of(
                         jwtTokenProvider.getUserIdFromToken(authToken),
-                        jwtTokenProvider.getUserRoleFromToken(authToken)
+                        jwtTokenProvider.getUserRoleFromToken(authToken),
+                        jwtTokenProvider.getUserNickNameFromToken(authToken)
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(
@@ -63,9 +66,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException ex) {
                 throw TokenNotFoundException.EXCEPTION;
             } catch (MalformedJwtException ex) {
-                throw TokenNotFoundException.EXCEPTION;
+                throw InvalidTokenException.EXCEPTION;
             } catch (Exception e) {
-                throw TokenNotFoundException.EXCEPTION;
+                throw TokenException.EXCEPTION;
             }
         } else {
             log.info("JWT does not begin with Bearer !!");

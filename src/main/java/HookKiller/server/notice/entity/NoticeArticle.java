@@ -7,8 +7,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -17,7 +17,7 @@ import java.util.List;
  * createdAt : 공지글 생성일
  * createdUser : 공지글 작성 사용자 ID입력.
  * updatedAt : 공지글 정보 업데이트 일자
- * updated_user : 마지막에 수정한 사용자 ID입력.
+ * updatedUser : 마지막에 수정한 사용자 ID입력.
  */
 
 @Entity
@@ -26,7 +26,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeArticle {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany
@@ -38,14 +39,14 @@ public class NoticeArticle {
     @Enumerated(EnumType.STRING)
     private NoticeArticleStatus status;
 
-    private DateTime createdAt;
+    private Timestamp createdAt;
     private Long createdUser;
-    private DateTime updatedAt;
+    private Timestamp updatedAt;
     private Long updatedUser;
 
     @Builder
     public NoticeArticle(Long id, List<NoticeContent> content, LanguageType language,
-                         NoticeArticleStatus noticeArticleStatus, DateTime createdAt, Long createdUser, DateTime updatedAt, Long updatedUser) {
+                         NoticeArticleStatus noticeArticleStatus, Timestamp createdAt, Long createdUser, Timestamp updatedAt, Long updatedUser) {
         this.id = id;
         this.content = content;
         this.language = language;

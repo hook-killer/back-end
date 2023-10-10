@@ -1,16 +1,21 @@
 package HookKiller.server.config.security;
 
+import HookKiller.server.jwt.JwtAuthenticationEntryPoint;
+import HookKiller.server.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Slf4j
@@ -18,6 +23,10 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     // TODO : 추후 WhiteList 항목 코드 변경 필요
     private static String[] tempWhiteListArray = {
             "/health",
@@ -25,21 +34,27 @@ public class SecurityConfig {
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector intorsepector) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(
-                        authorizationManagerRequestMatcherRegistry -> {
-                            authorizationManagerRequestMatcherRegistry
-                                    .requestMatchers(
-                                            new MvcRequestMatcher(intorsepector,  "/hello"),
-                                            new MvcRequestMatcher(intorsepector, "/health")
-                                    )
-                                    .permitAll()
-                                    .anyRequest().authenticated();
-                        })
-                .httpBasic(Customizer.withDefaults());
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .httpBasic(AbstractHttpConfigurer::disable) //
+                .csrf(AbstractHttpConfigurer::disable) // csrf 사용안함
 
-        return http.build();
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용안함
+                .authorizeHttpRequests(authorization -> authorization
+                                    .requestMatchers(
+                                            "/login",
+                                            "/join", "/health").permitAll()
+                                .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
+                        )
+                .exceptionHandling(excep -> excep.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 

@@ -5,8 +5,10 @@ import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -33,8 +35,16 @@ public class User extends AbstractTimeStamp {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-//    private Long certificateKeyId;
+    
+    @Builder
+    public User(String email, String password, String nickName, String role) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.role = UserRole.valueOf(role);
+    }
+    
+    //    private Long certificateKeyId;
 
 //    private OauthInfo oauthInfo;
 

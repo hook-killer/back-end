@@ -37,7 +37,6 @@ public class NoticeController {
      */
     @GetMapping("/{noticeArticleId}")
     public NoticeArticleDto getNoticeArticle(@PathVariable Long noticeArticleId, HttpServletRequest request) {
-        LanguageType.findTypeByRequest(null);
         return noticeService.getNoticeArticleByArticleId(noticeArticleId, LanguageType.findTypeByRequest(request));
     }
 

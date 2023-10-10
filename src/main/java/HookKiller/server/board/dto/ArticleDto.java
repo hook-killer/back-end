@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
+import java.sql.Timestamp;
+
 @Getter
 @Builder
 public class ArticleDto {
 
   private Long articleId;
   private String title;
-  private DateTime createdAt;
+  private Timestamp createdAt;
   private Long createdUser;
   private int likeCount;
 
@@ -20,7 +22,7 @@ public class ArticleDto {
     return ArticleDto.builder()
             .articleId(article.getId())
             .title(articleContent.getTitle())
-            .createdAt(article.getCreatedAt())
+            .createdAt(article.getCreateAt())
             .createdUser(article.getCreatedUser())
             .likeCount(article.getLikeCount())
             .build();

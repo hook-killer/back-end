@@ -20,7 +20,6 @@ import static org.springframework.http.HttpHeaders.SET_COOKIE;
 public class CorsConfig {
     private final CorsProperties corsProperties;
 
-    // TODO : 로그인 작업 끝난이후 SecurityConfig Cors에 해당 Bean 등록 필요
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         corsProperties.getDomains().forEach(url -> log.info("CORS Allowed URL : {}", url));

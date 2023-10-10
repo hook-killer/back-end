@@ -1,6 +1,5 @@
 package HookKiller.server.auth.service;
 
-import HookKiller.server.user.entity.User;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +25,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
+        // TODO : getPassword는 나중에 쓴다면 다시 작성
         return this.userId;
     }
 

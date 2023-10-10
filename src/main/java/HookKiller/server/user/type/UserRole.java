@@ -1,4 +1,4 @@
-정package HookKiller.server.user.type;
+package HookKiller.server.user.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

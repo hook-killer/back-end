@@ -1,5 +1,6 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.common.AbstractTimeStamp;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

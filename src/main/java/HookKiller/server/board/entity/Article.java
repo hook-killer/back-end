@@ -1,5 +1,6 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.common.AbstractTimeStamp;
 import jakarta.persistence.*;
 import lombok.*;
 import org.joda.time.DateTime;
@@ -21,10 +22,10 @@ import java.util.List;
 @Entity
 @Getter
 @RequiredArgsConstructor
-public class Article {
+public class Article extends AbstractTimeStamp {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id")
@@ -44,10 +45,7 @@ public class Article {
     private String status;
     private int likeCount;
     private boolean isDeleted;
-    private DateTime createdAt;
-    private long createdUser;
-    private DateTime updatedAt;
-    private long updatedUser;
-
+    private Long createdUser;
+    private Long updatedUser;
 
 }

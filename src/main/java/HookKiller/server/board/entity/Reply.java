@@ -1,5 +1,6 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.common.AbstractTimeStamp;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Reply {
+public class Reply extends AbstractTimeStamp {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,8 +38,6 @@ public class Reply {
 
     private String orgReplyLanguage;
     private boolean isDeleted;
-    private DateTime createdAt;
-    private long createdUser;
-    private DateTime updatedAt;
-    private long updatedUser;
+    private Long createdUser;
+    private Long updatedUser;
 }

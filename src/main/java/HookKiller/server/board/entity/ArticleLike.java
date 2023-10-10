@@ -1,6 +1,7 @@
 package HookKiller.server.board.entity;
 
 
+import HookKiller.server.common.AbstractTimeStamp;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import org.joda.time.DateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ArticleLike {
+public class ArticleLike extends AbstractTimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,5 @@ public class ArticleLike {
     @JoinColumn(name="article_id")
     private Article article;
 
-    private long userId;
-    private DateTime createdAt;
+    private Long userId;
 }

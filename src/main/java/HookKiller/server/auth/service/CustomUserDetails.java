@@ -1,53 +1,60 @@
 package HookKiller.server.auth.service;
 
-import HookKiller.server.user.entity.User;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-
-    private final User user;
-
+@Builder
+public record CustomUserDetails(String userId, String role, String nickname) implements UserDetails {
+    
     // 해당 유저의 권한을 리턴하는 메서드!
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(() -> user.getRole().name());
+        collection.add(() -> this.role);
         return collection;
     }
-
+    
     @Override
     public String getPassword() {
-        return user.getPassword();
+        // TODO : getPassword는 나중에 쓴다면 다시 작성
+        return this.userId;
     }
-
+    
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return String.valueOf(this.userId);
     }
-
+    
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    
     @Override
     public boolean isEnabled() {
         return true;
     }
+    
+    public static CustomUserDetails of(String userId, String role, String nickname) {
+        return CustomUserDetails.builder()
+                .userId(userId)
+                .role(role)
+                .nickname(nickname)
+                .build();
+    }
+    
 }

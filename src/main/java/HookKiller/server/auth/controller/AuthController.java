@@ -32,8 +32,8 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
     
-    @PostMapping("/register/{token}")
-    public ResponseEntity<AuthResponse> register(@PathVariable String token, @RequestBody @Valid RegisterRequest request) {
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
         return userService.registerUser(request);
     }
     

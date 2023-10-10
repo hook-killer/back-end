@@ -1,11 +1,18 @@
 package HookKiller.server.board.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -23,6 +30,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "tbl_reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reply extends AbstractTimeStamp {
 
@@ -33,11 +41,11 @@ public class Reply extends AbstractTimeStamp {
     @JoinColumn(name="article_id")
     private Article article;
 
-    @OneToMany
+    @OneToMany(mappedBy = "reply")
     private List<ReplyContent> replyContent;
 
     private String orgReplyLanguage;
     private boolean isDeleted;
-    private Long createdUser;
-    private Long updatedUser;
+    private Long createdUserId;
+    private Long updatedUserId;
 }

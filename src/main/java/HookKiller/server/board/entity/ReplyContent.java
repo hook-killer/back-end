@@ -1,7 +1,16 @@
 package HookKiller.server.board.entity;
 
-import HookKiller.server.common.AbstractTimeStamp;
-import jakarta.persistence.*;
+import HookKiller.server.board.type.BoardType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(name = "tbl_reply_content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReplyContent {
 
@@ -23,7 +33,7 @@ public class ReplyContent {
     @JoinColumn(name="reply_id")
     private Reply reply;
 
-    private String language;
+    private BoardType language;
 
     @Column
     @Lob

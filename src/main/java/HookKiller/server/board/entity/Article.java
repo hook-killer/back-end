@@ -1,9 +1,18 @@
 package HookKiller.server.board.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
-import jakarta.persistence.*;
-import lombok.*;
-import org.joda.time.DateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -21,7 +30,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
+@Table(name = "tbl_article")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends AbstractTimeStamp {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,13 +41,13 @@ public class Article extends AbstractTimeStamp {
     @JoinColumn(name="board_id")
     private Board board;
 
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<ArticleLike> ArticleLike;
 
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<ArticleContent> articleContent;
 
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<Reply> reply;
 
     private String orgArticleLanguage;
@@ -45,7 +55,7 @@ public class Article extends AbstractTimeStamp {
     private String status;
     private int likeCount;
     private boolean isDeleted;
-    private Long createdUser;
-    private Long updatedUser;
+    private Long createdUserId;
+    private Long updatedUserId;
 
 }

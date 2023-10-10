@@ -2,7 +2,6 @@ package HookKiller.server.board.repository;
 
 import HookKiller.server.board.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 
 /**
@@ -11,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA를 사용하여 기본 CRUD 작업을 자동으로 처리합니다.
  */
 
-@Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+  
 }

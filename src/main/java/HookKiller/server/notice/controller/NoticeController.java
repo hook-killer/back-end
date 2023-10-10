@@ -4,6 +4,7 @@ import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.notice.dto.NoticeArticleDto;
 import HookKiller.server.notice.dto.NoticeContentDto;
 import HookKiller.server.notice.entity.NoticeArticle;
+import HookKiller.server.notice.entity.NoticeContent;
 import HookKiller.server.repository.NoticeArticleRepository;
 import HookKiller.server.repository.NoticeContentRepository;
 import HookKiller.server.service.NoticeService;
@@ -31,7 +32,7 @@ public class NoticeController {
      * @param languageType
      * @return
      */
-    @GetMapping("{/noticeArticleId}")
+    @GetMapping("/{noticeArticleId}")
     public NoticeArticleDto getNoticeArticle(@PathVariable Long noticeArticleId, HttpServletRequest request, LanguageType languageType) {
         request.getHeader("languageType");
         return noticeService.getNoticeArticleByArticleId(noticeArticleId, languageType);
@@ -41,33 +42,29 @@ public class NoticeController {
      * 리스트 조회
      * @param request
      * @param languageType
-     * @param requestData
      * @return
      */
-    @GetMapping
-    public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request, LanguageType languageType, NoticeArticleDto requestData) {
-        request.getHeader("id");
-        Long id = requestData.getId();
-        List<NoticeArticleDto> articleDto = noticeService.getNoticeArticleList(id, languageType);
-        return articleDto;
+    @GetMapping("/list")
+    public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request, LanguageType languageType) {
+
+        return noticeService.getNoticeList(languageType);
     }
 
     /**
      * 공지사항 등록
      */
     @PostMapping
-    public void addNotice(@RequestBody @Valid NoticeArticleDto articleRequest, NoticeContentDto contentRequest) {
+    public void addNotice(@RequestBody NoticeArticleDto articleRequest, @Valid NoticeContentDto contentRequest) {
         noticeService.saveNotice(articleRequest, contentRequest);
     }
 
     /**
      * 공지사항 수정
      */
-    @PutMapping("/{id}")
-    public void updateNotice(@PathVariable Long id,
-                             @RequestBody @Valid NoticeArticleDto articleDto, NoticeContentDto contentDto) {
-        noticeService.update(id, articleDto);
-        Optional<NoticeArticle> findNotice = articleRepository.findById(id);
+    @PutMapping
+    public void updateNotice(@RequestBody NoticeArticleDto articleDto, @Valid NoticeContentDto contentDto, Long id) {
+        noticeService.update(id, contentDto);
+        Optional<NoticeContent> findNotice = contentRepository.findById(id);
     }
 
     /**

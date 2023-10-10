@@ -1,12 +1,16 @@
 package HookKiller.server.repository;
 
+import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.common.type.NoticeArticleStatus;
 import HookKiller.server.notice.entity.NoticeArticle;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.List;
+import java.util.Optional;
+
 public interface NoticeArticleRepository extends JpaRepository<NoticeArticle, Long> {
-    NoticeArticle findAll(NoticeArticle noticeArticle);
-    NoticeArticle getById(Long id);
+
+    Optional<NoticeArticle> findByLanguage(LanguageType languageType);
+    List<NoticeArticle> findByStatus(NoticeArticleStatus status);
 
 }

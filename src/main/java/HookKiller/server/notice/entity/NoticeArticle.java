@@ -45,8 +45,8 @@ public class NoticeArticle {
     private Long updatedUser;
 
     @Builder
-    public NoticeArticle(Long id, List<NoticeContent> content, LanguageType language,
-                         NoticeArticleStatus noticeArticleStatus, Timestamp createdAt, Long createdUser, Timestamp updatedAt, Long updatedUser) {
+    public NoticeArticle(Long id, List<NoticeContent> content, LanguageType language, NoticeArticleStatus noticeArticleStatus,
+                         Timestamp createdAt, Long createdUser, Timestamp updatedAt, Long updatedUser) {
         this.id = id;
         this.content = content;
         this.language = language;

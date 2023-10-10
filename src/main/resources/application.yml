@@ -5,6 +5,17 @@ spring:
       - db
       - auth
 
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   # 파일 한개 최대 20MB, 최대 Request 600MB로 20MB사진 30장까지 허용
   servlet:
     multipart:

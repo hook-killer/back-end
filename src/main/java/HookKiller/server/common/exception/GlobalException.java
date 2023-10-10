@@ -19,9 +19,12 @@ public enum GlobalException implements BaseErrorCode{
     EXPIRED_TOKEN_EXCEPTION(UNAUTHORIZED.value(), "401-1", "토큰이 만료되었습니다."),
     INVALID_TOKEN_EXCEPTION(UNAUTHORIZED.value(), "401-2", "올바르지 않은 토큰입니다."),
     SECURITY_CONTEXT_NOT_FOUND_ERROR(INTERNAL_SERVER_ERROR.value(), "500-2", "Security Context 에러입니다."),
+    ILLEGAL_ARGUMENT_ERROR(BAD_REQUEST.value(), "500-00","인자 값 문제로 인한 오류가 발생하였습니다"),
     FILE_UPLOAD_ERROR(INTERNAL_SERVER_ERROR.value(), "500-10", "파일 업로드 중 오류가 발생하였습니다"),
     FILE_DELETE_ERROR(INTERNAL_SERVER_ERROR.value(), "500-11", "파일 삭제 중 오류가 발생하였습니다"),
-    FILE_IO_ERROR(INTERNAL_SERVER_ERROR.value(), "500-12","파일 변환 중 오류가 발생하였습니다");
+    FILE_IO_ERROR(INTERNAL_SERVER_ERROR.value(), "500-12","파일 변환 중 오류가 발생하였습니다"),
+    MAIL_SEND_ERROR(INTERNAL_SERVER_ERROR.value(), "500-20", "메일 발송중 오류가 발생하였습니다"),
+    ;
 
     private final Integer statusCode;
     private final String errorCode;

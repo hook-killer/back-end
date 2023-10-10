@@ -40,13 +40,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.info("request: {}", request.getHeader(HEADER_STRING));
+        /*log.info("request: {}", request.getHeader(HEADER_STRING));
 
         // 토근을 가져옴
         String header = request.getHeader(HEADER_STRING);
         String username = null;
         String authToken = null;
-        
+
         // Bearer token인 경우 JWT 토큰 유효성 검사 진행
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX," ");
@@ -71,11 +71,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 if (this.jwtTokenProvider.validateToken(authToken, userDetails)) {
-                    
+
                     // 유저아이디 비밀번호 토큰 인증
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    
+
                     authenticationToken
                             .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     log.info("authenticated user " + username + ", setting security context");
@@ -85,7 +85,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw e;
                 // TODO: custom exception 던지도록 바꾸기
             }
-        }
+        }*/
         filterChain.doFilter(request, response);
     }
 

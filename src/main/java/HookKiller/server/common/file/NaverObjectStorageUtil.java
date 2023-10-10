@@ -127,7 +127,7 @@ public class NaverObjectStorageUtil {
                 environment.getProperty("spring.profiles.active", "default"),
                 usageType.getPath() ,
                 String.valueOf(now.getYear()),
-                String.valueOf(now.getMonth()),
+                String.valueOf(now.getMonthValue()),
                 String.valueOf(now.getDayOfMonth()),
                 fileName
         );

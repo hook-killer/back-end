@@ -5,6 +5,12 @@ spring:
       - db
       - auth
 
+  # 파일 한개 최대 20MB, 최대 Request 600MB로 20MB사진 30장까지 허용
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 600MB
+
 naver:
   storage:
     end-point: https://kr.object.ncloudstorage.com

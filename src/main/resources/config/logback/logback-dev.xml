@@ -24,7 +24,7 @@
 
     <appender name="nelo-logback-async" class="ch.qos.logback.classic.AsyncAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
+            <level>info</level>
         </filter>
         <param name="neverBlock" value="true" />
         <param name="includeCallerData" value="true" />

@@ -1,20 +1,14 @@
 # TODO : 각자 개발용 URL, 개인 Database명 입력 필요, 해당 2개의 속성은 커밋 제외 필수!!!!!
-#hook:
-#  db:
-#    url:
-#    database:
-#    username: hooklocal
-#    password: hooklocal1234!
-#    port: 3306
-
-# Test용 (Mr.재운DB)
 hook:
   db:
     url: db-it7f7-kr.vpc-pub-cdb.ntruss.com
-    database: jh
+    database: jw
     username: hooklocal
     password: hooklocal1234!
     port: 3306
+
+# Test용 (Mr.재운DB)
+
 
 spring:
   jpa:

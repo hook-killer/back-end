@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,13 +83,15 @@ public class NaverObjectStorageUtil {
 
     /**
      * 실제 File을 NaverObject Storage에 Upload
+     * Upload의 경우에는 결과값이 중요하지 않기 때문에 비동기 처리한다.
      *
      * @param usageType
      * @param filePath
      * @param uploadTarget
      * @param metadata
      */
-    private void uploadFile(NaverObjectStorageUsageType usageType, String filePath, InputStream uploadTarget, ObjectMetadata metadata) {
+    @Async
+    protected void uploadFile(NaverObjectStorageUsageType usageType, String filePath, InputStream uploadTarget, ObjectMetadata metadata) {
         storageObject.putObject(
                 new PutObjectRequest(
                         naverObjectStorageProperties.getBucketName(),

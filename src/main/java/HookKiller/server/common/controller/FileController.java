@@ -2,7 +2,8 @@ package HookKiller.server.common.controller;
 
 
 import HookKiller.server.common.dto.ImageUploadRequest;
-import HookKiller.server.common.file.NaverObjectStorageUtil;
+import HookKiller.server.common.entity.FileResources;
+import HookKiller.server.common.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,10 @@ import java.util.List;
 @RestController
 public class FileController {
 
-    private final NaverObjectStorageUtil naverObjectStorageUtil;
+    private final FileService fileService;
 
     @PostMapping("/image")
-    public ResponseEntity<List<String>> uploadImages(ImageUploadRequest request) {
-        // TODO : 사용자 정보 기록위한 시큐리티 유틸 제작이후 추가진행필요
-        return null;
+    public ResponseEntity<List<FileResources>> uploadImages(ImageUploadRequest request) {
+        return ResponseEntity.ok(fileService.getUploadImagePaths(request));
     }
 }

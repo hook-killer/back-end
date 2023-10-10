@@ -2,7 +2,6 @@ package HookKiller.server.common.dto;
 
 import HookKiller.server.common.file.NaverObjectStorageUsageType;
 import HookKiller.server.common.util.valid.ValidEnum;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +17,4 @@ public class ImageUploadRequest {
 
     @NotNull(message = "업로드한 파일이 존재하지 않습니다.")
     private List<MultipartFile> images;
-
-
 }

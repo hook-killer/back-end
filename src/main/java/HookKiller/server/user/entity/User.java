@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -36,11 +37,11 @@ public class User extends AbstractTimeStamp {
     private UserRole role;
     
     @Builder
-    public User(String email, String password, String nickName, String thumbnail) {
+    public User(String email, String password, String nickName, String role) {
         this.email = email;
         this.password = password;
         this.nickName = nickName;
-        this.thumbnail = thumbnail;
+        this.role = UserRole.valueOf(role);
     }
     
     //    private Long certificateKeyId;

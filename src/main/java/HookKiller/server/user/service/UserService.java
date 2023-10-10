@@ -28,7 +28,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickName(request.getNickName())
-                .thumbnail(request.getThumbnail())
+                .role(request.getRole())
                 .build());
         
         AuthResponse res = AuthResponse.builder()

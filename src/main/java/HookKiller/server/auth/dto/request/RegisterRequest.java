@@ -22,5 +22,5 @@ public class RegisterRequest {
 //  @Pattern(등등 추가)
   private String password;
   
-  private String thumbnail;
+  private String role;
 }

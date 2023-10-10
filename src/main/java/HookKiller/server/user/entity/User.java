@@ -5,6 +5,7 @@ import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,8 +34,16 @@ public class User extends AbstractTimeStamp {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-//    private Long certificateKeyId;
+    
+    @Builder
+    public User(String email, String password, String nickName, String thumbnail) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.thumbnail = thumbnail;
+    }
+    
+    //    private Long certificateKeyId;
 
 //    private OauthInfo oauthInfo;
 

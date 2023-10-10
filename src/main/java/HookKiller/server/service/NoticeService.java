@@ -31,10 +31,13 @@ public class NoticeService {
      * @return
      */
     public NoticeArticleDto getNoticeArticleByArticleId(Long noticeArticleId, LanguageType languageType) {
+
         NoticeArticle article = noticeArticleRepository.findById(noticeArticleId)
                 .orElseThrow(() -> NoticeArticleNotFoundException.EXCEPTION);
+
         NoticeContent content = noticeContentRepository.findByNoticeArticleAndLanguage(article, languageType)
                 .orElseThrow(() -> NoticeContentNotFoundException.EXCEPTION);
+
         return NoticeArticleDto.of(article, content);
     }
 

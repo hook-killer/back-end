@@ -1,6 +1,7 @@
 package HookKiller.server.notice.controller;
 
 import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.common.type.RequestHeaderConstants;
 import HookKiller.server.notice.dto.NoticeArticleDto;
 import HookKiller.server.notice.dto.NoticeContentDto;
 import HookKiller.server.notice.entity.NoticeArticle;
@@ -11,6 +12,9 @@ import HookKiller.server.service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.language.bm.Lang;
+import org.apache.logging.log4j.message.LoggerNameAwareMessage;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,25 +33,22 @@ public class NoticeController {
      *  단건 조회
      * @param noticeArticleId
      * @param request
-     * @param languageType
      * @return
      */
     @GetMapping("/{noticeArticleId}")
-    public NoticeArticleDto getNoticeArticle(@PathVariable Long noticeArticleId, HttpServletRequest request, LanguageType languageType) {
-        request.getHeader("languageType");
-        return noticeService.getNoticeArticleByArticleId(noticeArticleId, languageType);
+    public NoticeArticleDto getNoticeArticle(@PathVariable Long noticeArticleId, HttpServletRequest request) {
+        LanguageType.findTypeByRequest(null);
+        return noticeService.getNoticeArticleByArticleId(noticeArticleId, LanguageType.findTypeByRequest(request));
     }
 
     /**
      * 리스트 조회
      * @param request
-     * @param languageType
      * @return
      */
-    @GetMapping("/list")
-    public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request, LanguageType languageType) {
-
-        return noticeService.getNoticeList(languageType);
+    @GetMapping
+    public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request) {
+        return noticeService.getNoticeList(LanguageType.findTypeByRequest(request));
     }
 
     /**
@@ -74,6 +75,8 @@ public class NoticeController {
     public void deleteNotice(@PathVariable Long noticeArticleId) {
         noticeService.deleteNotice(noticeArticleId);
     }
+
+
 
 }
 

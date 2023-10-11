@@ -63,6 +63,16 @@ public class ArticleService {
     );
   }
 
+//  public Article updateArticle(PostArticleRequestDto postArticleRequestDto) {
+//    Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
+//            .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+//
+//    User requestUser = userUtils.getUser();
+//    return articleRepository
+//
+//
+//  }
+
   @Transactional
   public void deleteArticle(Long articleId) {
     articleRepository
@@ -70,6 +80,7 @@ public class ArticleService {
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)
             .updateStatus("DELETE");
   }
+
 
 
 

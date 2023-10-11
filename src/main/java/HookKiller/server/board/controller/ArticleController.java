@@ -2,7 +2,6 @@ package HookKiller.server.board.controller;
 
 import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.dto.PostArticleRequestDto;
-import HookKiller.server.board.repository.ArticleContentRepository;
 import HookKiller.server.board.service.ArticleContentService;
 import HookKiller.server.board.service.ArticleService;
 import HookKiller.server.board.type.BoardType;
@@ -43,6 +42,17 @@ public class ArticleController {
     );
     return ResponseEntity.ok("Article Create Success");
   }
+
+  /**
+   * 게시물 수정
+   */
+//  @PutMapping("/{articleId}")
+//  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto) {
+//    articleContentService.updateArticle(
+//            requestDto, articleService.updateArticle(requestDto)
+//    );
+//    return ResponseEntity.ok("Article Update Success");
+//  }
 
   /**
    * 게시물 삭제

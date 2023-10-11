@@ -53,6 +53,7 @@ public class Article extends AbstractTimeStamp {
   private LanguageType orgArticleLanguage;
 
   @NotNull
+  @Enumerated(EnumType.STRING)
   private ArticleStatus articleStatus;
 
   private int likeCount;

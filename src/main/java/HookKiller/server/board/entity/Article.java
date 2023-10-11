@@ -40,13 +40,13 @@ public class Article extends AbstractTimeStamp {
   @JoinColumn(name = "board_id")
   private Board board;
 
-  @OneToMany(mappedBy = "article")
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
   private List<ArticleLike> ArticleLike = new ArrayList<>();
 
-  @OneToMany(mappedBy = "article")
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
   private List<ArticleContent> articleContent = new ArrayList<>();
 
-  @OneToMany(mappedBy = "article")
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
   private List<Reply> reply = new ArrayList<>();
 
   @NotNull
@@ -64,6 +64,10 @@ public class Article extends AbstractTimeStamp {
   @NotNull
   @ManyToOne(fetch = FetchType.EAGER)
   private User updatedUser;
+
+  public void updateStatus(String status) {
+    articleStatus = ArticleStatus.valueOf(status);
+  }
 
   @Builder
   public Article(Board board, LanguageType orgArticleLanguage, ArticleStatus articleStatus, User createdUser, User updatedUser) {

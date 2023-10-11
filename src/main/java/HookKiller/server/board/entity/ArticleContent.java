@@ -1,8 +1,7 @@
 package HookKiller.server.board.entity;
 
 
-import HookKiller.server.board.type.BoardType;
-import jakarta.persistence.Column;
+import HookKiller.server.common.type.LanguageType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,7 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,16 +37,26 @@ public class ArticleContent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="article_id")
     private Article article;
 
     @Enumerated(EnumType.STRING)
-    private BoardType language;
+    private LanguageType language;
+
+    @NotNull
     private String title;
 
-    @Column
+    @NotNull
     @Lob
     private String content;
 
+    @Builder
+    public ArticleContent(Article article, LanguageType language, String title, String content) {
+        this.article = article;
+        this.language = language;
+        this.title = title;
+        this.content = content;
+    }
 }

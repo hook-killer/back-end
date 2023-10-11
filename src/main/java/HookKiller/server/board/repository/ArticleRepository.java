@@ -10,4 +10,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
   public List<Article> findAllByBoard(Board board);
+
+  List<Article> findAllByBoardAndStatus(Board board, String status);
+
 }

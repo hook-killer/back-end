@@ -1,19 +1,17 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.board.type.ArticleStatus;
 import HookKiller.server.common.AbstractTimeStamp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.user.entity.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,28 +32,45 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends AbstractTimeStamp {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_id")
-    private Board board;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "board_id")
+  private Board board;
 
-    @OneToMany(mappedBy = "article")
-    private List<ArticleLike> ArticleLike;
+  @OneToMany(mappedBy = "article")
+  private List<ArticleLike> ArticleLike = new ArrayList<>();
 
-    @OneToMany(mappedBy = "article")
-    private List<ArticleContent> articleContent;
+  @OneToMany(mappedBy = "article")
+  private List<ArticleContent> articleContent = new ArrayList<>();
 
-    @OneToMany(mappedBy = "article")
-    private List<Reply> reply;
+  @OneToMany(mappedBy = "article")
+  private List<Reply> reply = new ArrayList<>();
 
-    private String orgArticleLanguage;
-    private String articleType;
-    private String status;
-    private int likeCount;
-    private boolean isDeleted;
-    private Long createdUserId;
-    private Long updatedUserId;
+  @NotNull
+  private LanguageType orgArticleLanguage;
 
+  @NotNull
+  private ArticleStatus articleStatus;
+
+  private int likeCount;
+
+  @NotNull
+  @ManyToOne(fetch = FetchType.EAGER)
+  private User createdUser;
+
+  @NotNull
+  @ManyToOne(fetch = FetchType.EAGER)
+  private User updatedUser;
+
+  @Builder
+  public Article(Board board, LanguageType orgArticleLanguage, ArticleStatus articleStatus, User createdUser, User updatedUser) {
+    this.board = board;
+    this.articleStatus = articleStatus;
+    this.orgArticleLanguage = orgArticleLanguage;
+    this.createdUser = createdUser;
+    this.updatedUser = updatedUser;
+  }
 }

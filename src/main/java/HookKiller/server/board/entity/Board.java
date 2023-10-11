@@ -1,14 +1,7 @@
 package HookKiller.server.board.entity;
 
 import HookKiller.server.board.type.BoardType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,6 +23,7 @@ import java.util.List;
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="board_id")
     private Long id;
 
     @OneToMany(mappedBy = "board")

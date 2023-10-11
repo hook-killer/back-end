@@ -1,0 +1,30 @@
+package HookKiller.server.board.dto;
+
+import HookKiller.server.common.type.LanguageType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PostArticleRequestDto {
+  @NotNull(message = "게시판 ID는 필수 입니다.")
+  private Long boardId;
+
+  @NotNull(message = "원본 언어는 필수 선택 하셔야 합니다.")
+  @Enumerated(EnumType.STRING)
+  private LanguageType orgArticleLanguage;
+
+  @NotEmpty(message = "제목이 입력되지 않았습니다.")
+  private String title;
+
+  @NotEmpty(message = "내용이 입력되지 않았습니다.")
+  @Lob
+  private String content;
+}

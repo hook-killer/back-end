@@ -1,6 +1,7 @@
 package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,16 +38,27 @@ public class User extends AbstractTimeStamp {
     private UserRole role;
     
     @Builder
-    public User(String email, String password, String nickName, String role) {
+    public User(String email, String password, String nickName, String role, LoginType loginType, OauthInfo oauthInfo) {
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.role = UserRole.valueOf(role);
+        this.loginType = loginType;
+        this.oauthInfo = oauthInfo;
+    }
+
+    @Builder
+    public User(String email, String password, String nickName, String role, LoginType loginType) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.role = UserRole.valueOf(role);
+        this.loginType = loginType;
     }
     
     //    private Long certificateKeyId;
 
-//    private OauthInfo oauthInfo;
+    private OauthInfo oauthInfo;
 
 //    private String expoToken;
 
@@ -55,8 +67,8 @@ public class User extends AbstractTimeStamp {
 //    @ColumnDefault(value = "NOT_ACTIVE")
 //    private Status status;
 //
-//    @Enumerated(EnumType.STRING)
-//    private LoginType loginType;
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
 //
 //    @Column
 //    @ColumnDefault(value = "false")

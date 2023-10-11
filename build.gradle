@@ -62,6 +62,18 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+    // Oauth 2.0
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+    implementation 'io.github.openfeign:feign-jackson:12.4'
+    implementation 'io.github.openfeign:feign-httpclient:12.4'
+    implementation 'io.github.openfeign:feign-core:12.4'
+
+
+//    implementation 'io.github.openfeign:feign-jackson:12.5'
+
     // Amazon AWS Java SDK s3 And File
     implementation 'commons-io:commons-io:2.13.0'
     implementation('com.amazonaws:aws-java-sdk-s3:1.12.530') {

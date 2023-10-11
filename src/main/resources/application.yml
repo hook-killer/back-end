@@ -42,3 +42,12 @@ auth:
       "/api/**",
       "/user/**"
     ]
+
+oauth2:
+  kakao:
+    base-url: https://kauth.kakao.com
+    client-id: d13220db279c497ef47b29323ceb2e20
+    client-secret: 9nI9kKWteLr6kMH50gXTs8HbJ5qvRVq4
+    redirect-url: http://localhost:8080/login/oauth2/code/kakao
+    app-id: d13220db279c497ef47b29323ceb2e20
+    admin-key: 262a014744528270dde2033856929ddb

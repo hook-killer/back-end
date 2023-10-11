@@ -5,30 +5,30 @@ import HookKiller.server.user.type.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static HookKiller.server.jwt.ClaimVal.TOKEN_ID;
-import static HookKiller.server.jwt.ClaimVal.TOKEN_EMAIL;
-import static HookKiller.server.jwt.ClaimVal.TOKEN_NICKNAME;
-import static HookKiller.server.jwt.ClaimVal.TOKEN_ROLE;
+import static HookKiller.server.jwt.ClaimVal.*;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
-    private final String secretKey;
-    private final Long accessExp;
 
-    public JwtTokenProvider(JwtProperties jwtProperties) {
-        this.secretKey = jwtProperties.getSecretKey();
-        this.accessExp = jwtProperties.getAccessExp();
-    }
+    private String secretKey;
+    private Long accessExp;
+
+    private final JwtProperties jwtProperties;
     
     public String getUserIdFromToken(String token) {
         return getValueByFieldName(token, TOKEN_ID.getValue());
@@ -75,18 +75,13 @@ public class JwtTokenProvider {
     }
 
     // id를 입력받아 accessToken 생성
-    public String generateToken(Long id, String email, String nickname, UserRole role) {
+    public String generateAccessToken(Long id, String email, String nickname, UserRole role) {
         Map<String, String> claimMap = new HashMap<>();
         claimMap.put(TOKEN_ID.getValue(), id.toString());
         claimMap.put(TOKEN_EMAIL.getValue(), email);
         claimMap.put(TOKEN_ROLE.getValue(), role.name());
         claimMap.put(TOKEN_NICKNAME.getValue(), nickname);
-        return generateAccessToken(email, claimMap);
-    }
-
-    // id, 속성정보를 이용해 accessToken 생성
-    public String generateAccessToken(String email, Map<String, String> claims) {
-        return doGenerateAccessToken(email, claims);
+        return doGenerateAccessToken(email, claimMap);
     }
 
     // JWT accessToken 생성
@@ -102,9 +97,34 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // TODO : AccessToken의 생성방식과 동일하게 변경
+    public String generateRefreshToken(Long id) {
+        final Date issuedAt = new Date();
+        final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + jwtProperties.getRefreshExp() * 1000);
+        Map<String, String> claimMap = new HashMap<>();
+        return doGenerateRefreshToken(id, issuedAt, refreshTokenExpiresIn);
+    }
+
+    // TODO : AccessToken의 생성방식과 동일하게 변경
+    private String doGenerateRefreshToken(Long id, Date issuedAt, Date refreshTokenExpiresIn) {
+        final Key encodedKey = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+        return Jwts.builder()
+                .setIssuer(jwtProperties.getIssuer())
+                .setIssuedAt(issuedAt)
+                .setSubject(id.toString())
+                .claim(TYPE.getValue(), REFRESH_TOKEN.getValue())
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(encodedKey)
+                .compact();
+    }
+
     // 토큰 검증
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public Long getRefreshTokenTTLSecond() {
+        return jwtProperties.getRefreshExp();
     }
 }

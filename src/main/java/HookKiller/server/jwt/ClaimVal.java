@@ -11,6 +11,8 @@ public enum ClaimVal {
   TOKEN_PASSWORD("password"),
   TOKEN_ROLE("role"),
   TOKEN_NICKNAME("nickname"),
+  REFRESH_TOKEN("REFRESH_TOKEN"),
+  TYPE("type"),
   ;
   
   private final String value;

@@ -21,7 +21,7 @@ spring:
 
     hibernate:
       # 매번 create생성 시키기 위함
-      ddl-auto: create
+      ddl-auto: create-drop
 
     # DDL(CREATE TABLE) 등의 문구를 직접 보기 위한 설정
     generate-ddl: true

@@ -1,8 +1,7 @@
 package HookKiller.server.jwt;
 
-import HookKiller.server.auth.service.CustomUserDetails;
-import HookKiller.server.common.constants.StaticVariable;
 import HookKiller.server.properties.JwtProperties;
+import HookKiller.server.user.type.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,7 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static HookKiller.server.common.constants.StaticVariable.*;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_ID;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_EMAIL;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_NICKNAME;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_ROLE;
 
 @Slf4j
 @Component
@@ -27,10 +29,26 @@ public class JwtTokenProvider {
         this.secretKey = jwtProperties.getSecretKey();
         this.accessExp = jwtProperties.getAccessExp();
     }
+    
+    public String getUserIdFromToken(String token) {
+        return getValueByFieldName(token, TOKEN_ID.getValue());
+    }
 
     // token으로 사용자 id 조회
     public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+        return getValueByFieldName(token, TOKEN_EMAIL.getValue());
+    }
+    
+    public String getUserRoleFromToken(String token) {
+        return getValueByFieldName(token, TOKEN_ROLE.getValue());
+    }
+    
+    public String getUserNickNameFromToken(String token) {
+        return getValueByFieldName(token, TOKEN_NICKNAME.getValue());
+    }
+    
+    private String getValueByFieldName(String token, String claimName) {
+        return getClaimFromToken(token, claims -> claims.get(claimName)).toString();
     }
 
     // 모든 token에 대한 사용자 속성정보 조회
@@ -57,11 +75,12 @@ public class JwtTokenProvider {
     }
 
     // id를 입력받아 accessToken 생성
-    public String generateToken(String email, String password, String role) {
+    public String generateToken(Long id, String email, String nickname, UserRole role) {
         Map<String, String> claimMap = new HashMap<>();
-        claimMap.put(TOKEN_EMAIL, email);
-        claimMap.put(TOKEN_PASSWORD, password);
-        claimMap.put(TOKEN_ROLE, role);
+        claimMap.put(TOKEN_ID.getValue(), id.toString());
+        claimMap.put(TOKEN_EMAIL.getValue(), email);
+        claimMap.put(TOKEN_ROLE.getValue(), role.name());
+        claimMap.put(TOKEN_NICKNAME.getValue(), nickname);
         return generateAccessToken(email, claimMap);
     }
 

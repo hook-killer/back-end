@@ -1,10 +1,12 @@
-package HookKiller.server.common.exception;
+package HookKiller.server.auth.exception;
+
+import HookKiller.server.common.exception.BaseException;
 
 public class InvalidTokenException extends BaseException {
 
     public static final BaseException EXCEPTION = new InvalidTokenException();
 
     private InvalidTokenException() {
-        super(GlobalException.INVALID_TOKEN_EXCEPTION);
+        super(AuthException.INVALID_TOKEN_ERROR);
     }
 }

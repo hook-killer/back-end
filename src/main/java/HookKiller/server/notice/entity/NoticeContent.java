@@ -1,6 +1,7 @@
 package HookKiller.server.notice.entity;
 
 import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.notice.dto.NoticeContentDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "tbl_notice_content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeContent {
@@ -29,7 +31,6 @@ public class NoticeContent {
 
     private String title;
 
-    @Column
     @Lob
     private String content;
 
@@ -40,5 +41,10 @@ public class NoticeContent {
         this.language = language;
         this.title = title;
         this.content = content;
+    }
+
+    public void update(NoticeContentDto contentDto) {
+        this.title = contentDto.getTitle();
+        this.content = contentDto.getContent();
     }
 }

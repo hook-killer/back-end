@@ -10,10 +10,10 @@ import java.util.Arrays;
 public enum LanguageType {
     KO, EN, CN, JP;
 
-
     public static LanguageType findType(String value) {
         if (value == null || value.isEmpty()) {
-            throw IllegalArgumentException.EXCEPTION;
+            return KO;
+//            throw IllegalArgumentException.EXCEPTION;
         }
         return Arrays.stream(LanguageType.values())
                 .filter(type -> type.name().equals(value.toUpperCase()))

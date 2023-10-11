@@ -1,6 +1,10 @@
 package HookKiller.server.service;
 
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.common.util.UserUtils;
+import HookKiller.server.notice.dto.AddNoticeRequest;
+import HookKiller.server.notice.dto.EditNoticeRequest;
 import HookKiller.server.notice.dto.NoticeArticleDto;
 import HookKiller.server.notice.dto.NoticeContentDto;
 import HookKiller.server.notice.entity.NoticeArticle;
@@ -9,12 +13,17 @@ import HookKiller.server.notice.exception.NoticeArticleNotFoundException;
 import HookKiller.server.notice.exception.NoticeContentNotFoundException;
 import HookKiller.server.repository.NoticeArticleRepository;
 import HookKiller.server.repository.NoticeContentRepository;
+import HookKiller.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static HookKiller.server.common.type.ArticleStatus.DELETE;
+import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +31,7 @@ public class NoticeService {
 
     private final NoticeArticleRepository noticeArticleRepository;
     private final NoticeContentRepository noticeContentRepository;
+    private final UserUtils userUtils;
 
     /**
      * 단건 조회
@@ -48,6 +58,8 @@ public class NoticeService {
      */
     @Transactional(readOnly = true)
     public List<NoticeArticleDto> getNoticeList(LanguageType languageType) {
+        List<NoticeArticle> articleList = noticeArticleRepository.findAllByStatus(PUBLIC);
+
         return noticeArticleRepository.findAll()
                 .stream().map(data ->
                         NoticeArticleDto.builder()
@@ -63,38 +75,78 @@ public class NoticeService {
     /**
      * 등록
      *
-     * @param articleDto
-     * @param contentDto
      */
     @Transactional
-    public void saveNotice(NoticeArticleDto articleDto, NoticeContentDto contentDto) {
-        NoticeArticle noticeArticle = NoticeArticle.builder()
-                .id(articleDto.getId())
-                .language(articleDto.getLanguage())
-                .noticeArticleStatus(articleDto.getStatus())
-                .createdUser(articleDto.getCreatedUser())
-                .updatedUser(articleDto.getUpdatedUser())
-                .build();
-        NoticeContent noticeContent = NoticeContent.builder()
-                .id(contentDto.getId())
-                .language((contentDto.getLanguage()))
-                .title(contentDto.getTitle())
-                .content(contentDto.getContent())
-                .build();
-        noticeArticleRepository.save(noticeArticle);
-        noticeContentRepository.save(noticeContent);
+    public void saveNotice(AddNoticeRequest addNoticeRequest) {
+        User loginUser = userUtils.getUser();
+
+        NoticeArticle noticeArticle = noticeArticleRepository.save(
+                NoticeArticle.builder()
+                        .language(addNoticeRequest.getLanguage())
+                        .status(PUBLIC)
+                        .createdUser(loginUser)
+                        .updatedUser(loginUser)
+                        .build()
+        );
+
+        List<NoticeContent> contentsList = new ArrayList<>();
+        contentsList.add(
+                NoticeContent.builder()
+                        .noticeArticle(noticeArticle)
+                        .language(addNoticeRequest.getLanguage())
+                        .title(addNoticeRequest.getTitle())
+                        .content(addNoticeRequest.getContent())
+                        .build()
+        );
+        // TODO : getLanguage에 들어있는 언어에서 다른 언어 번역한 결과 역시 NoticeContent로 제작해서 Save
+        noticeContentRepository.saveAll(contentsList);
     }
 
     /**
      * 수정
-     *
-     * @param id
-     * @param contentDto
      */
     @Transactional
-    public void update(Long id, NoticeContentDto contentDto) {
-        Optional<NoticeContent> byId = noticeContentRepository.findById(id);
-        // TODO : 수정 받고 다시 작업 예정
+    public void updateNotice(EditNoticeRequest request) {
+        //로그인한 사용자 획득
+        User user = userUtils.getUser();
+        boolean chgTitle = false;
+        boolean chgContent = false;
+
+        NoticeArticle article = noticeArticleRepository.findById(request.getNoticeArticleId())
+                .orElseThrow(() -> NoticeArticleNotFoundException.EXCEPTION);
+        List<NoticeContent> contents = noticeContentRepository.findAllByNoticeArticle(article);
+
+        article.setUpdatedUser(user);
+        //다른경우 변경
+        if (!request.getLanguage().equals(article.getLanguage()))
+            article.setLanguage(request.getLanguage());
+
+        NoticeContent choiceContent = contents.stream()
+                .filter(content -> request.getLanguage().equals(content.getLanguage()))
+                .findFirst().orElseThrow(() -> NoticeContentNotFoundException.EXCEPTION);
+
+        if(request.getNewTitle() != null && !request.getNewTitle().equals(request.getOrgTitle())) {
+            chgTitle = true;
+            choiceContent.setTitle(request.getNewTitle());
+        }
+        if(request.getNewContent() != null && !request.getNewContent().equals(request.getOrgContent())){
+            chgContent = true;
+            choiceContent.setContent(request.getNewContent());
+        }
+
+        if(chgTitle || chgContent) {
+            final boolean finalChgTitle = chgTitle;
+            final boolean finalChgContent = chgContent;
+            contents.stream().filter(content-> choiceContent != content).forEach(content-> {
+                if(finalChgTitle){
+                    // TODO : request의 언어를 원본으로 해서 content의 언어로 타겟잡아 번역후 title변환
+                }
+                if(finalChgContent){
+                    // TODO : request의 언어를 원본으로 해서 content의 언어로 타겟잡아 번역후 content변환
+                }
+            });
+        }
+
     }
 
     /**
@@ -104,7 +156,8 @@ public class NoticeService {
      */
     @Transactional
     public void deleteNotice(Long id) {
-        noticeArticleRepository.deleteById(id);
+        noticeArticleRepository.findById(id).orElseThrow(() ->
+                NoticeArticleNotFoundException.EXCEPTION).updateStatus(DELETE);
     }
 
 }

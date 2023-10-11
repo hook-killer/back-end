@@ -2,9 +2,10 @@ package HookKiller.server.notice.dto;
 
 import HookKiller.server.common.AbstractTimeStamp;
 import HookKiller.server.common.type.LanguageType;
-import HookKiller.server.common.type.NoticeArticleStatus;
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.notice.entity.NoticeArticle;
 import HookKiller.server.notice.entity.NoticeContent;
+import HookKiller.server.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,9 +15,9 @@ public class NoticeArticleDto extends AbstractTimeStamp {
 
     private Long id;
     private LanguageType language;
-    private NoticeArticleStatus status;
-    private Long createdUser;
-    private Long updatedUser;
+    private ArticleStatus status;
+    private User createdUser;
+    private User updatedUser;
     private String content;
     private String title;
 

@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorization -> authorization
                                     .requestMatchers(
                                             "/login",
-                                            "/register", "/health").permitAll()
+                                            "/register", "/health", "/notice/**").permitAll()
                                 .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
                         )

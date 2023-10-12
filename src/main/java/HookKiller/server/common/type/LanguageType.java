@@ -1,13 +1,17 @@
 package HookKiller.server.common.type;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
+@AllArgsConstructor
 public enum LanguageType {
-    KO, EN, CN, JP;
+    KO("ko"), EN("en"), CN("zh-CN"), JP("ja");
+
+    private String languageCode;
 
     private static final String HTTP_REQUEST_HEADER_KEY_LANGUAGE = "language";
 

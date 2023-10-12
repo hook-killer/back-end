@@ -15,5 +15,4 @@ import java.util.Optional;
  */
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-  Optional<Board> findBoardByArticle(List<Article> article);
 }

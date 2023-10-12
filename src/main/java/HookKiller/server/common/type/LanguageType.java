@@ -23,7 +23,8 @@ public enum LanguageType {
 
     public static LanguageType findTypeByRequest(HttpServletRequest request) {
         if(request == null)
-            throw IllegalArgumentException.EXCEPTION;
+            return KO;
+//            throw IllegalArgumentException.EXCEPTION;
         return findType(request.getHeader(RequestHeaderConstants.KEY_LANGUAGE));
     }
 }

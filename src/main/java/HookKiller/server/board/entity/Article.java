@@ -71,8 +71,9 @@ public class Article extends AbstractTimeStamp {
   }
 
   @Builder
-  public Article(Board board, LanguageType orgArticleLanguage, ArticleStatus articleStatus, User createdUser, User updatedUser) {
+  public Article(Board board, Long id, LanguageType orgArticleLanguage, ArticleStatus articleStatus, User createdUser, User updatedUser) {
     this.board = board;
+    this.id = id;
     this.articleStatus = articleStatus;
     this.orgArticleLanguage = orgArticleLanguage;
     this.createdUser = createdUser;

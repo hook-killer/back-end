@@ -25,7 +25,6 @@ public class ArticleController {
   /**
    * 게시글 조회
    */
-
   @GetMapping("/{boardId}")
   public List<ArticleRequestDto> getArticleList(@PathVariable Long boardId, HttpServletRequest request) {
     BoardType language = BoardType.valueOf(request.getHeader("language"));
@@ -46,13 +45,15 @@ public class ArticleController {
   /**
    * 게시물 수정
    */
-//  @PutMapping("/{articleId}")
-//  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto) {
-//    articleContentService.updateArticle(
-//            requestDto, articleService.updateArticle(requestDto)
-//    );
-//    return ResponseEntity.ok("Article Update Success");
-//  }
+  @PostMapping("/{articleId}")
+  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto,
+                                              @PathVariable Long articleId) {
+    articleContentService.updateContent(
+            requestDto, articleService.updateArticle(articleId, requestDto)
+    );
+    return ResponseEntity.ok("Article Create Success");
+  }
+
 
   /**
    * 게시물 삭제

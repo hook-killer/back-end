@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "tb1_board")
+@Table(name = "tbl_board")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 

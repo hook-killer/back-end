@@ -47,6 +47,34 @@ public class ArticleContentService {
     articleContentRepository.saveAll(articleContentList);
   }
 
+  public void updateContent(PostArticleRequestDto requestDto, Article article) {
+    // 게시물의 모든 내용을 찾습니다.
+    List<ArticleContent> existingContents = articleContentRepository.findAllByArticle(article);
+
+    // 원본 언어의 내용을 업데이트합니다.
+    existingContents.stream()
+            .filter(content -> content.getLanguage().equals(requestDto.getOrgArticleLanguage()))
+            .forEach(content -> {
+              content.articleUpdate(requestDto.getTitle(), requestDto.getContent());
+            });
+
+    // 다른 언어로 번역된 내용들을 업데이트합니다.
+    for (LanguageType languageType : LanguageType.values()) {
+      if (!languageType.equals(requestDto.getOrgArticleLanguage())) {
+        existingContents.stream()
+                .filter(content -> content.getLanguage().equals(languageType))
+                .forEach(content -> {
+                  content.articleUpdate(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()),
+                          getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()));
+                });
+      }
+    }
+
+    articleContentRepository.saveAll(existingContents);
+  }
+
+
+
   protected String getTranslatePapagoTextArticleContent(String source, String target, String content) {
     return null;
   }

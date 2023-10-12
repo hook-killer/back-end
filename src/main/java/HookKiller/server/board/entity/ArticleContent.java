@@ -59,4 +59,9 @@ public class ArticleContent {
         this.title = title;
         this.content = content;
     }
+
+    public void articleUpdate(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

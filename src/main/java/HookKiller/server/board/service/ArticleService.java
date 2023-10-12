@@ -28,6 +28,7 @@ import java.util.List;
 public class ArticleService {
 
   private final UserUtils userUtils;
+  private final ArticleContentService articleContentService;
   private final BoardRepository boardRepository;
   private final ArticleRepository articleRepository;
   private final ArticleContentRepository articleContentRepository;
@@ -63,15 +64,33 @@ public class ArticleService {
     );
   }
 
-//  public Article updateArticle(PostArticleRequestDto postArticleRequestDto) {
-//    Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
-//            .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-//
-//    User requestUser = userUtils.getUser();
-//    return articleRepository
-//
-//
-//  }
+  @Transactional
+  public Article updateArticle(Long articleId, PostArticleRequestDto postArticleRequestDto) {
+
+    Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
+            .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+
+    Article article = articleRepository.findById(articleId)
+            .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
+
+    User requestUser = userUtils.getUser();
+
+    article = Article.builder()
+            .id(article.getId())
+            .board(board)
+            .orgArticleLanguage(postArticleRequestDto.getOrgArticleLanguage())
+            .articleStatus(article.getArticleStatus())
+            .createdUser(article.getCreatedUser())
+            .updatedUser(requestUser)
+            .build();
+
+    // 게시물 내용 업데이트
+    articleContentService.updateContent(postArticleRequestDto, article);
+
+    return articleRepository.save(article);
+  }
+
+
 
   @Transactional
   public void deleteArticle(Long articleId) {

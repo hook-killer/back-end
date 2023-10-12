@@ -4,19 +4,21 @@ import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.notice.dto.AddNoticeRequest;
 import HookKiller.server.notice.dto.EditNoticeRequest;
 import HookKiller.server.notice.dto.NoticeArticleDto;
-import HookKiller.server.notice.dto.NoticeContentDto;
-import HookKiller.server.notice.entity.NoticeContent;
-import HookKiller.server.repository.NoticeArticleRepository;
-import HookKiller.server.repository.NoticeContentRepository;
 import HookKiller.server.service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -25,11 +27,10 @@ import java.util.Optional;
 public class NoticeController {
 
     private final NoticeService noticeService;
-    private final NoticeArticleRepository articleRepository;
-    private final NoticeContentRepository contentRepository;
 
     /**
-     *  단건 조회
+     * 단건 조회
+     *
      * @param noticeArticleId
      * @param request
      * @return
@@ -42,6 +43,7 @@ public class NoticeController {
 
     /**
      * 리스트 조회
+     *
      * @param request
      * @return
      */

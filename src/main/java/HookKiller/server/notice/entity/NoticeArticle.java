@@ -1,13 +1,26 @@
 package HookKiller.server.notice.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
-import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.type.ArticleStatus;
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.user.entity.User;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +31,6 @@ import java.util.List;
  * updatedAt : 공지글 정보 업데이트 일자
  * updatedUser : 마지막에 수정한 사용자 ID입력.
  */
-
 @Entity
 @Getter
 @Setter
@@ -31,7 +43,7 @@ public class NoticeArticle extends AbstractTimeStamp {
     private Long id;
 
     @OneToMany
-    private List<NoticeContent> content;
+    private List<NoticeContent> content = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private LanguageType language;
@@ -46,10 +58,8 @@ public class NoticeArticle extends AbstractTimeStamp {
     private User updatedUser;
 
     @Builder
-    public NoticeArticle(Long id, List<NoticeContent> content, LanguageType language, ArticleStatus status,
-                         User createdUser,User updatedUser) {
+    public NoticeArticle(Long id, LanguageType language, ArticleStatus status, User createdUser, User updatedUser) {
         this.id = id;
-        this.content = content;
         this.language = language;
         this.status = status;
         this.createdUser = createdUser;

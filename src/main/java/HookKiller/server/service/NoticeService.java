@@ -1,16 +1,13 @@
 package HookKiller.server.service;
 
-import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.notice.dto.AddNoticeRequest;
 import HookKiller.server.notice.dto.EditNoticeRequest;
 import HookKiller.server.notice.dto.NoticeArticleDto;
-import HookKiller.server.notice.dto.NoticeContentDto;
 import HookKiller.server.notice.entity.NoticeArticle;
 import HookKiller.server.notice.entity.NoticeContent;
-import HookKiller.server.notice.exception.NoticeArticleNotFoundException;
-import HookKiller.server.notice.exception.NoticeContentNotFoundException;
+import HookKiller.server.notice.exception.NoticeNotFoundException;
 import HookKiller.server.repository.NoticeArticleRepository;
 import HookKiller.server.repository.NoticeContentRepository;
 import HookKiller.server.user.entity.User;
@@ -20,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static HookKiller.server.common.type.ArticleStatus.DELETE;
 import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
@@ -40,14 +36,13 @@ public class NoticeService {
      * @param languageType
      * @return
      */
+    @Transactional(readOnly = true)
     public NoticeArticleDto getNoticeArticleByArticleId(Long noticeArticleId, LanguageType languageType) {
-
+        // TODO : 삭제처리된 게시물도 조회가 가능한것인가?
         NoticeArticle article = noticeArticleRepository.findById(noticeArticleId)
-                .orElseThrow(() -> NoticeArticleNotFoundException.EXCEPTION);
-
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         NoticeContent content = noticeContentRepository.findByNoticeArticleAndLanguage(article, languageType)
-                .orElseThrow(() -> NoticeContentNotFoundException.EXCEPTION);
-
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         return NoticeArticleDto.of(article, content);
     }
 
@@ -59,7 +54,7 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public List<NoticeArticleDto> getNoticeList(LanguageType languageType) {
         List<NoticeArticle> articleList = noticeArticleRepository.findAllByStatus(PUBLIC);
-
+        // TODO : NoticeArticle의 정보가 아니라, NoticeArticle이 PUBLIC상태인 게시물의 Content를 파라미터로 받은 languageType의 Content로 리스트를 반환해야 함.
         return noticeArticleRepository.findAll()
                 .stream().map(data ->
                         NoticeArticleDto.builder()
@@ -68,7 +63,8 @@ public class NoticeService {
                                 .status(data.getStatus())
                                 .createdUser(data.getCreatedUser())
                                 .updatedUser(data.getUpdatedUser())
-                                .build())
+                                .build()
+                )
                 .toList();
     }
 
@@ -113,7 +109,7 @@ public class NoticeService {
         boolean chgContent = false;
 
         NoticeArticle article = noticeArticleRepository.findById(request.getNoticeArticleId())
-                .orElseThrow(() -> NoticeArticleNotFoundException.EXCEPTION);
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         List<NoticeContent> contents = noticeContentRepository.findAllByNoticeArticle(article);
 
         article.setUpdatedUser(user);
@@ -123,7 +119,7 @@ public class NoticeService {
 
         NoticeContent choiceContent = contents.stream()
                 .filter(content -> request.getLanguage().equals(content.getLanguage()))
-                .findFirst().orElseThrow(() -> NoticeContentNotFoundException.EXCEPTION);
+                .findFirst().orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
 
         if(request.getNewTitle() != null && !request.getNewTitle().equals(request.getOrgTitle())) {
             chgTitle = true;
@@ -157,7 +153,7 @@ public class NoticeService {
     @Transactional
     public void deleteNotice(Long id) {
         noticeArticleRepository.findById(id).orElseThrow(() ->
-                NoticeArticleNotFoundException.EXCEPTION).updateStatus(DELETE);
+                NoticeNotFoundException.EXCEPTION).updateStatus(DELETE);
     }
 
 }

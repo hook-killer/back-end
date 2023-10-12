@@ -52,13 +52,12 @@ public class NoticeArticle extends AbstractTimeStamp {
 
     @Builder
     public NoticeArticle(Long id, LanguageType language, ArticleStatus status, User createdUser,
-                         User updatedUser, String title) {
+                         User updatedUser) {
         this.id = id;
         this.language = language;
         this.status = status;
         this.createdUser = createdUser;
         this.updatedUser = updatedUser;
-        this.title = title;
     }
 
     public void updateStatus(ArticleStatus status) {

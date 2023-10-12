@@ -39,7 +39,7 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public NoticeArticleDto getNoticeArticleByArticleId(Long noticeArticleId, LanguageType languageType) {
         // TODO : 삭제처리된 게시물도 조회가 가능한것인가?
-        NoticeArticle article = noticeArticleRepository.findById(noticeArticleId)
+        NoticeArticle article = noticeArticleRepository.findByIdAndStatus(noticeArticleId, PUBLIC)
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         NoticeContent content = noticeContentRepository.findByNoticeArticleAndLanguage(article, languageType)
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
@@ -55,7 +55,7 @@ public class NoticeService {
     public List<NoticeArticleDto> getNoticeList(LanguageType languageType) {
         List<NoticeArticle> articleList = noticeArticleRepository.findAllByStatus(PUBLIC);
         // TODO : NoticeArticle의 정보가 아니라, NoticeArticle이 PUBLIC상태인 게시물의 Content를 파라미터로 받은 languageType의 Content로 리스트를 반환해야 함.
-        return noticeArticleRepository.findAll()
+        return noticeArticleRepository.findAllByStatus(PUBLIC)
                 .stream().map(data ->
                         NoticeArticleDto.builder()
                                 .id(data.getId())
@@ -63,6 +63,9 @@ public class NoticeService {
                                 .status(data.getStatus())
                                 .createdUser(data.getCreatedUser())
                                 .updatedUser(data.getUpdatedUser())
+                                .createAt(data.getCreateAt())
+                                .updateAt(data.getUpdateAt())
+                                .title(data.getContent().get(0).getTitle())
                                 .build()
                 )
                 .toList();

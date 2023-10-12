@@ -18,12 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * language : title, content가 적용된 언어
- * title : 공지사항 제목
- * content : 공지사항 내용
- */
-
 @Entity
 @Getter
 @Setter

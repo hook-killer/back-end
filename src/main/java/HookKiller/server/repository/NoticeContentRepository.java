@@ -1,5 +1,6 @@
 package HookKiller.server.repository;
 
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.notice.entity.NoticeArticle;
 import HookKiller.server.notice.entity.NoticeContent;

@@ -4,7 +4,6 @@ import HookKiller.server.common.dto.ErrorDetail;
 import HookKiller.server.common.exception.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

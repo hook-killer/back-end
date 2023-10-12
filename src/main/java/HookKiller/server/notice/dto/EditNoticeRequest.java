@@ -1,7 +1,6 @@
 package HookKiller.server.notice.dto;
 
 import HookKiller.server.common.type.LanguageType;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

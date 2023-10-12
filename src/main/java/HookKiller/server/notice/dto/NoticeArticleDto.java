@@ -9,6 +9,8 @@ import HookKiller.server.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Builder
 public class NoticeArticleDto extends AbstractTimeStamp {
@@ -20,19 +22,23 @@ public class NoticeArticleDto extends AbstractTimeStamp {
     private User updatedUser;
     private String content;
     private String title;
+    private Timestamp createAt;
+    private Timestamp updateAt;
 
-    // TODO : 생성일자 , 수정일자 필요한지 없는지 생각해보기
+    // TODO : 생성일자, 수정일자 필요한지 없는지 생각해보기
     // TODO : NoticeArticle의 status인지 NoticeContent의 language인지 생각해보기
     // TODO : NoticeArticle 한개로도 끝날 수 있는거 아닌지 생각해보기
     public static NoticeArticleDto of(NoticeArticle noticeArticle, NoticeContent noticeContent) {
         return NoticeArticleDto.builder()
                 .id(noticeArticle.getId())
-                .language(noticeArticle.getLanguage())
+                .language(noticeContent.getLanguage())
                 .status(noticeArticle.getStatus())
                 .createdUser(noticeArticle.getCreatedUser())
                 .updatedUser(noticeArticle.getUpdatedUser())
                 .content(noticeContent.getContent())
                 .title(noticeContent.getTitle())
+                .createAt(noticeArticle.getCreateAt())
+                .updateAt(noticeArticle.getUpdateAt())
                 .build();
     }
 }

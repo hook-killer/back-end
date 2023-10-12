@@ -10,15 +10,19 @@ import lombok.NoArgsConstructor;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KakaoInfoResponse {
 
-    private Properties properties;
     private String id;
     private KakaoAccount kakaoAccount;
+    private Properties properties;
 
     @Getter
     @NoArgsConstructor
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public static class Properties {
         private String nickname;
+        private String thumbnailImage;
+        private String profileImage;
+        private String customField1;
+        private String customField2;
     }
 
     @Getter
@@ -26,19 +30,34 @@ public class KakaoInfoResponse {
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public static class KakaoAccount {
 
+        private boolean profileNeedsAgreement;
+        private boolean emailNeedsAgreement;
+        private boolean isEmailValid;
+        private boolean isEmailVerified;
         private Profile profile;
         private String email;
+        private boolean nameNeedsAgreement;
         private String name;
+        private boolean ageRangeNeedsAgreement;
+        private String ageRange;
+        private boolean birthdayNeedsAgreement;
+        private String birthday;
+        private boolean genderNeedsAgreement;
+        private String gender;
+
 
         @Getter
         @NoArgsConstructor
         @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
         public static class Profile {
+            private String nickname;
+            private String thumbnailImageUrl;
             private String profileImageUrl;
+            private boolean isDefaultImage;
         }
 
-        public String getProfileImageUrl() {
-            return profile.getProfileImageUrl();
+        public String getNickName() {
+            return profile.getNickname();
         }
     }
 
@@ -54,9 +73,8 @@ public class KakaoInfoResponse {
         return kakaoAccount.getName() != null ? kakaoAccount.getName() : properties.getNickname();
     }
 
-    public String getProfileUrl() {
-        return kakaoAccount.getProfileImageUrl();
+    public String getNickName() {
+        return kakaoAccount.getNickName();
     }
-    ;
 }
 

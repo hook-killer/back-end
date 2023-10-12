@@ -1,5 +1,6 @@
 package HookKiller.server.user.repository;
 
+import HookKiller.server.user.entity.OauthInfo;
 import HookKiller.server.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmailAndPassword(String email, String password);
     
     boolean existsByEmail(String email);
+
+    Optional<User> findByOauthInfo(OauthInfo oauthInfo);
 }

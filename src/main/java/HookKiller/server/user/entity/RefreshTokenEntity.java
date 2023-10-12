@@ -5,11 +5,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Indexed;
 
 @Getter
 @Entity
 @Table(name = "tbl_refresh_token")
+@NoArgsConstructor
 public class RefreshTokenEntity {
 
     @Id

@@ -75,6 +75,11 @@ public class AuthController {
         return authService.getCredentialFromKaKao(code, referer);
     }
 
+    @GetMapping("/oauth/kakao/develop")
+    public OAuthResponse registerUserByCode(@RequestParam String code) {
+        return authService.registerUserByKakaoCode(code);
+    }
+
     // 받은idToken으로 카카오 서버의 사용자 정보를 사용할 수 있는지 OIDC로 인증 및 인가 받고 회원가입 처리
     @PostMapping("/oauth/kakao/register")
     public OAuthResponse registerUser(
@@ -82,6 +87,8 @@ public class AuthController {
             @Valid @RequestBody RegisterRequest registerRequest) {
         return userService.registerUserByOICDToken(token, registerRequest);
     }
+
+
 
     
 }

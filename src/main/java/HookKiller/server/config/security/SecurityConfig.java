@@ -42,7 +42,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용안함
                 .authorizeHttpRequests(authorization -> authorization
                                     .requestMatchers(
+                                            "/auth/**",
                                             "/auth/oauth/**",
+                                            "/auth/oauth/kakao/**",
                                             "/health"
                                             ).permitAll()
                                 .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음

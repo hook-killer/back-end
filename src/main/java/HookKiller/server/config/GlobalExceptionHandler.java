@@ -6,6 +6,7 @@ import HookKiller.server.common.dto.ErrorResponse;
 import HookKiller.server.common.exception.BaseErrorCode;
 import HookKiller.server.common.exception.BaseException;
 import HookKiller.server.common.exception.GlobalException;
+import HookKiller.server.common.exception.OuterServerException;
 import HookKiller.server.common.util.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> internalServerExceptionHandle(
             Exception e, HttpServletRequest req) throws Exception {
-        final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) req;
+//        final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) req;
         final Long userId = UserUtils.getCurrentUserId();
         String url =
                 UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(req))
@@ -43,14 +44,16 @@ public class GlobalExceptionHandler {
 
     // TODO : 소셜로그인 구현시 API에 대한 에러 Handling구현
 
-//    @ExceptionHandler(OuterServerException.class)
-//    protected ResponseEntity<ErrorResponse> outerServerExceptionHandle(OuterServerException e) {
-//        ErrorDetail errorDetail =
-//                ErrorDetail.of(e.getStatusCode(), e.getErrorCode(), e.getReason());
-//        ErrorResponse errorResponse = new ErrorResponse(errorDetail);
-//        return ResponseEntity.status(HttpStatus.valueOf(errorDetail.getStatusCode()))
-//                .body(errorResponse);
-//    }
+    @ExceptionHandler(OuterServerException.class)
+    protected ResponseEntity<ErrorResponse> outerServerExceptionHandle(OuterServerException e) {
+      log.error("응애응애응애ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ");
+        ErrorDetail errorDetail =
+                ErrorDetail.of(e.getStatusCode(), e.getErrorCode(), e.getReason());
+        log.error("StatusCode >>> {} , ErrorCode >>> {} , Reason >>> {} , cause >>> {}", e.getStatusCode(), e.getErrorCode(), e.getReason(), e.getCause());
+        ErrorResponse errorResponse = new ErrorResponse(errorDetail);
+        return ResponseEntity.status(HttpStatus.valueOf(errorDetail.getStatusCode()))
+                .body(errorResponse);
+    }
 
     @ExceptionHandler(BaseException.class)
     protected ResponseEntity<ErrorResponse> baseExceptionHandle(

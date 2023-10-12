@@ -43,6 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 토근을 가져옴
         String header = request.getHeader(HEADER_STRING);
+        log.warn("header : {}", header);
+        log.warn("is header null? : {}", header == null);
         String username = null;
         String authToken = null;
 
@@ -51,6 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // token 검증이 되고 인증 정보가 존재하지 않는 경우 spring security 인증 정보 저장
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX," ");
+            log.warn("AuthToken : {}", authToken);
             try {
                 CustomUserDetails userDetails = CustomUserDetails.of(
                         jwtTokenProvider.getUserIdFromToken(authToken),

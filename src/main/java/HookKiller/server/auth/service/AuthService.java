@@ -69,17 +69,21 @@ public class AuthService {
     return OauthTokenResponse.from(
             kakaoOauthClient.kakaoAuth(
             kakaoOauthProperties.getKakaoClientId(),
-            referer + "kakao/callback",
+//            referer + "kakao/callback",
+                    referer,
                     code,
                     kakaoOauthProperties.getKakaoClientSecret()
     ));
   }
 
   public OAuthResponse registerUserByKakaoCode(String code) {
+    log.error("병신 밥버거 1");
     String accessToken = kakaoOauthHelper.getOauthToken(code).getAccessToken();
-
+    
+    log.error("병신 밥버거 2");
     KakaoUserInfoDto userInfo = kakaoOauthHelper.getUserInfo(accessToken);
-
+    
+    log.error("병신 밥버거 3");
     User user = userRepository.findByOauthInfo(userInfo.toOauthInfo()).orElseGet(
             () -> userRepository.save(
                     User.builder()
@@ -92,6 +96,7 @@ public class AuthService {
                             .build()
             )
     );
+    log.error("병신 밥버거 4");
     return tokenGenerateHelper.execute(user);
   }
 }

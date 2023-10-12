@@ -8,7 +8,6 @@ import HookKiller.server.common.type.LanguageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +30,8 @@ public class ArticleContentService {
                     languageType -> ArticleContent.builder()
                             .article(article)
                             .language(languageType)
-                            .title(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()))
-                            .content(getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()))
+                            // .title(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()))
+                            // .content(getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()))
                             .build()
             ).toList()
     );
@@ -64,8 +63,8 @@ public class ArticleContentService {
         existingContents.stream()
                 .filter(content -> content.getLanguage().equals(languageType))
                 .forEach(content -> {
-                  content.articleUpdate(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()),
-                          getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()));
+                  // content.articleUpdate(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()),
+                          // getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()));
                 });
       }
     }

@@ -6,16 +6,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostArticleRequestDto {
   @NotNull(message = "게시판 ID는 필수 입니다.")
   private Long boardId;
+
+  private Long articleId;
 
   @NotNull(message = "원본 언어는 필수 선택 하셔야 합니다.")
   @Enumerated(EnumType.STRING)

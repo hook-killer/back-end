@@ -10,16 +10,14 @@ import HookKiller.server.board.repository.ArticleContentRepository;
 import HookKiller.server.board.repository.ArticleRepository;
 import HookKiller.server.board.repository.BoardRepository;
 import HookKiller.server.board.type.ArticleStatus;
-import HookKiller.server.board.type.BoardType;
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,13 +31,10 @@ public class ArticleService {
   private final ArticleRepository articleRepository;
   private final ArticleContentRepository articleContentRepository;
 
-  public List<ArticleRequestDto> getArticleList(Long boardId, BoardType language) {
+  public List<ArticleRequestDto> getArticleList(Long boardId, LanguageType language) {
     // boardId로 board에 해당하는 Article들을 모두 뽑아온다
     Board board = boardRepository.findById(boardId).orElseThrow(()-> BoardNotFoundException.EXCEPTION);
-    List<Article> articleList = articleRepository.findAllByBoardAndStatus(board, "PUBLIC");
-
-    // Article들 하나하나 마다에 해당하는 ArticleContent랑 같이 DTO로 변환한다
-    List<ArticleRequestDto> articleDtoList = new ArrayList<>();
+    List<Article> articleList = articleRepository.findAllByBoardAndArticleStatus(board, ArticleStatus.PUBLIC);
 
     return articleList.stream()
             .map(article ->
@@ -65,12 +60,12 @@ public class ArticleService {
   }
 
   @Transactional
-  public Article updateArticle(Long articleId, PostArticleRequestDto postArticleRequestDto) {
+  public Article updateArticle(PostArticleRequestDto postArticleRequestDto) {
 
     Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
             .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
 
-    Article article = articleRepository.findById(articleId)
+    Article article = articleRepository.findById(postArticleRequestDto.getArticleId())
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
 
     User requestUser = userUtils.getUser();
@@ -97,10 +92,6 @@ public class ArticleService {
     articleRepository
             .findById(articleId)
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)
-            .updateStatus("DELETE");
+            .updateStatus(ArticleStatus.DELETE);
   }
-
-
-
-
 }

@@ -5,17 +5,24 @@ import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.service.ArticleContentService;
 import HookKiller.server.board.service.ArticleService;
 import HookKiller.server.board.type.BoardType;
+import HookKiller.server.common.type.LanguageType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/articles")
+@RequestMapping("/article")
 @RequiredArgsConstructor
 public class ArticleController {
 
@@ -27,9 +34,17 @@ public class ArticleController {
    */
   @GetMapping("/{boardId}")
   public List<ArticleRequestDto> getArticleList(@PathVariable Long boardId, HttpServletRequest request) {
-    BoardType language = BoardType.valueOf(request.getHeader("language"));
-    return articleService.getArticleList(boardId, language);
+    return articleService.getArticleList(boardId, LanguageType.findTypeByRequest(request));
   }
+
+  /**
+   * 단건 조회
+   */
+//  @GetMapping("/{boardId}/{articleId}")
+//  public ArticleRequestDto getArticle(@PathVariable Long articleId, HttpServletRequest request) {
+//    BoardType language = BoardType.valueOf(request.getHeader("language"));
+//    return articleService.getArticle(boardId, articleId, language);
+//  }
 
   /**
    * 게시글 등록
@@ -45,12 +60,9 @@ public class ArticleController {
   /**
    * 게시물 수정
    */
-  @PostMapping("/{articleId}")
-  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto,
-                                              @PathVariable Long articleId) {
-    articleContentService.updateContent(
-            requestDto, articleService.updateArticle(articleId, requestDto)
-    );
+  @PostMapping
+  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto) {
+    articleContentService.updateContent(requestDto, articleService.updateArticle(requestDto));
     return ResponseEntity.ok("Article Create Success");
   }
 

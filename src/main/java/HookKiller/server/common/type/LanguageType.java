@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -24,5 +26,11 @@ public enum LanguageType {
 
     public static LanguageType findTypeByRequest(HttpServletRequest request) {
         return request == null ? KO : findType(request.getHeader(HTTP_REQUEST_HEADER_KEY_LANGUAGE));
+    }
+
+    public Set<LanguageType> getTranslateTargetLanguage() {
+        return Arrays.stream(LanguageType.values())
+                .filter(languageType -> !languageType.equals(this))
+                .collect(Collectors.toSet());
     }
 }

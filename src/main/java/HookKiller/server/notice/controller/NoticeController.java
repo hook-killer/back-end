@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -47,16 +48,20 @@ public class NoticeController {
      * @param request
      * @return
      */
-    @GetMapping("/")
-    public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request) {
+    @GetMapping
+    public List<NoticeArticleDto> getNoticeArticleList(
+            @RequestParam(defaultValue = "0", required = false) int page,
+            @RequestParam(defaultValue = "10", required = false) int articleLimit,
+            HttpServletRequest request
+    ) {
         log.info("공지사항 리스트 조회");
-        return noticeService.getNoticeList(LanguageType.findTypeByRequest(request));
+        return noticeService.getNoticeList(page, articleLimit, LanguageType.findTypeByRequest(request));
     }
 
     /**
      * 공지사항 등록
      */
-    @PostMapping("/")
+    @PostMapping
     public void addNotice(@RequestBody @Valid AddNoticeRequest request) {
         log.info("공지사항 등록");
         noticeService.saveNotice(request);
@@ -65,7 +70,7 @@ public class NoticeController {
     /**
      * 공지사항 수정
      */
-    @PutMapping("/")
+    @PutMapping
     public void updateNotice(@RequestBody @Valid EditNoticeRequest request) {
         log.info("공지사항 수정");
         noticeService.updateNotice(request);

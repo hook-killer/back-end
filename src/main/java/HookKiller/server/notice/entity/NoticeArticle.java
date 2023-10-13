@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class NoticeArticle extends AbstractTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "noticeArticle", fetch = FetchType.LAZY)
     private List<NoticeContent> content = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -44,10 +43,10 @@ public class NoticeArticle extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     private ArticleStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User createdUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User updatedUser;
 
     @Builder

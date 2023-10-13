@@ -3,6 +3,7 @@ package HookKiller.server.common.type;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 
+import java.awt.print.Pageable;
 import java.util.Arrays;
 
 @Getter

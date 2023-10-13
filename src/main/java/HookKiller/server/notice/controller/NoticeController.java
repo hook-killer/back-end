@@ -4,7 +4,7 @@ import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.notice.dto.AddNoticeRequest;
 import HookKiller.server.notice.dto.EditNoticeRequest;
 import HookKiller.server.notice.dto.NoticeArticleDto;
-import HookKiller.server.service.NoticeService;
+import HookKiller.server.notice.service.NoticeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class NoticeController {
      */
     @GetMapping("/{noticeArticleId}")
     public NoticeArticleDto getNoticeArticle(@PathVariable Long noticeArticleId, HttpServletRequest request) {
-        log.error("공지사항 단건 조회 >>> {}", noticeArticleId);
+        log.info("공지사항 단건 조회 >>> {}", noticeArticleId);
         return noticeService.getNoticeArticleByArticleId(noticeArticleId, LanguageType.findTypeByRequest(request));
     }
 
@@ -47,8 +48,9 @@ public class NoticeController {
      * @param request
      * @return
      */
-    @GetMapping
+    @GetMapping("/")
     public List<NoticeArticleDto> getNoticeArticleList(HttpServletRequest request) {
+        log.info("공지사항 리스트 조회");
         return noticeService.getNoticeList(LanguageType.findTypeByRequest(request));
     }
 

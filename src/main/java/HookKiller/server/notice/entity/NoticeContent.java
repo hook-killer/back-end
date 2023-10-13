@@ -17,10 +17,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "tbl_notice_content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NoticeContent {

@@ -7,7 +7,7 @@ hook:
     password: hooklocal1234!
     port: 3306
 
-# Test용 (Mr.재운DB)
+# Test용
 
 
 spring:

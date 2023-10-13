@@ -2,6 +2,7 @@ package HookKiller.server.auth.controller;
 
 import HookKiller.server.auth.dto.request.AuthRequest;
 import HookKiller.server.auth.dto.request.SingUpRequest;
+import HookKiller.server.auth.dto.request.RegisterRequest;
 import HookKiller.server.auth.dto.response.AuthResponse;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.dto.response.OauthLoginLinkResponse;
@@ -10,12 +11,25 @@ import HookKiller.server.auth.service.AuthService;
 import HookKiller.server.auth.service.CustomUserDetailsService;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.user.entity.User;
+import HookKiller.server.outer.api.oauth.dto.KakaoTokenResponse;
 import HookKiller.server.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -49,10 +63,10 @@ public class AuthController {
     @GetMapping("/oauth/kakao/link")
     public OauthLoginLinkResponse getKakaoLoginLink(
             @RequestHeader(required = false) String referer,
-            @RequestHeader(required = false) String host) {
-
-        if (referer.contains(host)) {
-            log.info("/oauth/kakao" + host);
+            @RequestHeader(required = false) String host
+            ) {
+        if (referer != null && referer.contains(host)) {
+            log.info(host + "/oauth/kakao");
             String format = String.format("https://%s/", host);
             return authService.getKakaoOauthLink(format);
         }
@@ -67,12 +81,13 @@ public class AuthController {
             @RequestHeader(required = false) String host) {
 
         // dev, production 환경에서
-        if (referer.contains(host)) {
+        if (referer != null && referer.contains(host)) {
             log.info("/oauth/kakao" + host);
-            String format = String.format("https://%s/", host);
-            return authService.getCredentialFromKaKao(code, format);
+            String format = String.format("http://%s/oauth/kakao", host);
+            return authService.getCredentialFromKaKao(code, referer);
         }
-        return authService.getCredentialFromKaKao(code, referer);
+        //return authService.getCredentialFromKaKao(code, referer);
+        return null;
     }
 
     @GetMapping("/oauth/kakao/develop")
@@ -84,8 +99,8 @@ public class AuthController {
     @PostMapping("/oauth/kakao/register")
     public OAuthResponse registerUser(
             @RequestParam("id_token") String token,
-            @Valid @RequestBody SingUpRequest singUpRequest) {
-        return userService.registerUserByOICDToken(token, singUpRequest);
+            @Valid @RequestBody RegisterRequest registerRequest) {
+        return userService.registerUserByOICDToken(token, registerRequest);
     }
 
 

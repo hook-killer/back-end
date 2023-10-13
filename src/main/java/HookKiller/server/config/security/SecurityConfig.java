@@ -44,6 +44,7 @@ public class SecurityConfig {
                                     .requestMatchers(
                                             "/auth/**",
                                             "/auth/oauth/**",
+                                            "/auth/oauth/kakao/**",
                                             "/health"
                                             ).permitAll()
                                 .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음

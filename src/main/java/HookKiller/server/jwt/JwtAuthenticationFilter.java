@@ -5,7 +5,6 @@ import HookKiller.server.auth.exception.TokenException;
 import HookKiller.server.auth.exception.TokenNotFoundException;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.service.CustomUserDetails;
-import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.properties.JwtProperties;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -17,9 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -64,7 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(
                                 userDetails, "user", userDetails.getAuthorities())
                 );
-
             } catch (IllegalArgumentException ex) {
                 throw UserNotFoundException.EXCEPTION;
             } catch (ExpiredJwtException ex) {

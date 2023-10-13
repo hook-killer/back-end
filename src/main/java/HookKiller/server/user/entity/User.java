@@ -1,6 +1,7 @@
 package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.user.type.Status;
 import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -51,9 +52,9 @@ public class User extends AbstractTimeStamp {
 //    private String expoToken;
 
 
-//    @Enumerated(EnumType.STRING)
-//    @ColumnDefault(value = "NOT_ACTIVE")
-//    private Status status;
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault(value = "NOT_ACTIVE")
+    private Status status;
 //
 //    @Enumerated(EnumType.STRING)
 //    private LoginType loginType;

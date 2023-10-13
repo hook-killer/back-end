@@ -27,7 +27,8 @@ public enum GlobalException implements BaseErrorCode{
     FILE_UPLOAD_ERROR(INTERNAL_SERVER_ERROR.value(), "500-10", "파일 업로드 중 오류가 발생하였습니다"),
     FILE_DELETE_ERROR(INTERNAL_SERVER_ERROR.value(), "500-11", "파일 삭제 중 오류가 발생하였습니다"),
     FILE_IO_ERROR(INTERNAL_SERVER_ERROR.value(), "500-12","파일 변환 중 오류가 발생하였습니다"),
-    MAIL_SEND_ERROR(INTERNAL_SERVER_ERROR.value(), "500-20", "메일 발송중 오류가 발생하였습니다")
+    MAIL_SEND_ERROR(INTERNAL_SERVER_ERROR.value(), "500-20", "메일 발송중 오류가 발생하였습니다"),
+    NAVER_ERROR(INTERNAL_SERVER_ERROR.value(),  "500-30", "네이버 번역 도중 오류가 발생하였습니다"),
     ;
     private final Integer statusCode;
     private final String errorCode;

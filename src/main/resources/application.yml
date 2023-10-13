@@ -7,6 +7,7 @@ spring:
   security:
     session:
       store-type: MEMORY
+      - papago
 
 
   mail:

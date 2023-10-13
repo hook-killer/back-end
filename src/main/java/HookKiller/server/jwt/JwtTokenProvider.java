@@ -1,113 +1,97 @@
 package HookKiller.server.jwt;
 
+import HookKiller.server.auth.exception.ExpiredTokenException;
+import HookKiller.server.auth.exception.InvalidTokenException;
+import HookKiller.server.auth.service.CustomUserDetails;
+import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.properties.JwtProperties;
+import HookKiller.server.user.entity.User;
 import HookKiller.server.user.type.UserRole;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static HookKiller.server.jwt.ClaimVal.*;
+import static org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
 
-    private String secretKey;
-    private Long accessExp;
-
     private final JwtProperties jwtProperties;
-    
-    public String getUserIdFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_ID.getValue());
-    }
 
-    // token으로 사용자 id 조회
-    public String getUsernameFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_EMAIL.getValue());
-    }
-    
-    public String getUserRoleFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_ROLE.getValue());
-    }
-    
-    public String getUserNickNameFromToken(String token) {
-        return getValueByFieldName(token, TOKEN_NICKNAME.getValue());
-    }
-    
-    private String getValueByFieldName(String token, String claimName) {
-        return getClaimFromToken(token, claims -> claims.get(claimName)).toString();
+    // 시크릿키 가져와서 저장
+    private Key getSecertKey() {
+        return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
     }
 
     // 모든 token에 대한 사용자 속성정보 조회
-    private Claims getAllClaimsFromToken(String token) {
-        log.debug("TokenUtil SecretKey >>> {} ", this.secretKey);
-        return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
-    }
-
-    // 토큰 만료일자 조회
-    public Date getExpirationDateFromToken(String token) {
-        return getClaimFromToken(token, Claims::getExpiration);
-    }
-
-    //
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
-    }
-    
-    // 토근 만료 여부 체크
-    private Boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
+    private Jws<Claims> getJws(String token) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(getSecertKey()).build().parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            throw ExpiredTokenException.EXCEPTION;
+        } catch (Exception e) {
+            throw InvalidTokenException.EXCEPTION;
+        }
     }
 
     // id를 입력받아 accessToken 생성
-    public String generateAccessToken(Long id, String email, String nickname, UserRole role) {
-        Map<String, String> claimMap = new HashMap<>();
-        claimMap.put(TOKEN_ID.getValue(), id.toString());
-        claimMap.put(TOKEN_EMAIL.getValue(), email);
-        claimMap.put(TOKEN_ROLE.getValue(), role.name());
-        claimMap.put(TOKEN_NICKNAME.getValue(), nickname);
-        return doGenerateAccessToken(email, claimMap);
+    public String generateAccessToken(Long id, String role) {
+
+        final Date issuedAt = new Date();
+        final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + jwtProperties.getAccessExp() * 1000);
+
+        return doGenerateAccessToken(id, issuedAt, accessTokenExpiresIn, role);
     }
 
     // JWT accessToken 생성
-    // UsernamePasswordAuthenticationToken
-    private String doGenerateAccessToken(String email, Map<String, String> claims) {
-        log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", this.secretKey, this.accessExp);
+    private String doGenerateAccessToken(Long id, Date issuedAt, Date accessExpiresIn, String role) {
+
+        log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", jwtProperties.getSecretKey(), jwtProperties.getAccessExp());
+
+        final Key encodeKey = getSecertKey();
+
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(email)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + this.accessExp * 1000))
-                .signWith(SignatureAlgorithm.HS512, this.secretKey)
+                .setSubject(id.toString())
+                .setIssuedAt(issuedAt)
+                .setExpiration(accessExpiresIn)
+                .setIssuer(jwtProperties.getIssuer())
+                .claim(TYPE.getValue(), ACCESS_TOKEN)
+                .claim(TOKEN_ROLE.getValue(), role)
+                .signWith(encodeKey)
                 .compact();
     }
 
-    // TODO : AccessToken의 생성방식과 동일하게 변경
+    // refresh Token 생성
     public String generateRefreshToken(Long id) {
+
         final Date issuedAt = new Date();
         final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + jwtProperties.getRefreshExp() * 1000);
-        Map<String, String> claimMap = new HashMap<>();
+
         return doGenerateRefreshToken(id, issuedAt, refreshTokenExpiresIn);
     }
 
-    // TODO : AccessToken의 생성방식과 동일하게 변경
+    // JWT refreshToken 생성
     private String doGenerateRefreshToken(Long id, Date issuedAt, Date refreshTokenExpiresIn) {
-        final Key encodedKey = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+
+        final Key encodedKey = getSecertKey();
+
         return Jwts.builder()
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(issuedAt)
@@ -118,10 +102,36 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 토큰 검증
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    // 토근 형식 확인
+    public boolean isAccessToken(String token) {
+        return getJws(token).getBody().get(TYPE.getValue()).equals(ACCESS_TOKEN);
+    }
+
+    public boolean isRefreshToken(String token) {
+        return getJws(token).getBody().get(TYPE.getValue()).equals(REFRESH_TOKEN);
+    }
+
+    public AccessTokenDetail parseAccessToken(String token) {
+        if (isAccessToken(token)) {
+            Claims claims = getJws(token).getBody();
+            return AccessTokenDetail.builder()
+                    .userId(Long.parseLong(claims.getSubject()))
+                    .role((String) claims.get(TOKEN_ROLE.getValue()))
+                    .build();
+        }
+        throw InvalidTokenException.EXCEPTION;
+    }
+
+    public Long parseRefreshToken(String token) {
+        try {
+            if (isRefreshToken(token)) {
+                Claims claims = getJws(token).getBody();
+                return Long.parseLong(claims.getSubject());
+            }
+        } catch (ExpiredTokenException e) {
+            throw ExpiredTokenException.EXCEPTION;
+        }
+        throw InvalidTokenException.EXCEPTION;
     }
 
     public Long getRefreshTokenTTLSecond() {

@@ -1,8 +1,7 @@
 package HookKiller.server.auth.controller;
 
 import HookKiller.server.auth.dto.request.AuthRequest;
-import HookKiller.server.auth.dto.request.OauthRegisterRequest;
-import HookKiller.server.auth.dto.request.RegisterRequest;
+import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.response.AuthResponse;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.dto.response.OauthLoginLinkResponse;
@@ -10,6 +9,7 @@ import HookKiller.server.auth.dto.response.OauthTokenResponse;
 import HookKiller.server.auth.service.AuthService;
 import HookKiller.server.auth.service.CustomUserDetailsService;
 import HookKiller.server.jwt.JwtTokenProvider;
+import HookKiller.server.user.entity.User;
 import HookKiller.server.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class AuthController {
     private final UserService userService;
     
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<User> register(@RequestBody @Valid SingUpRequest request) {
         return userService.registerUser(request);
     }
     
@@ -84,8 +84,8 @@ public class AuthController {
     @PostMapping("/oauth/kakao/register")
     public OAuthResponse registerUser(
             @RequestParam("id_token") String token,
-            @Valid @RequestBody RegisterRequest registerRequest) {
-        return userService.registerUserByOICDToken(token, registerRequest);
+            @Valid @RequestBody SingUpRequest singUpRequest) {
+        return userService.registerUserByOICDToken(token, singUpRequest);
     }
 
 

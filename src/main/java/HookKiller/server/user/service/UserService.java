@@ -1,8 +1,6 @@
 package HookKiller.server.user.service;
 
-import HookKiller.server.auth.dto.request.OauthRegisterRequest;
-import HookKiller.server.auth.dto.request.RegisterRequest;
-import HookKiller.server.auth.dto.response.AuthResponse;
+import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.helper.OIDCHelper;
 import HookKiller.server.common.dto.OIDCDto;
@@ -23,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
@@ -37,9 +36,10 @@ public class UserService {
     private final OIDCHelper oidcHelper;
     private final KakaoOauthProperties kakaoOauthProperties;
     private final RefreshTokenRepository refreshTokenRepository;
-    
+
+    // 자체 회원가입
     @Transactional
-    public ResponseEntity<AuthResponse> registerUser(RegisterRequest request) {
+    public ResponseEntity<User> registerUser(@RequestBody SingUpRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw AlreadyExistUserException.EXCEPTION;
         }
@@ -52,15 +52,11 @@ public class UserService {
                 .loginType(LoginType.DEFAULT)
                 .build());
         
-        AuthResponse res = AuthResponse.builder()
-                .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getEmail(),user.getNickName(), user.getRole()))
-                .build();
-        
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(user);
     }
 
     // OauthInfo를 저장하는 유저 디비에 넣기
-    public User registerUserWithOauthInfo(RegisterRequest request, OauthInfo oauthInfo) {
+    public User registerUserWithOauthInfo(SingUpRequest request, OauthInfo oauthInfo) {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(UUID.randomUUID().toString())
@@ -72,15 +68,17 @@ public class UserService {
     }
 
     // Oauth 회원가입 시 OAuthResponse 리턴하는 메소드
-    public OAuthResponse registerUserByOICDToken(String idToken, RegisterRequest registerRequest) {
+    public OAuthResponse registerUserByOICDToken(String idToken, SingUpRequest singUpRequest) {
         OIDCResponse oidcResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
         OIDCDto oidcDto = oidcHelper.getPayloadFromIdToken(idToken, kakaoOauthProperties.getKakaoBaseUrl(), kakaoOauthProperties.getKakaoAppId(), oidcResponse);
         OauthInfo oauthInfo = OauthInfo.builder()
                 .provider(OauthProvider.KAKAO)
                 .oid(oidcDto.getSub())
                 .build();
-        User user = registerUserWithOauthInfo(registerRequest, oauthInfo);
-        String newAccessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getEmail(), user.getNickName(), user.getRole());
+        User user = registerUserWithOauthInfo(singUpRequest, oauthInfo);
+
+        String newAccessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
+
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
 
         RefreshTokenEntity newRefreshTokenEntity =

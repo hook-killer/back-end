@@ -1,6 +1,5 @@
 package HookKiller.server.auth.helper;
 
-import HookKiller.server.auth.dto.response.AuthResponse;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.user.entity.RefreshTokenEntity;
@@ -20,8 +19,10 @@ public class TokenGenerateHelper {
 
     @Transactional
     public OAuthResponse execute(User user) {
+
         String newAccessToken =
-                jwtTokenProvider.generateAccessToken(user.getId(), user.getEmail(), user.getNickName(),user.getRole());
+                jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
+
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
 
         RefreshTokenEntity newRefreshTokenEntity =

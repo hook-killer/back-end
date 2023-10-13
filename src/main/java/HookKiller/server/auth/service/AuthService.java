@@ -43,12 +43,12 @@ public class AuthService {
   private static final String KAKAO_OAUTH_QUERY_STRING =
           "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
 
-  private static final String BEARER = "Bearer ";
-  
   public ResponseEntity<AuthResponse> loginExecute(AuthRequest request) {
-    User user = userRepository.findByEmailAndPassword(request.getEmail(), request.getPassword()).orElseThrow(()-> UserNotFoundException.EXCEPTION );
+
+    User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> UserNotFoundException.EXCEPTION );
+
     AuthResponse res = AuthResponse.builder()
-            .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getEmail(),user.getNickName(), user.getRole()))
+            .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
             .build();
     return ResponseEntity.ok(res);
   }

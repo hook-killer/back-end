@@ -36,12 +36,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .httpBasic(AbstractHttpConfigurer::disable) //
+                .httpBasic(AbstractHttpConfigurer::disable) // 기본 로그인화면 사용안함
                 .csrf(AbstractHttpConfigurer::disable) // csrf 사용안함
-
+                .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용안함
                 .authorizeHttpRequests(authorization -> authorization
                                     .requestMatchers(
+                                            "/auth/**",
                                             "/auth/oauth/**",
                                             "/health"
                                             ).permitAll()
@@ -49,7 +50,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
                         )
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource)) //CORS Spring Boot 설정
-                .exceptionHandling(excep -> excep.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

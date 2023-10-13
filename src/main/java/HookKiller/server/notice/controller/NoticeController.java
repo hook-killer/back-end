@@ -56,16 +56,18 @@ public class NoticeController {
     /**
      * 공지사항 등록
      */
-    @PostMapping
+    @PostMapping("/")
     public void addNotice(@RequestBody @Valid AddNoticeRequest request) {
+        log.info("공지사항 등록");
         noticeService.saveNotice(request);
     }
 
     /**
      * 공지사항 수정
      */
-    @PutMapping
+    @PutMapping("/")
     public void updateNotice(@RequestBody @Valid EditNoticeRequest request) {
+        log.info("공지사항 수정");
         noticeService.updateNotice(request);
     }
 

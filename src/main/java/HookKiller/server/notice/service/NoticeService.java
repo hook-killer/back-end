@@ -1,5 +1,6 @@
 package HookKiller.server.notice.service;
 
+import HookKiller.server.common.service.TranslateService;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.notice.dto.AddNoticeRequest;
@@ -7,12 +8,16 @@ import HookKiller.server.notice.dto.EditNoticeRequest;
 import HookKiller.server.notice.dto.NoticeArticleDto;
 import HookKiller.server.notice.entity.NoticeArticle;
 import HookKiller.server.notice.entity.NoticeContent;
+import HookKiller.server.notice.exception.NoticeNotAdminForbiddenException;
 import HookKiller.server.notice.exception.NoticeNotFoundException;
 import HookKiller.server.notice.repository.NoticeArticleRepository;
 import HookKiller.server.notice.repository.NoticeContentRepository;
 import HookKiller.server.user.entity.User;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +31,7 @@ import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
 @Service
 @RequiredArgsConstructor
 public class NoticeService {
-
+    private final TranslateService translateService;
     private final NoticeArticleRepository noticeArticleRepository;
     private final NoticeContentRepository noticeContentRepository;
     private final UserUtils userUtils;
@@ -48,43 +53,61 @@ public class NoticeService {
     }
 
     /**
-     * 리스트 조회
+     * 리스트 조회 - 사용자가 요청한 languageType에 맞춰서 List조회
+     * 1. ArticleStatus가 공개중(PUBLIC)인 상태
+     * 2. 생성일이 최신 순서로
+     * 3. Content에서 선택한 언어로 번역된 데이터가 존재하는 경우
+     * TODO : 페이지네이션
      *
      * @return
      */
     @Transactional(readOnly = true)
-    public List<NoticeArticleDto> getNoticeList(LanguageType languageType) {
-        List<NoticeArticle> articleList = noticeArticleRepository.findAllByStatus(PUBLIC);
-         return noticeArticleRepository.findAllByStatus(PUBLIC)
+    public List<NoticeArticleDto> getNoticeList(int page, int articleLimit, LanguageType languageType) {
+        return noticeArticleRepository.findAllByStatusOrderByCreateAtDesc(PUBLIC, PageRequest.of(page, articleLimit))
                 .stream()
-                 .map(data -> NoticeArticleDto.builder()
-                         .id(data.getId())
-                         .language(data.getLanguage())
-                         .status(data.getStatus())
-                         .createdUser(data.getCreatedUser())
-                         .updatedUser(data.getUpdatedUser())
-                         .createAt(data.getCreateAt())
-                         .updateAt(data.getUpdateAt())
-                         .title(data.getContent().get(0).getTitle())
-                         .build()
-                 ).toList();
-
+                .filter(noticeArticle -> noticeArticle.getContent().stream().anyMatch(noticeContent -> noticeContent.getLanguage().equals(languageType)))
+                .map(noticeArticle -> {
+                    //그래봐야 Filter로 존재하는 애들만 걸러져서 의미없음
+                    NoticeContent noticeContent = noticeArticle.getContent()
+                            .stream()
+                            .filter(content -> content.getLanguage().equals(languageType))
+                            .findFirst()
+                            .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
+                    return NoticeArticleDto.builder()
+                            .id(noticeArticle.getId())
+                            .language(noticeArticle.getLanguage())
+                            .status(noticeArticle.getStatus())
+                            .createdUser(noticeArticle.getCreatedUser())
+                            .updatedUser(noticeArticle.getUpdatedUser())
+                            .title(noticeContent.getTitle())
+                            .build();
+                })
+                .toList();
     }
 
     /**
-     * 등록
+     * 공지사항 게시물 등록
+     * 1. 사용자가 로그인을 하지 않은 경우 → UserNotFoundException이 발생한다.
+     * 2. 사용자가 로그인을 하였지만 관리자가 아닌 경우 → NoticeNotAdminForbiddenException이 발생한다.
+     * 3. 번역이 실패한 경우 → NaverErrorException이 발생한다.
      *
+     * @param addNoticeRequest
      */
     @Transactional
     public void saveNotice(AddNoticeRequest addNoticeRequest) {
-        User loginUser = userUtils.getUser();
+        //로그인한 사용자 획득
+        User user = userUtils.getUser();
+
+        //관리자 권한 확인
+        if(user.getRole().equals(UserRole.ADMIN))
+            throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         NoticeArticle noticeArticle = noticeArticleRepository.save(
                 NoticeArticle.builder()
                         .language(addNoticeRequest.getLanguage())
                         .status(PUBLIC)
-                        .createdUser(loginUser)
-                        .updatedUser(loginUser)
+                        .createdUser(user)
+                        .updatedUser(user)
                         .build()
         );
 
@@ -97,23 +120,61 @@ public class NoticeService {
                         .content(addNoticeRequest.getContent())
                         .build()
         );
-        // TODO : getLanguage에 들어있는 언어에서 다른 언어 번역한 결과 역시 NoticeContent로 제작해서 Save
+
+        addNoticeRequest
+                .getLanguage()
+                .getTranslateTargetLanguage()
+                .forEach(targetLanguage ->
+                        contentsList.add(
+                                NoticeContent
+                                        .builder()
+                                        .noticeArticle(noticeArticle)
+                                        .language(targetLanguage)
+                                        .title(
+                                                translateService.naverPapagoTextTranslate(
+                                                        addNoticeRequest.getLanguage(), targetLanguage, addNoticeRequest.getTitle()
+                                                )
+                                        ).content(
+                                                translateService.naverPapagoHtmlTranslate(
+                                                        addNoticeRequest.getLanguage(), targetLanguage, addNoticeRequest.getContent()
+                                                )
+                                        ).build()
+                        )
+                );
+
         noticeContentRepository.saveAll(contentsList);
     }
 
     /**
-     * 수정
+     * 게시물 수정
+     * 1. 사용자가 로그인을 하지 않은 경우 → UserNotFoundException이 발생한다.
+     * 2. 사용자가 로그인을 하였지만 관리자가 아닌 경우 → NoticeNotAdminForbiddenException이 발생한다.
+     * 3. 공지사항 게시물이 NoticeArticleId와 공개상태인지로 조회시 존재하지 않는 경우 → NoticeNotFoundException이 발생한다.
+     * 4. 요청한 언어가 DB에 없는 경우 → NoticeNotFoundException이 발생한다
+     * 5. 번역이 실패한 경우 → NaverErrorException이 발생한다.
+     *
+     * 어떤 경우도 Exception이 발생하면 수정이 적용되지 않고 Rollback된다.
+     *
+     * @param request
      */
     @Transactional
     public void updateNotice(EditNoticeRequest request) {
         //로그인한 사용자 획득
         User user = userUtils.getUser();
+
+        //관리자 권한 확인
+        if(user.getRole().equals(UserRole.ADMIN))
+            throw NoticeNotAdminForbiddenException.EXCEPTION;
+
+        // 변경여부 확인을 위한 변수
         boolean chgTitle = false;
         boolean chgContent = false;
 
-        NoticeArticle article = noticeArticleRepository.findById(request.getNoticeArticleId())
+        //게시물이 공개중이어야 수정가능함
+        NoticeArticle article = noticeArticleRepository.findByIdAndStatus(request.getNoticeArticleId(), PUBLIC)
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         List<NoticeContent> contents = noticeContentRepository.findAllByNoticeArticle(article);
+
 
         article.setUpdatedUser(user);
         //다른경우 변경
@@ -122,39 +183,53 @@ public class NoticeService {
 
         NoticeContent choiceContent = contents.stream()
                 .filter(content -> request.getLanguage().equals(content.getLanguage()))
-                .findFirst().orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
+                .findFirst()
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
 
-        if(request.getNewTitle() != null && !request.getNewTitle().equals(request.getOrgTitle())) {
+        if (request.getNewTitle() != null && !request.getNewTitle().equals(request.getOrgTitle())) {
             chgTitle = true;
             choiceContent.setTitle(request.getNewTitle());
         }
-        if(request.getNewContent() != null && !request.getNewContent().equals(request.getOrgContent())){
+        if (request.getNewContent() != null && !request.getNewContent().equals(request.getOrgContent())) {
             chgContent = true;
             choiceContent.setContent(request.getNewContent());
         }
 
-        if(chgTitle || chgContent) {
+        if (chgTitle || chgContent) {
+            //Lambda에서 활용하기 위한 final변수 변환
             final boolean finalChgTitle = chgTitle;
             final boolean finalChgContent = chgContent;
-            contents.stream().filter(content-> choiceContent != content).forEach(content-> {
-                if(finalChgTitle){
-                    // TODO : request의 언어를 원본으로 해서 content의 언어로 타겟잡아 번역후 title변환
-                }
-                if(finalChgContent){
-                    // TODO : request의 언어를 원본으로 해서 content의 언어로 타겟잡아 번역후 content변환
-                }
-            });
+            contents.stream()
+                    .filter(content -> choiceContent != content)
+                    .forEach(content -> {
+                                if (finalChgTitle) {
+                                    translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle());
+                                }
+                                if (finalChgContent) {
+                                    translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getContent());
+                                }
+                            }
+                    );
         }
 
     }
 
     /**
-     * 삭제
+     * 공지사항 게시물 삭제
+     * 1. 사용자가 로그인을 하지 않은 경우 → UserNotFoundException이 발생한다.
+     * 2. 사용자가 로그인을 하였지만 관리자가 아닌 경우 → NoticeNotAdminForbiddenException이 발생한다.
      *
      * @param id
      */
     @Transactional
     public void deleteNotice(Long id) {
+        //로그인한 사용자 획득
+        User user = userUtils.getUser();
+
+        //관리자 권한 확인
+        if(user.getRole().equals(UserRole.ADMIN))
+            throw NoticeNotAdminForbiddenException.EXCEPTION;
+
         noticeArticleRepository.findById(id).orElseThrow(() ->
                 NoticeNotFoundException.EXCEPTION).updateStatus(DELETE);
     }

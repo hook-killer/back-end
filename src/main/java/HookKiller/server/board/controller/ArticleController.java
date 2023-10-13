@@ -4,7 +4,6 @@ import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.service.ArticleContentService;
 import HookKiller.server.board.service.ArticleService;
-import HookKiller.server.board.type.BoardType;
 import HookKiller.server.common.type.LanguageType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

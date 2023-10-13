@@ -63,22 +63,13 @@ public class ArticleService {
   @Transactional
   public Article updateArticle(PostArticleRequestDto postArticleRequestDto) {
 
-    Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
-            .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-
     Article article = articleRepository.findById(postArticleRequestDto.getArticleId())
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
 
     User requestUser = userUtils.getUser();
 
-    article = Article.builder()
-            .id(article.getId())
-            .board(board)
-            .orgArticleLanguage(postArticleRequestDto.getOrgArticleLanguage())
-            .articleStatus(article.getArticleStatus())
-            .createdUser(article.getCreatedUser())
-            .updatedUser(requestUser)
-            .build();
+    article.setOrgArticleLanguage(postArticleRequestDto.getOrgArticleLanguage());
+    article.setUpdatedUser(requestUser);
 
     // 게시물 내용 업데이트
     articleContentService.updateContent(postArticleRequestDto, article);

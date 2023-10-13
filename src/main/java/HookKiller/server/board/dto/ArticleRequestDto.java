@@ -15,30 +15,33 @@ import lombok.Getter;
 @Builder
 public class ArticleRequestDto extends AbstractTimeStamp {
 
-  private Long boardId;
-  private Long articleId;
-  @Enumerated(EnumType.STRING)
-  private LanguageType orgArticleLanguage;
-  @Enumerated(EnumType.STRING)
-  private ArticleStatus status;
-  private int likeCount;
-  private Long createdUserId;
-  private Long updatedUserId;
+    private Long boardId;
 
-  private Long contentId;
-  @Enumerated(EnumType.STRING)
-  private LanguageType contentLanguage;
-  private String title;
-  @Lob
-  private String content;
+    private Long articleId;
 
-  public static ArticleRequestDto of(Article article, ArticleContent articleContent) {
-    return ArticleRequestDto.builder()
-            .articleId(article.getId())
-            .title(articleContent.getTitle())
-            .content(articleContent.getContent())
-            .likeCount(article.getLikeCount())
-            .build();
-  }
+    @Enumerated(EnumType.STRING)
+    private LanguageType orgArticleLanguage;
+
+    @Enumerated(EnumType.STRING)
+    private ArticleStatus status;
+
+    private int likeCount;
+
+    @Enumerated(EnumType.STRING)
+    private LanguageType contentLanguage;
+
+    private String title;
+
+    @Lob
+    private String content;
+
+    public static ArticleRequestDto of(Article article, ArticleContent articleContent) {
+        return ArticleRequestDto.builder()
+                .articleId(article.getId())
+                .title(articleContent.getTitle())
+                .content(articleContent.getContent())
+                .likeCount(article.getLikeCount())
+                .build();
+    }
 
 }

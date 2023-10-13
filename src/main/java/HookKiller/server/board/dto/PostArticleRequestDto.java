@@ -29,6 +29,5 @@ public class PostArticleRequestDto {
   private String title;
 
   @NotEmpty(message = "내용이 입력되지 않았습니다.")
-  @Lob
   private String content;
 }

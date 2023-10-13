@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface ArticleContentRepository extends JpaRepository<ArticleContent, Long> {
 
-  Optional <ArticleContent> findByArticleAndLanguage(Article article, LanguageType language);
+    Optional<ArticleContent> findByArticleAndLanguage(Article article, LanguageType language);
 
-  List<ArticleContent> findAllByArticle(Article article);
+    List<ArticleContent> findAllByArticle(Article article);
 
 }

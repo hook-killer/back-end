@@ -25,9 +25,6 @@ public class NoticeArticleDto extends AbstractTimeStamp {
     private Timestamp createAt;
     private Timestamp updateAt;
 
-    // TODO : 생성일자, 수정일자 필요한지 없는지 생각해보기
-    // TODO : NoticeArticle의 status인지 NoticeContent의 language인지 생각해보기
-    // TODO : NoticeArticle 한개로도 끝날 수 있는거 아닌지 생각해보기
     public static NoticeArticleDto of(NoticeArticle noticeArticle, NoticeContent noticeContent) {
         return NoticeArticleDto.builder()
                 .id(noticeArticle.getId())

@@ -98,7 +98,7 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(user.getRole().equals(UserRole.ADMIN))
+        if(!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         NoticeArticle noticeArticle = noticeArticleRepository.save(
@@ -162,7 +162,7 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(user.getRole().equals(UserRole.ADMIN))
+        if(!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         // 변경여부 확인을 위한 변수
@@ -226,7 +226,7 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(user.getRole().equals(UserRole.ADMIN))
+        if(!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         noticeArticleRepository.findById(id).orElseThrow(() ->

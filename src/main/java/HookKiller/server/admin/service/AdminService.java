@@ -7,7 +7,6 @@ import HookKiller.server.user.dto.UserDto;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.exception.AlreadyExistUserException;
 import HookKiller.server.user.repository.UserRepository;
-import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,9 +35,7 @@ public class AdminService {
 
         log.info("관리자 계정 등록 service");
 
-        if (userUtils.getUser().getRole().equals(UserRole.ADMIN)) {
-            throw UserNotAdminException.EXCEPTION;
-        }
+        authorityVerification();
 
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw AlreadyExistUserException.EXCEPTION;
@@ -62,9 +59,7 @@ public class AdminService {
 
         log.info("관리자 계정 리스트");
 
-        if (userUtils.getUser().getRole().equals(UserRole.ADMIN)) {
-            throw UserNotAdminException.EXCEPTION;
-        }
+        authorityVerification();
 
         return userRepository.findAllByRole(ADMIN)
                 .stream()
@@ -85,9 +80,7 @@ public class AdminService {
 
         log.info("사용자 계정 리스트");
 
-        if (userUtils.getUser().getRole().equals(UserRole.ADMIN)) {
-            throw UserNotAdminException.EXCEPTION;
-        }
+        authorityVerification();
 
         return userRepository.findAllByRole(USER)
                 .stream()
@@ -108,11 +101,14 @@ public class AdminService {
 
         log.info("계정 상태 변경");
 
-        if (userUtils.getUser().getRole().equals(UserRole.ADMIN)) {
+        authorityVerification();
+
+    }
+
+    private void authorityVerification() {
+        if (!userUtils.getUser().getRole().equals(ADMIN)) {
             throw UserNotAdminException.EXCEPTION;
         }
-
-
     }
 
 }

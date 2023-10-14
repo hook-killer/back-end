@@ -6,6 +6,7 @@ import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.exception.AlreadyExistUserException;
 import HookKiller.server.user.repository.UserRepository;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .nickName(request.getNickName())
-                .role(request.getRole())
+                .role(UserRole.valueOf(request.getRole()))
                 .build());
         
         AuthResponse res = AuthResponse.builder()

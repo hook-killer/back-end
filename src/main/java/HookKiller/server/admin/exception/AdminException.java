@@ -1,11 +1,10 @@
-package HookKiller.server.acctmgnt.exception;
+package HookKiller.server.admin.exception;
 
 import HookKiller.server.common.dto.ErrorDetail;
 import HookKiller.server.common.exception.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Getter

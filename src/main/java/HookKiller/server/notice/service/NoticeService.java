@@ -17,7 +17,6 @@ import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,7 +64,7 @@ public class NoticeService {
     public List<NoticeArticleDto> getNoticeList(int page, int articleLimit, LanguageType languageType) {
         return noticeArticleRepository.findAllByStatusOrderByCreateAtDesc(PUBLIC, PageRequest.of(page, articleLimit))
                 .stream()
-                .filter(noticeArticle -> noticeArticle.getContent().stream().anyMatch(noticeContent -> noticeContent.getLanguage().equals(languageType)))
+                .filter(noticeArticle -> noticeArticle.getContent().stream().anyMatch(noticeArticleContent -> noticeArticleContent.getLanguage().equals(languageType)))
                 .map(noticeArticle -> {
                     //그래봐야 Filter로 존재하는 애들만 걸러져서 의미없음
                     NoticeContent noticeContent = noticeArticle.getContent()

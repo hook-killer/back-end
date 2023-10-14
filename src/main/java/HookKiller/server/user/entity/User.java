@@ -6,6 +6,7 @@ import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
 public class User extends AbstractTimeStamp {
@@ -37,13 +40,13 @@ public class User extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     
-    @Builder
-    public User(String email, String password, String nickName, String role) {
-        this.email = email;
-        this.password = password;
-        this.nickName = nickName;
-        this.role = UserRole.valueOf(role);
-    }
+//    @Builder
+//    public User(String email, String password, String nickName, String role) {
+//        this.email = email;
+//        this.password = password;
+//        this.nickName = nickName;
+//        this.role = UserRole.valueOf(role);
+//    }
     
     //    private Long certificateKeyId;
 
@@ -53,8 +56,8 @@ public class User extends AbstractTimeStamp {
 
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault(value = "NOT_ACTIVE")
-    private Status status;
+    @Builder.Default
+    private Status status = Status.ACTIVE;
 //
 //    @Enumerated(EnumType.STRING)
 //    private LoginType loginType;

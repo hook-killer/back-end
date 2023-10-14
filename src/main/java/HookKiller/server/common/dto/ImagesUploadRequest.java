@@ -11,11 +11,11 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ImageUploadRequest {
+public class ImagesUploadRequest {
     //@ValidEnum(enumClass = NaverObjectStorageUsageType.class, message = "사용처를 입력해 주시기 바랍니다.")
     @NotNull(message = "사용처를 입력해 주시기 바랍니다.")
     private NaverObjectStorageUsageType naverObjectStorageUsageType;
 
     @NotNull(message = "업로드한 파일이 존재하지 않습니다.")
-    private MultipartFile image;
+    private List<MultipartFile> images;
 }

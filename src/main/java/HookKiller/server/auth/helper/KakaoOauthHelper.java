@@ -1,11 +1,15 @@
 package HookKiller.server.auth.helper;
 
 import HookKiller.server.auth.dto.KakaoUserInfoDto;
+import HookKiller.server.auth.dto.OIDCUserInfo;
+import HookKiller.server.common.dto.OIDCDto;
 import HookKiller.server.outer.api.oauth.client.KakaoInfoClient;
 import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
 import HookKiller.server.outer.api.oauth.dto.KakaoInfoResponse;
 import HookKiller.server.outer.api.oauth.dto.KakaoTokenResponse;
+import HookKiller.server.outer.api.oauth.dto.OIDCResponse;
 import HookKiller.server.properties.KakaoOauthProperties;
+import HookKiller.server.user.entity.OauthInfo;
 import HookKiller.server.user.entity.OauthProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,31 +32,39 @@ public class KakaoOauthHelper {
   private final KakaoOauthClient kakaoOauthClient;
   
   private final KakaoInfoClient kakaoInfoClient;
+  private final OIDCHelper oidcHelper;
   
-  public KakaoTokenResponse getOauthToken(String code) {
-    log.error("과연 봉세환은 병신이되는가, 내가 병신이 되는가 >>> {} ", code);
-   String kakaoClientId = kakaoOauthProperties.getKakaoClientId();
-    log.info("김종원은 정상이었다11 >>> {}", kakaoClientId);
-    String kakaoRedirectUrl = kakaoOauthProperties.getKakaoRedirectUrl();
-    log.info("김종원은 정상이었다22 >>> {}", kakaoRedirectUrl);
-    
-    String kakaoProperties = kakaoOauthProperties.getKakaoClientSecret();
-    log.info("김종원은 정상이었다33 >>> {}", kakaoProperties);
-/*
-    String path = "/oauth/token?grant_type=authorization_code&client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&code={CODE}&client_secret={CLIENT_SECRET}";
-    path = path.replace("{CLIENT_ID}", kakaoClientId);
-    path = path.replace("{REDIRECT_URI}", kakaoRedirectUrl);
-    path = path.replace("{CODE}", code);
-    path = path.replace("{CLIENT_SECRET}", kakaoProperties);
-    ResponseEntity<String> response = new RestTemplate().postForEntity(URI.create("https://kauth.kakao.com" + path),null, String.class);
-    log.error("responseEntity >>> {}", response.toString());
-    */
+  public KakaoTokenResponse getOauthToken(String code, String referer) {
+    log.info("referer 1 : {}", referer);
     return kakaoOauthClient.kakaoAuth(
             kakaoOauthProperties.getKakaoClientId(),
-            kakaoOauthProperties.getKakaoRedirectUrl(),
+            referer + "/kakao/callback",
             code,
             kakaoOauthProperties.getKakaoClientSecret()
     );
+  }
+  
+  public OIDCDto getOIDCDecodePayload(String token) {
+    OIDCResponse oidcResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
+    return oidcHelper.getPayloadFromIdToken(
+            token,
+            kakaoOauthProperties.getKakaoBaseUrl(),
+            kakaoOauthProperties.getKakaoClientId(),
+            oidcResponse);
+  }
+  
+  public OIDCUserInfo getOauthInfoByIdToken(String idToken) {
+    OIDCDto oidcDecodePayload = getOIDCDecodePayload(idToken);
+    OauthInfo oauthInfo = OauthInfo.builder()
+            .provider(OauthProvider.KAKAO)
+            .oid(oidcDecodePayload.getSub())
+            .build();
+    return OIDCUserInfo.builder()
+            .oauthInfo(oauthInfo)
+            .email(oidcDecodePayload.getEmail())
+            .nickName(oidcDecodePayload.getKakaoNickName())
+            .thumbnailImg(oidcDecodePayload.getKakaoThumbnailImg())
+            .build();
   }
   
   public KakaoUserInfoDto getUserInfo(String oauthAccessToken) {

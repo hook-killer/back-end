@@ -45,6 +45,8 @@ public class SecurityConfig {
                                             "/auth/**",
                                             "/auth/oauth/**",
                                             "/auth/oauth/kakao/**",
+                                            "/auth/oauth/kakao/link/**",
+                                            "/auth/oauth/kakao/register/**",
                                             "/health"
                                             ).permitAll()
                                 .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음

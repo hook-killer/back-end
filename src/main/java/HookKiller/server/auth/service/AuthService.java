@@ -66,37 +66,31 @@ public class AuthService {
 
   // 카카오 로그인 후 토큰 받기
   public OauthTokenResponse getCredentialFromKaKao(String code, String referer) {
+    log.info("referer : {}", referer);
+    log.info("referer + 리다이렉트 : {}", referer + "/kakao/callback");
     return OauthTokenResponse.from(
-            kakaoOauthClient.kakaoAuth(
-            kakaoOauthProperties.getKakaoClientId(),
-//            referer + "kakao/callback",
-                    referer,
-                    code,
-                    kakaoOauthProperties.getKakaoClientSecret()
-    ));
+            kakaoOauthHelper.getOauthToken(code, referer)
+    );
   }
 
-  public OAuthResponse registerUserByKakaoCode(String code) {
-    log.error("병신 밥버거 1");
-    String accessToken = kakaoOauthHelper.getOauthToken(code).getAccessToken();
-    
-    log.error("병신 밥버거 2");
-    KakaoUserInfoDto userInfo = kakaoOauthHelper.getUserInfo(accessToken);
-    
-    log.error("병신 밥버거 3");
-    User user = userRepository.findByOauthInfo(userInfo.toOauthInfo()).orElseGet(
-            () -> userRepository.save(
-                    User.builder()
-                            .oauthInfo(userInfo.toOauthInfo())
-                            .email(userInfo.getEmail())
-                            .nickName(userInfo.getProfile().getNickname())
-                            .password(UUID.randomUUID().toString())
-                            .role(USER.getValue())
-                            .loginType(KAKAO)
-                            .build()
-            )
-    );
-    log.error("병신 밥버거 4");
-    return tokenGenerateHelper.execute(user);
-  }
+  // oidc 사용 시 필요없음
+//  public OAuthResponse registerUserByKakaoCode(String code) {
+//    String accessToken = kakaoOauthHelper.getOauthTokenTest(code).getAccessToken();
+//
+//    KakaoUserInfoDto userInfo = kakaoOauthHelper.getUserInfo(accessToken);
+//
+//    User user = userRepository.findByOauthInfo(userInfo.toOauthInfo()).orElseGet(
+//            () -> userRepository.save(
+//                    User.builder()
+//                            .oauthInfo(userInfo.toOauthInfo())
+//                            .email(userInfo.getEmail())
+//                            .nickName(userInfo.getProfile().getNickname())
+//                            .password(UUID.randomUUID().toString())
+//                            .role(USER.getValue())
+//                            .loginType(KAKAO)
+//                            .build()
+//            )
+//    );
+//    return tokenGenerateHelper.execute(user);
+//  }
 }

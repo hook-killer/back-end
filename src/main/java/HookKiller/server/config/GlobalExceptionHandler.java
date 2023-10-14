@@ -29,12 +29,13 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> internalServerExceptionHandle(
             Exception e, HttpServletRequest req) throws Exception {
 //        final ContentCachingRequestWrapper cachingRequest = (ContentCachingRequestWrapper) req;
-        final Long userId = UserUtils.getCurrentUserId();
+//        final Long userId = UserUtils.getCurrentUserId();
         String url =
                 UriComponentsBuilder.fromHttpRequest(new ServletServerHttpRequest(req))
                         .build()
                         .toUriString();
-        log.error(String.valueOf(e));
+        log.error("ExceptionHandler : {}", String.valueOf(e));
+        e.printStackTrace();
         GlobalException internalServerError = GlobalException.INTERNAL_SERVER_ERRORS;
         ErrorResponse errorResponse = new ErrorResponse(internalServerError.getErrorDetail());
 
@@ -42,11 +43,9 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
-    // TODO : 소셜로그인 구현시 API에 대한 에러 Handling구현
-
     @ExceptionHandler(OuterServerException.class)
     protected ResponseEntity<ErrorResponse> outerServerExceptionHandle(OuterServerException e) {
-      log.error("응애응애응애ㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐㅐ");
+      log.error("GlobalExceptionHanlder의 OuterServerErrorHandler");
         ErrorDetail errorDetail =
                 ErrorDetail.of(e.getStatusCode(), e.getErrorCode(), e.getReason());
         log.error("StatusCode >>> {} , ErrorCode >>> {} , Reason >>> {} , cause >>> {}", e.getStatusCode(), e.getErrorCode(), e.getReason(), e.getCause());

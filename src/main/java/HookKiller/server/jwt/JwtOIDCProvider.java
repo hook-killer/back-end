@@ -3,8 +3,14 @@ package HookKiller.server.jwt;
 import HookKiller.server.auth.exception.ExpiredTokenException;
 import HookKiller.server.auth.exception.InvalidTokenException;
 import HookKiller.server.common.dto.OIDCDto;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -16,6 +22,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class JwtOIDCProvider {
 
@@ -23,19 +30,26 @@ public class JwtOIDCProvider {
 
     // 외부에서 돌릴 검증 로직
     public String getKidFromUnsignedTokenHeader(String token, String iss, String aud) {
+        log.error("getKidFromUnsignedTokenHeader들어옴!");
         return (String) getUnsignedTokenClaims(token, iss, aud).getHeader().get(KID);
     }
 
     private Jwt<Header, Claims> getUnsignedTokenClaims(String token, String iss, String aud) {
         try {
-            return Jwts.parserBuilder()
+            log.info("iss : {}, aud : {}", iss, aud);
+            Jwt<Header, Claims> headerClaimsJwt = Jwts.parserBuilder()
                     .requireAudience(aud)
                     .requireIssuer(iss)
                     .build()
                     .parseClaimsJwt(getParseUnsignedToken(token));
+            log.info("headerClaimsJwt : {}", headerClaimsJwt.toString());
+            return headerClaimsJwt;
         } catch (ExpiredJwtException e) {
+            log.info("여기?");
             throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
+            log.info("아니면 여기?");
+            e.printStackTrace();
             throw InvalidTokenException.EXCEPTION;
         }
     }
@@ -44,15 +58,19 @@ public class JwtOIDCProvider {
     private String getParseUnsignedToken(String token) {
         String[] splitToken = token.split("\\.");
         if (splitToken.length != 3) throw InvalidTokenException.EXCEPTION;
+        log.info("splitToken : {}", splitToken[1]);
         return splitToken[0] + "." + splitToken[1] + ".";
     }
 
     public Jws<Claims> getOIDCTokenJws(String token, String modulus, String exponent) {
         try {
-            return Jwts.parserBuilder()
+            // OIDC 공개키의 모듈(m)과 지수(e)로 jwt 토큰 파싱
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
                     .setSigningKey(getRSAPublicKey(modulus, exponent))
                     .build()
                     .parseClaimsJws(token);
+            log.info("getOIDCTokenJws : {}", claimsJws.toString());
+            return claimsJws;
         } catch (ExpiredJwtException e) {
             throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
@@ -61,12 +79,18 @@ public class JwtOIDCProvider {
     }
 
     public OIDCDto getOIDCTokenBody(String token, String modulus, String exponent) {
+        log.info("JwtOIDCProvider의 getOIDCTokenBody 들어옴");
         Claims body = getOIDCTokenJws(token, modulus, exponent).getBody();
-        return new OIDCDto(
+        log.info("OIDC Token의 body : {}", body.toString());
+        OIDCDto dto = new OIDCDto(
                 body.getIssuer(),
                 body.getAudience(),
                 body.getSubject(),
-                body.get("email", String.class));
+                body.get("email", String.class),
+                body.get("nickname", String.class),
+                body.get("picture", String.class));
+        log.info("OIDC Token으로 만든 OIDCDto : {}", dto.toString());
+        return dto;
     }
 
     private Key getRSAPublicKey(String modulus, String exponent)

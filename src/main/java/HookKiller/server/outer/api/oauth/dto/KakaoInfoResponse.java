@@ -21,8 +21,6 @@ public class KakaoInfoResponse {
         private String nickname;
         private String thumbnailImage;
         private String profileImage;
-        private String customField1;
-        private String customField2;
     }
 
     @Getter
@@ -31,19 +29,11 @@ public class KakaoInfoResponse {
     public static class KakaoAccount {
 
         private boolean profileNeedsAgreement;
+        private Profile profile;
         private boolean emailNeedsAgreement;
         private boolean isEmailValid;
         private boolean isEmailVerified;
-        private Profile profile;
         private String email;
-        private boolean nameNeedsAgreement;
-        private String name;
-        private boolean ageRangeNeedsAgreement;
-        private String ageRange;
-        private boolean birthdayNeedsAgreement;
-        private String birthday;
-        private boolean genderNeedsAgreement;
-        private String gender;
 
 
         @Getter
@@ -55,10 +45,6 @@ public class KakaoInfoResponse {
             private String profileImageUrl;
             private boolean isDefaultImage;
         }
-
-        public String getNickName() {
-            return profile.getNickname();
-        }
     }
 
     public String getId() {
@@ -69,12 +55,8 @@ public class KakaoInfoResponse {
         return kakaoAccount.getEmail();
     }
 
-    public String getName() {
-        return kakaoAccount.getName() != null ? kakaoAccount.getName() : properties.getNickname();
-    }
-
     public String getNickName() {
-        return kakaoAccount.getNickName();
+        return kakaoAccount.getProfile().getNickname();
     }
 }
 

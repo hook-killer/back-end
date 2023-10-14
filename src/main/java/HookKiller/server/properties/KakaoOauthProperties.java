@@ -5,48 +5,43 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "oauth2")
+@ConfigurationProperties(prefix = "oauth2.kakao")
 public class KakaoOauthProperties {
-
-    private OauthSecret kakao;
-
-    @Getter
-    @Setter
-    public static class OauthSecret {
-        private String baseUrl;
-        private String clientId;
-        private String clientSecret;
-        private String redirectUrl;
-        private String appId;
-        private String adminKey;
-    }
+    
+    private String baseUrl;
+    private String clientId;
+    private String clientSecret;
+    private String redirectUrl;
+    private String appId;
+    private String adminKey;
 
     // base url
     public String getKakaoBaseUrl() {
-        return kakao.getBaseUrl();
+        return this.baseUrl;
     }
 
     // rest api key
     public String getKakaoClientId() {
-        return kakao.getClientId();
+        return this.clientId;
     }
 
     // redirect url
     public String getKakaoRedirectUrl() {
-        return kakao.getRedirectUrl();
+        return this.redirectUrl;
     }
 
     // secret key
     public String getKakaoClientSecret() {
-        return kakao.getClientSecret();
+        return this.clientSecret;
     }
 
     // native app key
     public String getKakaoAppId() {
-        return kakao.getAppId();
+        return this.appId;
     }
 
-
+    public String getKakaoAdminKey() {
+        return this.adminKey;
+    }
 }

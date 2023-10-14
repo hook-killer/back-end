@@ -16,11 +16,14 @@ public class OIDCHelper {
     private final JwtOIDCProvider jwtOIDCProvider;
 
     private String getKidFromUnsignedIdToken(String token, String iss, String aud) {
+        log.info("getKidFromUnsignedIdToken 들어옴! token : {}", token);
+        log.info("getKidFromUnsignedTokenHeader의 반환값 : {}", jwtOIDCProvider.getKidFromUnsignedTokenHeader(token, iss, aud));
         return jwtOIDCProvider.getKidFromUnsignedTokenHeader(token, iss, aud);
     }
 
     public OIDCDto getPayloadFromIdToken(
             String token, String iss, String aud, OIDCResponse oidcResponse) {
+        log.info("getPayloadFromIdToken 들어옴! token : {}, iss : {}, aud : {}", token, iss, aud);
         String kid = getKidFromUnsignedIdToken(token, iss, aud);
 
         log.info("kid = {}", kid);
@@ -30,6 +33,8 @@ public class OIDCHelper {
                         .filter(o -> o.getKid().equals(kid))
                         .findFirst()
                         .orElseThrow();
+        
+        log.info("OIDCPublicKeyDto : {}", oidcPublicKeyDto.toString());
 
         return jwtOIDCProvider.getOIDCTokenBody(
                 token, oidcPublicKeyDto.getN(), oidcPublicKeyDto.getE());

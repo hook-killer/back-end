@@ -3,16 +3,24 @@ package HookKiller.server.user.entity;
 import HookKiller.server.common.AbstractTimeStamp;
 import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.UserRole;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
 public class User extends AbstractTimeStamp {
@@ -21,14 +29,14 @@ public class User extends AbstractTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+//    @NotNull
     @Column(unique = true)
     private String email;
 
-    @NotNull
+//    @NotNull
     private String password;
 
-    @NotNull
+//    @NotNull
     private String nickName;
 
     private String thumbnail;
@@ -37,11 +45,12 @@ public class User extends AbstractTimeStamp {
     private UserRole role;
     
     @Builder
-    public User(String email, String password, String nickName, String role, LoginType loginType, OauthInfo oauthInfo) {
+    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.role = UserRole.valueOf(role);
+        this.thumbnail = thumbnail;
         this.loginType = loginType;
         this.oauthInfo = oauthInfo;
     }
@@ -53,6 +62,12 @@ public class User extends AbstractTimeStamp {
         this.nickName = nickName;
         this.role = UserRole.valueOf(role);
         this.loginType = loginType;
+    }
+    
+    @Builder
+    public User(String role, OauthInfo oauthInfo) {
+        this.role = UserRole.valueOf(role);
+        this.oauthInfo = oauthInfo;
     }
     
     //    private Long certificateKeyId;

@@ -2,9 +2,11 @@ package HookKiller.server.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class OIDCDto {
     /**
      * issuer ex https://kauth.kakao.com
@@ -18,6 +20,10 @@ public class OIDCDto {
      * idToken에 해당하는 사용자의 회원번호
      */
     private String sub;
-
+    
     private String email;
+    
+    private String kakaoNickName;
+    
+    private String kakaoThumbnailImg;
 }

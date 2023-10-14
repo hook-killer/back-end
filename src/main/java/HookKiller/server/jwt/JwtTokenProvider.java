@@ -50,6 +50,28 @@ public class JwtTokenProvider {
             throw InvalidTokenException.EXCEPTION;
         }
     }
+    
+    private Claims getAllClaimsFromToken(String token) {
+        log.debug("TokenUtil SecretKey >>> {} ", jwtProperties.getSecretKey());
+        return Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token).getBody();
+    }
+
+    // 토큰 만료일자 조회
+    public Date getExpirationDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getExpiration);
+    }
+
+    //
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaimsFromToken(token);
+        return claimsResolver.apply(claims);
+    }
+    
+    // 토근 만료 여부 체크
+    private Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
 
     // id를 입력받아 accessToken 생성
     public String generateAccessToken(Long id, String role) {
@@ -62,11 +84,11 @@ public class JwtTokenProvider {
 
     // JWT accessToken 생성
     private String doGenerateAccessToken(Long id, Date issuedAt, Date accessExpiresIn, String role) {
-
+        
         log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", jwtProperties.getSecretKey(), jwtProperties.getAccessExp());
-
+        
         final Key encodeKey = getSecertKey();
-
+        
         return Jwts.builder()
                 .setSubject(id.toString())
                 .setIssuedAt(issuedAt)
@@ -75,6 +97,17 @@ public class JwtTokenProvider {
                 .claim(TYPE.getValue(), ACCESS_TOKEN)
                 .claim(TOKEN_ROLE.getValue(), role)
                 .signWith(encodeKey)
+                .compact();
+    }
+    // UsernamePasswordAuthenticationToken
+    private String doGenerateAccessToken(String email, Map<String, String> claims) {
+        log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", jwtProperties.getSecretKey(), jwtProperties.getAccessExp());
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getAccessExp() * 1000))
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey())
                 .compact();
     }
 

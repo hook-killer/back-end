@@ -1,6 +1,6 @@
 package HookKiller.server.board.service;
 
-import HookKiller.server.board.dto.ReplyRequestDto;
+import HookKiller.server.board.dto.ReplyResponseDto;
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.Reply;
 import HookKiller.server.board.entity.ReplyContent;
@@ -9,7 +9,6 @@ import HookKiller.server.board.exception.ReplyContentNotFoundException;
 import HookKiller.server.board.repository.ArticleRepository;
 import HookKiller.server.board.repository.ReplyContentRepository;
 import HookKiller.server.board.repository.ReplyRepository;
-import HookKiller.server.board.type.ReplyStatus;
 import HookKiller.server.common.service.TranslateService;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
@@ -21,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static HookKiller.server.board.type.ReplyStatus.FALSE;
+import static HookKiller.server.board.type.ReplyStatus.TURE;
+
 
 @Slf4j
 @Service
@@ -34,13 +37,13 @@ public class ReplyService {
   private final TranslateService translateService;
 
   @Transactional
-  public void createReply(ReplyRequestDto requestDto) {
+  public void createReply(ReplyResponseDto requestDto) {
 
     User user = userUtils.getUser();
 
     Reply reply = replyRepository.save(
             Reply.builder()
-                    .isDeleted(ReplyStatus.FALSE)
+                    .replyStatus(FALSE)
                     .orgReplyLanguage(requestDto.getOrgReplyLanguage())
                     .createdUser(user)
                     .updatedUser(user)
@@ -79,13 +82,13 @@ public class ReplyService {
 
 
   @Transactional(readOnly = true)
-  public List<ReplyRequestDto> getReplyList(Long articleId, LanguageType language) {
+  public List<ReplyResponseDto> getReplyList(Long articleId, LanguageType language) {
     Article article = articleRepository.findById(articleId).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
-    List<Reply> replyList = replyRepository.findAllByArticleAndDeleted(article, false);
+    List<Reply> replyList = replyRepository.findAllByArticleAndReplyStatus(article, FALSE);
 
     return replyList.stream()
             .map(reply ->
-                    ReplyRequestDto.of(reply, replyContentRepository
+                    ReplyResponseDto.of(reply, replyContentRepository
                             .findByReplyAndLanguage(reply, language)
                             .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)))
             .toList();
@@ -96,7 +99,7 @@ public class ReplyService {
     replyRepository
             .findById(replyId)
             .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
-            .updateStatus(ReplyStatus.TURE);
+            .updateStatus(TURE);
   }
 
 }

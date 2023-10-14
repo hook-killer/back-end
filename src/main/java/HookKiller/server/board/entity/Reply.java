@@ -41,14 +41,13 @@ import java.util.List;
 @Table(name = "tbl_reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 public class Reply extends AbstractTimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "reply")
+    @OneToMany(mappedBy = "reply", fetch = FetchType.EAGER)
     private List<ReplyContent> replyContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,7 +59,7 @@ public class Reply extends AbstractTimeStamp {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ReplyStatus isDeleted;
+    private ReplyStatus replyStatus;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
@@ -71,17 +70,17 @@ public class Reply extends AbstractTimeStamp {
     private User updatedUser;
 
     @Builder
-    public Reply(Long id, LanguageType orgReplyLanguage, ReplyStatus isDeleted,
+    public Reply(Long id, LanguageType orgReplyLanguage, ReplyStatus replyStatus,
                  User createdUser, User updatedUser) {
         this.id = id;
         this.orgReplyLanguage = orgReplyLanguage;
-        this.isDeleted = isDeleted;
+        this.replyStatus = replyStatus;
         this.createdUser = createdUser;
         this.updatedUser = updatedUser;
     }
 
     public void updateStatus(ReplyStatus status) {
-        isDeleted = status;
+        replyStatus = status;
     }
 
 }

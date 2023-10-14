@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyRequestDto extends AbstractTimeStamp {
+public class ReplyResponseDto extends AbstractTimeStamp {
 
   private Long articleId;
 
@@ -27,8 +27,8 @@ public class ReplyRequestDto extends AbstractTimeStamp {
 
   private String content;
 
-  public static ReplyRequestDto of(Reply reply, ReplyContent replyContent) {
-    return ReplyRequestDto.builder()
+  public static ReplyResponseDto of(Reply reply, ReplyContent replyContent) {
+    return ReplyResponseDto.builder()
             .replyId(reply.getId())
             .createUser(reply.getCreatedUser())
             .content(replyContent.getContent())

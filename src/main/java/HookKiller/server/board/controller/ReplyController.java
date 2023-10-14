@@ -1,6 +1,6 @@
 package HookKiller.server.board.controller;
 
-import HookKiller.server.board.dto.ReplyRequestDto;
+import HookKiller.server.board.dto.ReplyResponseDto;
 import HookKiller.server.board.service.ReplyService;
 import HookKiller.server.common.type.LanguageType;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,12 +26,12 @@ public class ReplyController {
   private final ReplyService replyService;
 
   @PostMapping
-  public void createReply(@RequestBody ReplyRequestDto requestDto) {
+  public void createReply(@RequestBody ReplyResponseDto requestDto) {
     replyService.createReply(requestDto);
   }
 
   @GetMapping("/{articleId}")
-  public List<ReplyRequestDto> getReplyList(@PathVariable Long articleId, HttpServletRequest request) {
+  public List<ReplyResponseDto> getReplyList(@PathVariable Long articleId, HttpServletRequest request) {
     return replyService.getReplyList(articleId, LanguageType.findTypeByRequest(request));
   }
 

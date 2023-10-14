@@ -33,7 +33,10 @@ public class ArticleController {
   /**
    * 단건 조회
    */
-
+  @GetMapping("/{articleId}")
+  public ArticleRequestDto getArticle(@PathVariable Long articleId, HttpServletRequest request) {
+    return articleService.getArticleByArticleId(articleId, LanguageType.findTypeByRequest(request));
+  }
 
   /**
    * 게시글 등록

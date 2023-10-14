@@ -6,19 +6,15 @@ import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.helper.KakaoOauthHelper;
 import HookKiller.server.auth.helper.OIDCHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
-import HookKiller.server.common.dto.OIDCDto;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
-import HookKiller.server.outer.api.oauth.dto.OIDCResponse;
 import HookKiller.server.properties.KakaoOauthProperties;
-import HookKiller.server.user.entity.OauthInfo;
-import HookKiller.server.user.entity.OauthProvider;
-import HookKiller.server.user.entity.RefreshTokenEntity;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.exception.AlreadyExistUserException;
 import HookKiller.server.user.repository.RefreshTokenRepository;
 import HookKiller.server.user.repository.UserRepository;
 import HookKiller.server.user.type.LoginType;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -51,68 +47,28 @@ public class UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .nickName(request.getNickName())
-                .role(request.getRole())
+                .role(UserRole.valueOf(request.getRole()))
                 .loginType(LoginType.DEFAULT)
                 .build());
         
         return ResponseEntity.ok(user);
     }
-
-    // OauthInfo를 저장하는 유저 디비에 넣기
-    public User registerUserWithOauthInfo(OauthInfo oauthInfo) {
-        // User(String email, String password, String nickName, String role, LoginType loginType, OauthInfo oauthInfo)
-        User user = User.builder()
-                .email("bongsh0112@naver.com")
-                .password("basdf")
-                .nickName("nickname")
-                .role("ROLE_USER")
-                .loginType(LoginType.DEFAULT)
-                .oauthInfo(oauthInfo)
-                .build();
-        return userRepository.save(user);
-    }
-
-    // Oauth 회원가입 시 OAuthResponse 리턴하는 메소드
-//    public OAuthResponse registerUserByOIDCToken(String idToken) {
-//        OIDCResponse oidcResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
-//        OIDCDto oidcDto = oidcHelper.getPayloadFromIdToken(idToken, kakaoOauthProperties.getKakaoBaseUrl(), kakaoOauthProperties.getKakaoAppId(), oidcResponse);
-//        OauthInfo oauthInfo = OauthInfo.builder()
-//                .provider(OauthProvider.KAKAO)
-//                .oid(oidcDto.getSub())
-//                .build();
-//        User user = registerUserWithOauthInfo(oauthInfo);
-//
-//        String newAccessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
-//
-//        String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
-//
-//        RefreshTokenEntity newRefreshTokenEntity =
-//                RefreshTokenEntity.builder()
-//                        .refreshToken(newRefreshToken)
-//                        .id(user.getId())
-//                        .ttl(jwtTokenProvider.getRefreshTokenTTLSecond())
-//                        .build();
-//        refreshTokenRepository.save(newRefreshTokenEntity);
-//
-//        return OAuthResponse.builder()
-//                .userId(user.getId())
-//                .accessToken(newAccessToken)
-//                .refreshToken(newRefreshToken)
-//                .build();
-//    }
     
     @Transactional
-    public User registerUserByOIDCToken(String idToken) {
+    public OAuthResponse registerUserByOIDCToken(String idToken) {
         OIDCUserInfo oidcUserInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
 //        KakaoUserInfoDto kakaoUserInfoDto = kakaoOauthHelper.getUserInfo(idToken);
-        return userRepository.save(User.builder()
-                        .email(oidcUserInfo.getEmail())
-                        .password("testtesttest")
-                        .nickName(oidcUserInfo.getNickName())
-                        .thumbnail(oidcUserInfo.getThumbnailImg())
-                        .loginType(LoginType.DEFAULT)
-                        .role("USER")
-                        .oauthInfo(oidcUserInfo.getOauthInfo())
-                        .build());
+        userRepository.findByEmail(oidcUserInfo.getEmail()).ifPresent(user -> {
+            throw AlreadyExistUserException.EXCEPTION;
+        });
+        return tokenGenerateHelper.execute(userRepository.save(User.builder()
+                .email(oidcUserInfo.getEmail())
+                .password("testtesttest")
+                .nickName(oidcUserInfo.getNickName())
+                .thumbnail(oidcUserInfo.getThumbnailImg())
+                .loginType(LoginType.DEFAULT)
+                .role(UserRole.valueOf("USER"))
+                .oauthInfo(oidcUserInfo.getOauthInfo())
+                .build()));
     }
 }

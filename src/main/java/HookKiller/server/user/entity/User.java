@@ -2,6 +2,7 @@ package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
 import HookKiller.server.user.type.LoginType;
+import HookKiller.server.user.type.Status;
 import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,16 +12,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
 @Getter
 @ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
 public class User extends AbstractTimeStamp {
@@ -44,31 +50,31 @@ public class User extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     
-    @Builder
-    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
-        this.email = email;
-        this.password = password;
-        this.nickName = nickName;
-        this.role = UserRole.valueOf(role);
-        this.thumbnail = thumbnail;
-        this.loginType = loginType;
-        this.oauthInfo = oauthInfo;
-    }
-
-    @Builder
-    public User(String email, String password, String nickName, String role, LoginType loginType) {
-        this.email = email;
-        this.password = password;
-        this.nickName = nickName;
-        this.role = UserRole.valueOf(role);
-        this.loginType = loginType;
-    }
-    
-    @Builder
-    public User(String role, OauthInfo oauthInfo) {
-        this.role = UserRole.valueOf(role);
-        this.oauthInfo = oauthInfo;
-    }
+//    @Builder
+//    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
+//        this.email = email;
+//        this.password = password;
+//        this.nickName = nickName;
+//        this.role = UserRole.valueOf(role);
+//        this.thumbnail = thumbnail;
+//        this.loginType = loginType;
+//        this.oauthInfo = oauthInfo;
+//    }
+//
+//    @Builder
+//    public User(String email, String password, String nickName, String role, LoginType loginType) {
+//        this.email = email;
+//        this.password = password;
+//        this.nickName = nickName;
+//        this.role = UserRole.valueOf(role);
+//        this.loginType = loginType;
+//    }
+//
+//    @Builder
+//    public User(String role, OauthInfo oauthInfo) {
+//        this.role = UserRole.valueOf(role);
+//        this.oauthInfo = oauthInfo;
+//    }
     
     //    private Long certificateKeyId;
 
@@ -77,9 +83,9 @@ public class User extends AbstractTimeStamp {
 //    private String expoToken;
 
 
-//    @Enumerated(EnumType.STRING)
-//    @ColumnDefault(value = "NOT_ACTIVE")
-//    private Status status;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status = Status.ACTIVE;
 //
     @Enumerated(EnumType.STRING)
     private LoginType loginType;

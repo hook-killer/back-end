@@ -2,10 +2,9 @@ package HookKiller.server.auth.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class SingUpRequest {
   private String nickName;
   
   @NotEmpty(message = "패스워드 입력은 필수 입니다.")
-  @Size(min = 3, max = 15)
+  @Length(min = 1)
 //  @Pattern(등등 추가)
   private String password;
   

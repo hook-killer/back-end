@@ -2,31 +2,28 @@ package HookKiller.server.jwt;
 
 import HookKiller.server.auth.exception.ExpiredTokenException;
 import HookKiller.server.auth.exception.InvalidTokenException;
-import HookKiller.server.auth.service.CustomUserDetails;
 import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.properties.JwtProperties;
-import HookKiller.server.user.entity.User;
-import HookKiller.server.user.type.UserRole;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import static HookKiller.server.jwt.ClaimVal.*;
-import static org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE;
+import static HookKiller.server.jwt.ClaimVal.ACCESS_TOKEN;
+import static HookKiller.server.jwt.ClaimVal.REFRESH_TOKEN;
+import static HookKiller.server.jwt.ClaimVal.TOKEN_ROLE;
+import static HookKiller.server.jwt.ClaimVal.TYPE;
 
 @Slf4j
 @Component
@@ -135,9 +132,9 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // 토근 형식 확인
+    // 토큰 형식 확인
     public boolean isAccessToken(String token) {
-        return getJws(token).getBody().get(TYPE.getValue()).equals(ACCESS_TOKEN);
+        return getJws(token).getBody().get(TYPE.getValue()).equals(ACCESS_TOKEN.getValue());
     }
 
     public boolean isRefreshToken(String token) {
@@ -145,8 +142,10 @@ public class JwtTokenProvider {
     }
 
     public AccessTokenDetail parseAccessToken(String token) {
+        log.info("accessToken 파싱중...");
         if (isAccessToken(token)) {
             Claims claims = getJws(token).getBody();
+            log.info("claim의 body를 가져옴 : {}", claims.toString());
             return AccessTokenDetail.builder()
                     .userId(Long.parseLong(claims.getSubject()))
                     .role((String) claims.get(TOKEN_ROLE.getValue()))

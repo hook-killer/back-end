@@ -9,6 +9,5 @@ select 1 from dual;
 
 insert into tbl_user (email, password, nick_name, role) values ("admin@test.com", "11111111", "관리자", "ADMIN");
 
-
 insert into tbl_user (email, password, nick_name, role) values ("user@test.com", "11111111", "사용자", "USER");
 

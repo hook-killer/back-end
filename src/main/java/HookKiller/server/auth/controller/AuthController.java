@@ -49,9 +49,14 @@ public class AuthController {
         return authService.loginExecute(body);
     }
     
+    @GetMapping("/login/test")
+    public boolean loginTest(@RequestParam String accessToken) {
+        return authService.loginExecuteTest(accessToken);
+    }
+    
     @PostMapping("/logout")
-    public void logout(){
-        // React Cookie 삭제로 구현할 것. 따로 로직은 필요없음
+    public boolean logout() {
+        return true;
     }
 
     // kakao Oauth 링크를 프론트에 전달해줌.
@@ -98,8 +103,12 @@ public class AuthController {
     @PostMapping("/oauth/kakao/register")
     public OAuthResponse registerUser(
             @RequestParam("id_token") String token) {
-        log.info("Controller 들어옴!");
-        User user = userService.registerUserByOIDCToken(token);
-        return tokenGenerateHelper.execute(user);
+        return userService.registerUserByOIDCToken(token);
+    }
+    
+    // 받은 idToken을 이용해서 우리가 쓰는 accessToken 발급받기
+    @PostMapping("/oauth/kakao/login")
+    public OAuthResponse oauthLogin(@RequestParam String idToken) {
+        return authService.loginUserByIdToken(idToken);
     }
 }

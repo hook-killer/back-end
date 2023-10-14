@@ -4,6 +4,7 @@ import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.ArticleContent;
 import HookKiller.server.board.repository.ArticleContentRepository;
+import HookKiller.server.common.service.TranslateService;
 import HookKiller.server.common.type.LanguageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleContentService {
   private final ArticleContentRepository articleContentRepository;
+  private final TranslateService translateService;
 
   public void createContent(PostArticleRequestDto requestDto, Article article) {
 
@@ -30,8 +32,8 @@ public class ArticleContentService {
                     languageType -> ArticleContent.builder()
                             .article(article)
                             .language(languageType)
-                            // .title(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()))
-                            // .content(getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()))
+                             // .title(translateService.naverPapagoTextTranslate(requestDto.getOrgArticleLanguage(), languageType.getLanguageCode(), requestDto.getTitle()))
+                             // .content(translateService.naverPapagoHtmlTranslate(requestDto.getOrgArticleLanguage(), languageType.getLanguageCode(), requestDto.getContent()))
                             .build()
             ).toList()
     );
@@ -63,8 +65,9 @@ public class ArticleContentService {
         existingContents.stream()
                 .filter(content -> content.getLanguage().equals(languageType))
                 .forEach(content -> {
-                  // content.articleUpdate(getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()),
-                          // getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()));
+                   content.articleUpdate(
+                           getTranslatePapagoTextArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getTitle()),
+                           getTranslatePapagoHTMLArticleContent(requestDto.getOrgArticleLanguage().getLanguageCode(), languageType.getLanguageCode(), requestDto.getContent()));
                 });
       }
     }

@@ -1,7 +1,12 @@
 package HookKiller.server.board.entity;
 
+import HookKiller.server.board.type.ReplyStatus;
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.user.entity.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +15,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,20 +40,48 @@ import java.util.List;
 @Getter
 @Table(name = "tbl_reply")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Reply extends AbstractTimeStamp {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany(mappedBy = "reply")
+    private List<ReplyContent> replyContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="article_id")
     private Article article;
 
-    @OneToMany(mappedBy = "reply")
-    private List<ReplyContent> replyContent;
+    @NotNull
+    private LanguageType orgReplyLanguage;
 
-    private String orgReplyLanguage;
-    private boolean isDeleted;
-    private Long createdUserId;
-    private Long updatedUserId;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private ReplyStatus isDeleted;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User createdUser;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User updatedUser;
+
+    @Builder
+    public Reply(Long id, LanguageType orgReplyLanguage, ReplyStatus isDeleted,
+                 User createdUser, User updatedUser) {
+        this.id = id;
+        this.orgReplyLanguage = orgReplyLanguage;
+        this.isDeleted = isDeleted;
+        this.createdUser = createdUser;
+        this.updatedUser = updatedUser;
+    }
+
+    public void updateStatus(ReplyStatus status) {
+        isDeleted = status;
+    }
+
 }

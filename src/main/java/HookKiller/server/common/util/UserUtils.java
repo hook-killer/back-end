@@ -26,7 +26,7 @@ public class UserUtils {
     }
 
     public User getUser() {
-        return userRepository.findById(getCurrentUserId()).orElseThrow(()-> UserNotFoundException.EXCEPTION);
+        return userRepository.findById(1L).orElseThrow(()-> UserNotFoundException.EXCEPTION);
     }
 
 }

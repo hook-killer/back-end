@@ -3,6 +3,7 @@ package HookKiller.server.board.service;
 import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.entity.Article;
+import HookKiller.server.board.entity.ArticleContent;
 import HookKiller.server.board.entity.Board;
 import HookKiller.server.board.exception.ArticleContentNotFoundException;
 import HookKiller.server.board.exception.BoardNotFoundException;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static HookKiller.server.board.type.ArticleStatus.PUBLIC;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class ArticleService {
   public List<ArticleRequestDto> getArticleList(Long boardId, LanguageType language) {
     // boardId로 board에 해당하는 Article들을 모두 뽑아온다
     Board board = boardRepository.findById(boardId).orElseThrow(()-> BoardNotFoundException.EXCEPTION);
-    List<Article> articleList = articleRepository.findAllByBoardAndArticleStatus(board, ArticleStatus.PUBLIC);
+    List<Article> articleList = articleRepository.findAllByBoardAndArticleStatus(board, PUBLIC);
 
     return articleList.stream()
             .map(article ->
@@ -45,6 +48,15 @@ public class ArticleService {
             .toList();
   }
 
+  @Transactional(readOnly = true)
+  public ArticleRequestDto getArticleByArticleId(Long articleId, LanguageType language) {
+    Article article = articleRepository.findByIdAndArticleStatus(articleId, PUBLIC)
+            .orElseThrow(()-> ArticleContentNotFoundException.EXCEPTION);
+    ArticleContent content = articleContentRepository.findByArticleAndLanguage(article, language)
+            .orElseThrow(()-> ArticleContentNotFoundException.EXCEPTION);
+    return ArticleRequestDto.of(article, content);
+  }
+
   public Article createArticle(PostArticleRequestDto postArticleRequestDto) {
     Board board = boardRepository.findById(postArticleRequestDto.getBoardId())
             .orElseThrow(() -> BoardNotFoundException.EXCEPTION);
@@ -52,7 +64,7 @@ public class ArticleService {
     User requestUser = userUtils.getUser();
     return articleRepository.save(Article.builder()
             .board(board)
-            .articleStatus(ArticleStatus.PUBLIC)
+            .articleStatus(PUBLIC)
             .orgArticleLanguage(postArticleRequestDto.getOrgArticleLanguage())
             .createdUser(requestUser)
             .updatedUser(requestUser)
@@ -86,4 +98,5 @@ public class ArticleService {
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)
             .updateStatus(ArticleStatus.DELETE);
   }
+
 }

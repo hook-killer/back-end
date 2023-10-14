@@ -2,6 +2,7 @@ package HookKiller.server.common.service;
 
 import HookKiller.server.common.dto.FileUploadResponse;
 import HookKiller.server.common.dto.ImageUploadRequest;
+import HookKiller.server.common.dto.ImagesUploadRequest;
 import HookKiller.server.common.entity.FileResources;
 import HookKiller.server.common.file.NaverObjectStorageUsageType;
 import HookKiller.server.common.file.NaverObjectStorageUtil;
@@ -24,7 +25,7 @@ public class FileService {
     private final FileRepository fileRepository;
 
     @Transactional
-    public List<FileUploadResponse> getUploadImagePaths(ImageUploadRequest request) {
+    public List<FileUploadResponse> getUploadImagePaths(ImagesUploadRequest request) {
         User loginUser = userUtils.getUser();
         NaverObjectStorageUsageType usageType = request.getNaverObjectStorageUsageType();
         return request.getImages().stream().map(
@@ -38,5 +39,20 @@ public class FileService {
                         )
                 )
         ).toList();
+    }
+
+    @Transactional
+    public FileUploadResponse getUploadImagePaths(ImageUploadRequest request) {
+        User loginUser = userUtils.getUser();
+        NaverObjectStorageUsageType usageType = request.getNaverObjectStorageUsageType();
+        return FileUploadResponse.of(
+                fileRepository.save(
+                        FileResources.builder()
+                                .usageType(usageType)
+                                .path(naverObjectStorageUtil.storageFileUpload(usageType, request.getImage()))
+                                .createdUser(loginUser)
+                                .build()
+                )
+        );
     }
 }

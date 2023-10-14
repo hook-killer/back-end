@@ -16,6 +16,8 @@ import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +37,10 @@ public class ArticleService {
   private final ArticleRepository articleRepository;
   private final ArticleContentRepository articleContentRepository;
 
-  public List<ArticleRequestDto> getArticleList(Long boardId, LanguageType language) {
+  public List<ArticleRequestDto> getArticleList(int page, int articleLimit, Long boardId, LanguageType language) {
     // boardId로 board에 해당하는 Article들을 모두 뽑아온다
     Board board = boardRepository.findById(boardId).orElseThrow(()-> BoardNotFoundException.EXCEPTION);
-    List<Article> articleList = articleRepository.findAllByBoardAndArticleStatus(board, PUBLIC);
-
+    Page<Article> articleList = articleRepository.findAllByBoardAndArticleStatusOrderByCreateAtDesc(board, PUBLIC, PageRequest.of(page, articleLimit));
     return articleList.stream()
             .map(article ->
                     ArticleRequestDto.of(article, articleContentRepository

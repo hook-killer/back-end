@@ -26,8 +26,12 @@ public class ArticleController {
    * 게시글 조회
    */
   @GetMapping("/{boardId}")
-  public List<ArticleRequestDto> getArticleList(@PathVariable Long boardId, HttpServletRequest request) {
-    return articleService.getArticleList(boardId, LanguageType.findTypeByRequest(request));
+  public List<ArticleRequestDto> getArticleList(
+          @RequestParam(defaultValue = "0", required = false) int page,
+          @RequestParam(defaultValue = "10", required = false) int articleLimit,
+          @PathVariable Long boardId,
+          HttpServletRequest request) {
+    return articleService.getArticleList(page, articleLimit, boardId, LanguageType.findTypeByRequest(request));
   }
 
   /**

@@ -1,7 +1,7 @@
 package HookKiller.server.user.service;
 
-import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.OIDCUserInfo;
+import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.helper.KakaoOauthHelper;
 import HookKiller.server.auth.helper.OIDCHelper;
@@ -26,7 +26,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -60,7 +59,7 @@ public class UserService {
     }
 
     // OauthInfo를 저장하는 유저 디비에 넣기
-    public User registerUserWithOauthInfo(OauthInfo oauthInfo, SingUpRequest singUpRequest) {
+    public User registerUserWithOauthInfo(OauthInfo oauthInfo) {
         // User(String email, String password, String nickName, String role, LoginType loginType, OauthInfo oauthInfo)
         User user = User.builder()
                 .email("bongsh0112@naver.com")
@@ -74,33 +73,34 @@ public class UserService {
     }
 
     // Oauth 회원가입 시 OAuthResponse 리턴하는 메소드
-    public OAuthResponse registerUserByOIDCToken(String idToken, SingUpRequest singUpRequest) {
-        OIDCResponse oidcResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
-        OIDCDto oidcDto = oidcHelper.getPayloadFromIdToken(idToken, kakaoOauthProperties.getKakaoBaseUrl(), kakaoOauthProperties.getKakaoAppId(), oidcResponse);
-        OauthInfo oauthInfo = OauthInfo.builder()
-                .provider(OauthProvider.KAKAO)
-                .oid(oidcDto.getSub())
-                .build();
-        User user = registerUserWithOauthInfo(oauthInfo, singUpRequest);
-        
-        String newAccessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
-        
-        String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
-        
-        RefreshTokenEntity newRefreshTokenEntity =
-                RefreshTokenEntity.builder()
-                        .refreshToken(newRefreshToken)
-                        .id(user.getId())
-                        .ttl(jwtTokenProvider.getRefreshTokenTTLSecond())
-                        .build();
-        refreshTokenRepository.save(newRefreshTokenEntity);
-        
-        return OAuthResponse.builder()
-                .userId(user.getId())
-                .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)
-                .build();
-    }
+//    public OAuthResponse registerUserByOIDCToken(String idToken) {
+//        OIDCResponse oidcResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
+//        OIDCDto oidcDto = oidcHelper.getPayloadFromIdToken(idToken, kakaoOauthProperties.getKakaoBaseUrl(), kakaoOauthProperties.getKakaoAppId(), oidcResponse);
+//        OauthInfo oauthInfo = OauthInfo.builder()
+//                .provider(OauthProvider.KAKAO)
+//                .oid(oidcDto.getSub())
+//                .build();
+//        User user = registerUserWithOauthInfo(oauthInfo);
+//
+//        String newAccessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
+//
+//        String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
+//
+//        RefreshTokenEntity newRefreshTokenEntity =
+//                RefreshTokenEntity.builder()
+//                        .refreshToken(newRefreshToken)
+//                        .id(user.getId())
+//                        .ttl(jwtTokenProvider.getRefreshTokenTTLSecond())
+//                        .build();
+//        refreshTokenRepository.save(newRefreshTokenEntity);
+//
+//        return OAuthResponse.builder()
+//                .userId(user.getId())
+//                .accessToken(newAccessToken)
+//                .refreshToken(newRefreshToken)
+//                .build();
+//    }
+    
     @Transactional
     public User registerUserByOIDCToken(String idToken) {
         OIDCUserInfo oidcUserInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);

@@ -24,7 +24,6 @@ public class TokenGenerateHelper {
         log.info("TokenGenerateHelper 들어옴! userid : {}", user.getId());
         String newAccessToken =
                 jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
-
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
         log.info("new AccessToken : {}, new RefreshToken : {}", newAccessToken, newRefreshToken);
         

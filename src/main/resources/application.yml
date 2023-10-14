@@ -4,9 +4,6 @@ spring:
     include:
       - db
       - auth
-  security:
-    session:
-      store-type: MEMORY
       - papago
 
 
@@ -32,21 +29,17 @@ naver:
     region-name: kr-standard
     bucket-name: hook-killer-file-bucket
 
-
-
 auth:
   jwt:
     header: "Authorization"
-    prefix: "Bearer"
+    prefix: "Bearer "
     secret-key: hokasdofkoasdkfoafjasdlkfjsadlkfjeijflasdkfjasdfasdfasdfaefargagstrghehasdfasfaegargasfsadfdaga
     access-exp: 36000
     refresh-exp: 3600
     issuer: hookkiller
     exclude-path: [
-      "/auth/**",
-      "/auth/oauth/**",
-      "/user/**",
-      "/notice/**"
+      "/api/**",
+      "/user/**"
     ]
 
 oauth2:

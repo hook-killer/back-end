@@ -10,8 +10,8 @@ import HookKiller.server.auth.helper.TokenGenerateHelper;
 import HookKiller.server.auth.service.AuthService;
 import HookKiller.server.auth.service.CustomUserDetailsService;
 import HookKiller.server.jwt.JwtTokenProvider;
-import HookKiller.server.user.entity.User;
 import HookKiller.server.outer.api.oauth.client.KakaoInfoClient;
+import HookKiller.server.user.entity.User;
 import HookKiller.server.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -86,13 +86,14 @@ public class AuthController {
         }
         return authService.getCredentialFromKaKao(code, referer);
     }
+    
     // oidc를 안쓰면 코드만으로도 회원가입이 가능함. 근데 우리는 oidc를 쓰니까 일단 막아놓자
 //    @GetMapping("/oauth/kakao/develop")
 //    public OAuthResponse registerUserByCode(@RequestParam String code) {
 //        log.error("김종원이 승리했다.");
 //        return authService.registerUserByKakaoCode(code);
 //    }
-
+    
     // 받은 idToken으로 카카오 서버의 사용자 정보를 사용할 수 있는지 OIDC로 인증 및 인가 받고 회원가입 처리
     @PostMapping("/oauth/kakao/register")
     public OAuthResponse registerUser(

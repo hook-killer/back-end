@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * id : PK
@@ -29,6 +30,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "tbl_article_content")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArticleContent {
@@ -39,7 +41,7 @@ public class ArticleContent {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="article_id")
+    @JoinColumn(name = "article_id")
     private Article article;
 
     @Enumerated(EnumType.STRING)
@@ -56,11 +58,6 @@ public class ArticleContent {
     public ArticleContent(Article article, LanguageType language, String title, String content) {
         this.article = article;
         this.language = language;
-        this.title = title;
-        this.content = content;
-    }
-
-    public void articleUpdate(String title, String content) {
         this.title = title;
         this.content = content;
     }

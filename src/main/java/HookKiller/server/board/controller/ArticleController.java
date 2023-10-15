@@ -2,13 +2,13 @@ package HookKiller.server.board.controller;
 
 import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.dto.PostArticleRequestDto;
-import HookKiller.server.board.service.ArticleContentService;
+import HookKiller.server.board.entity.Board;
 import HookKiller.server.board.service.ArticleService;
 import HookKiller.server.common.type.LanguageType;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +20,9 @@ import java.util.List;
 public class ArticleController {
 
   private final ArticleService articleService;
-  private final ArticleContentService articleContentService;
 
   /**
-   * 게시글 조회
+   * 리스트 조회 조회
    */
   @GetMapping("/{boardId}")
   public List<ArticleRequestDto> getArticleList(
@@ -46,20 +45,16 @@ public class ArticleController {
    * 게시글 등록
    */
   @PostMapping
-  public ResponseEntity<String> createArticle(@RequestBody PostArticleRequestDto requestDto) {
-    articleContentService.createContent(
-            requestDto, articleService.createArticle(requestDto)
-    );
-    return ResponseEntity.ok("Article Create Success");
+  public void createArticle(@RequestBody @Valid PostArticleRequestDto requestDto, Board board) {
+    articleService.createArticle(requestDto, board);
   }
 
   /**
    * 게시물 수정
    */
   @PutMapping
-  public ResponseEntity<String> updateArticle(@RequestBody PostArticleRequestDto requestDto) {
-    articleContentService.updateContent(requestDto, articleService.updateArticle(requestDto));
-    return ResponseEntity.ok("Article Create Success");
+  public void updateArticle(@RequestBody @Valid  PostArticleRequestDto requestDto) {
+    articleService.updateArticle(requestDto);
   }
 
 
@@ -67,9 +62,8 @@ public class ArticleController {
    * 게시물 삭제
    */
   @DeleteMapping("/{articleId}")
-  public ResponseEntity<String> deleteArticle(@PathVariable Long articleId) {
-    articleService.deleteArticle(articleId);
-    return ResponseEntity.ok("삭제처리가 완료되었습니다.");
+  public void deleteArticle(@PathVariable ArticleRequestDto requestDto) {
+    articleService.deleteArticle(requestDto);
   }
 
 }

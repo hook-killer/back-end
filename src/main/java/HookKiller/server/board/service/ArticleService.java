@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static HookKiller.server.board.type.ArticleStatus.PUBLIC;
@@ -65,7 +64,7 @@ public class ArticleService {
     User requestUser = userUtils.getUser();
     return articleRepository.save(Article.builder()
             .board(board)
-            .articleStatus(PUBLIC)
+            .articleStatus(ArticleStatus.PUBLIC)
             .orgArticleLanguage(postArticleRequestDto.getOrgArticleLanguage())
             .createdUser(requestUser)
             .updatedUser(requestUser)
@@ -99,5 +98,4 @@ public class ArticleService {
             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)
             .updateStatus(ArticleStatus.DELETE);
   }
-
 }

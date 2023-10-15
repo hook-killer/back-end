@@ -1,9 +1,7 @@
 package HookKiller.server.admin.service;
 
-import HookKiller.server.admin.exception.UserNotAdminException;
 import HookKiller.server.auth.dto.request.RegisterRequest;
 import HookKiller.server.auth.exception.UserNotFoundException;
-import HookKiller.server.common.exception.IllegalArgumentException;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.dto.UserDto;
 import HookKiller.server.user.entity.User;
@@ -37,11 +35,7 @@ public class AdminService {
     @Transactional
     public void regAdmin(RegisterRequest registerRequest) {
 
-        User requestAdmin = userUtils.getUser();
-
-        if (!requestAdmin.getRole().equals(ADMIN)) {
-            throw UserNotAdminException.EXCEPTION;
-        }
+        User requestAdmin = userUtils.verificationRequestUserAdminAndGetUser();
 
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw AlreadyExistUserException.EXCEPTION;
@@ -63,8 +57,7 @@ public class AdminService {
      */
     @Transactional(readOnly = true)
     public List<UserDto> acctListByRole(UserRole role) {
-
-        authorityVerification();
+        userUtils.verificationiRequestUserAdmin();
 
         // 계정을 role로 구분
         List<User> accounts = (role == ADMIN) ?
@@ -89,29 +82,12 @@ public class AdminService {
     @Transactional
     public void modifyAcctStat(Long id, Status status) {
 
-        authorityVerification();
+        userUtils.verificationiRequestUserAdmin();
+        log.info("계정 {} >>> {}", status, id);
 
-        String action = switch (status) {
-            case DELETE -> "삭제";
-            case NOT_ACTIVE -> "비활성화";
-            case ACTIVE -> "활성화";
-            case SUSPENSION -> "정지";
-            default -> throw IllegalArgumentException.EXCEPTION;
-        };
-
-        log.info("계정 {} >>> {}", action, id);
-
-        userRepository.findById(id).orElseThrow(() ->
-                UserNotFoundException.EXCEPTION).updateUserStatus(status);
-    }
-
-    /**
-     * 권한 확인 메서드
-     */
-    private void authorityVerification() {
-        if (!userUtils.getUser().getRole().equals(ADMIN)) {
-            throw UserNotAdminException.EXCEPTION;
-        }
+        userRepository.findById(id)
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION)
+                .updateUserStatus(status);
     }
 
 }

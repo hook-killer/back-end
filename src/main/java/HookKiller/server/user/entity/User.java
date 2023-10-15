@@ -58,6 +58,11 @@ public class User extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Status status = Status.ACTIVE;
+
+    public void updateUserStatus(Status userStatus) {
+        this.status = userStatus;
+    }
+
 //
 //    @Enumerated(EnumType.STRING)
 //    private LoginType loginType;

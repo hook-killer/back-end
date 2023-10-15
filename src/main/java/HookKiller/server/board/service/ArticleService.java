@@ -135,7 +135,6 @@ public class ArticleService {
     articleContentRepository.saveAll(articleContentList);
   }
 
-
   @Transactional
   public void updateArticle(PostArticleRequestDto requestDto) {
 

@@ -26,8 +26,8 @@ public class ReplyController {
   private final ReplyService replyService;
 
   @PostMapping
-  public void createReply(@RequestBody ReplyResponseDto requestDto) {
-    replyService.createReply(requestDto);
+  public void createReply(@RequestBody ReplyResponseDto responseDto) {
+    replyService.createReply(responseDto);
   }
 
   @GetMapping("/{articleId}")

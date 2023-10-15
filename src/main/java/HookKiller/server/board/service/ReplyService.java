@@ -37,14 +37,14 @@ public class ReplyService {
   private final TranslateService translateService;
 
   @Transactional
-  public void createReply(ReplyResponseDto requestDto) {
+  public void createReply(ReplyResponseDto responseDto) {
 
     User user = userUtils.getUser();
 
     Reply reply = replyRepository.save(
             Reply.builder()
                     .replyStatus(FALSE)
-                    .orgReplyLanguage(requestDto.getOrgReplyLanguage())
+                    .orgReplyLanguage(responseDto.getOrgReplyLanguage())
                     .createdUser(user)
                     .updatedUser(user)
                     .build()
@@ -54,12 +54,12 @@ public class ReplyService {
     replyContentList.add(
             ReplyContent.builder()
                     .reply(reply)
-                    .language(requestDto.getOrgReplyLanguage())
-                    .content(requestDto.getContent())
+                    .language(responseDto.getOrgReplyLanguage())
+                    .content(responseDto.getContent())
                     .build()
     );
 
-    requestDto
+    responseDto
             .getOrgReplyLanguage()
             .getTranslateTargetLanguage()
             .forEach(targetLanguage ->
@@ -70,7 +70,7 @@ public class ReplyService {
                                     .language(targetLanguage)
                                     .content(
                                             translateService.naverPapagoTextTranslate(
-                                                    requestDto.getOrgReplyLanguage(), targetLanguage, requestDto.getContent()
+                                                    responseDto.getOrgReplyLanguage(), targetLanguage, responseDto.getContent()
                                             )
                                     )
                                     .build()

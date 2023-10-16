@@ -35,9 +35,11 @@ public class ArticleLikeService {
      */
     @Transactional(readOnly = true)
     public CommonBooleanResultResponse isUserArticleLike(Long articleId) {
-        boolean result = articleLikeRepository.findByArticleAndUser(
-                this.findByArticleId(articleId), userUtils.getUserIsStatusActive()
-        ).isPresent();
+        User user = userUtils.getUserIsStatusActive();
+        Article article = this.findByArticleId(articleId);
+        boolean result = articleLikeRepository.findByArticleAndUser(article, user).isPresent();
+
+        log.info("IsUserArticleLike 조회 유저 >>> {} , 조회 요청 ArticleId >>> {}", user.getEmail(), article.getId());
 
         return CommonBooleanResultResponse.builder()
                 .result(result)
@@ -65,6 +67,7 @@ public class ArticleLikeService {
         //true가 없는 케이스
         boolean isNotExistsArticleLike = articleLikeRepository.findByArticleAndUser(article, user).isEmpty();
         if (isNotExistsArticleLike) {
+            log.info("Add Article Like : UserEmail >>> {}, ArticleId >>> {}", user.getEmail(), article.getId());
             articleLikeRepository.save(
                     ArticleLike.builder().article(article).user(user).build()
             );
@@ -72,9 +75,11 @@ public class ArticleLikeService {
             return ArticleLikeConstants.ARTICLE_LIKE_RTN_MSG_INSERT_STATUS;
         }
         if (articleLikeRepository.deleteByArticleAndUser(article, user).isPresent()) {
+            log.info("Delete Article Like : UserEmail >>> {}, ArticleId >>> {}", user.getEmail(), article.getId());
             article.minusLikeCount();
             return ArticleLikeConstants.ARTICLE_LIKE_RTN_MSG_DELETE_STATUS;
         }
+        log.error("Delete Error ArticleLike : UserEmail >>> {} , ArticleId >>> {}", user.getEmail(), article.getId());
         throw DeleteFailException.EXCEPTION;
     }
 

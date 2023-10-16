@@ -82,6 +82,14 @@ public class Article extends AbstractTimeStamp {
     articleStatus = status;
   }
 
+  public void addLikeCount() {
+    this.likeCount++;
+  }
+  public void minusLikeCount() {
+    if(this.likeCount > 0)
+      this.likeCount--;
+  }
+
   @Builder
   public Article(Board board, Long id, LanguageType orgArticleLanguage, ArticleStatus articleStatus, User createdUser, User updatedUser) {
     this.board = board;

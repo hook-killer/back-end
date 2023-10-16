@@ -68,9 +68,11 @@ public class ArticleLikeService {
             articleLikeRepository.save(
                     ArticleLike.builder().article(article).user(user).build()
             );
+            article.addLikeCount();
             return ArticleLikeConstants.ARTICLE_LIKE_RTN_MSG_INSERT_STATUS;
         }
         if (articleLikeRepository.deleteByArticleAndUser(article, user).isPresent()) {
+            article.minusLikeCount();
             return ArticleLikeConstants.ARTICLE_LIKE_RTN_MSG_DELETE_STATUS;
         }
         throw DeleteFailException.EXCEPTION;

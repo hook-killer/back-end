@@ -2,6 +2,10 @@ package HookKiller.server.admin.service;
 
 import HookKiller.server.auth.dto.request.RegisterRequest;
 import HookKiller.server.auth.exception.UserNotFoundException;
+import HookKiller.server.board.dto.ArticleRequestDto;
+import HookKiller.server.board.entity.ArticleContent;
+import HookKiller.server.board.repository.ArticleContentRepository;
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.dto.UserDto;
 import HookKiller.server.user.entity.User;
@@ -25,6 +29,7 @@ import static HookKiller.server.user.type.UserRole.USER;
 @RequiredArgsConstructor
 public class AdminService {
 
+    private final ArticleContentRepository articleContentRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserUtils userUtils;
@@ -57,7 +62,7 @@ public class AdminService {
      */
     @Transactional(readOnly = true)
     public List<UserDto> acctListByRole(UserRole role) {
-        userUtils.verificationiRequestUserAdmin();
+        userUtils.verificationRequestUserAdmin();
 
         // 계정을 role로 구분
         List<User> accounts = (role == ADMIN) ?
@@ -82,12 +87,27 @@ public class AdminService {
     @Transactional
     public void modifyAcctStat(Long id, Status status) {
 
-        userUtils.verificationiRequestUserAdmin();
+        userUtils.verificationRequestUserAdmin();
         log.info("계정 {} >>> {}", status, id);
 
         userRepository.findById(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION)
                 .updateUserStatus(status);
+    }
+
+    /**
+     * 사용자 게시글 조회
+     */
+    @Transactional(readOnly = true)
+    public List<ArticleRequestDto> acctArticleList(ArticleContent contentId, LanguageType languageType, User userId) {
+
+        userUtils.verificationRequestUserAdmin();
+
+        ArticleContent content = articleContentRepository.findAllByContentIdAndUserId(contentId, userId)
+                        .orElseThrow(() -> )
+        log.info("조회 대상 사용자 ID >>> {}", userId);
+
+
     }
 
 }

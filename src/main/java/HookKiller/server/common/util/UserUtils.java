@@ -35,7 +35,7 @@ public class UserUtils {
     /**
      * 사용자 정보에 대한 반환은 하지 않으며, 현재 요청을 보낸 사용자가 `관리자`인지를 확인한다.
      */
-    public void verificationiRequestUserAdmin() {
+    public void verificationRequestUserAdmin() {
         this.verificationRequestUserAdminAndGetUser();
     }
 
@@ -45,7 +45,7 @@ public class UserUtils {
      */
     public User verificationRequestUserAdminAndGetUser() {
         User user = this.getUser();
-        if (user.getRole().equals(ADMIN)) {
+        if (!user.getRole().equals(ADMIN)) {
             throw UserNotAdminException.EXCEPTION;
         }
         return user;

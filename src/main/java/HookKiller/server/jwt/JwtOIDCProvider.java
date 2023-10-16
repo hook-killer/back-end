@@ -45,10 +45,10 @@ public class JwtOIDCProvider {
             log.info("headerClaimsJwt : {}", headerClaimsJwt.toString());
             return headerClaimsJwt;
         } catch (ExpiredJwtException e) {
-            log.info("여기?");
+            log.info("jwt 생성 유효시간 초과");
             throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
-            log.info("아니면 여기?");
+            log.info("토큰 만료");
             e.printStackTrace();
             throw InvalidTokenException.EXCEPTION;
         }

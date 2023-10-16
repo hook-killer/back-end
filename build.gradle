@@ -71,9 +71,6 @@ dependencies {
     implementation 'io.github.openfeign:feign-httpclient:12.4'
     implementation 'io.github.openfeign:feign-core:12.4'
 
-
-//    implementation 'io.github.openfeign:feign-jackson:12.5'
-
     // Amazon AWS Java SDK s3 And File
     implementation 'commons-io:commons-io:2.13.0'
     implementation('com.amazonaws:aws-java-sdk-s3:1.12.530') {

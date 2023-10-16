@@ -25,20 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Slf4j
 public class AuthController {
 
     
-    private final JwtTokenProvider jwtTokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
     private final AuthService authService;
     private final UserService userService;
-    private final KakaoInfoClient kakaoInfoClient;
-    private final TokenGenerateHelper tokenGenerateHelper;
-    
+
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid SingUpRequest request) {
         return userService.registerUser(request);

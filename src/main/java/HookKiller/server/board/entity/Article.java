@@ -1,7 +1,7 @@
 package HookKiller.server.board.entity;
 
-import HookKiller.server.board.type.ArticleStatus;
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.user.entity.User;
 import jakarta.persistence.CascadeType;

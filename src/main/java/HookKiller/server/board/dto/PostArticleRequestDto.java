@@ -1,7 +1,6 @@
 package HookKiller.server.board.dto;
 
 import HookKiller.server.common.type.LanguageType;
-import HookKiller.server.user.entity.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,7 +31,4 @@ public class PostArticleRequestDto {
   @NotEmpty(message = "내용이 입력되지 않았습니다.")
   private String content;
   private String newContent;
-
-  @NotNull
-  private User createdUser;
 }

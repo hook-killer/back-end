@@ -1,6 +1,7 @@
 package HookKiller.server.common.service;
 
-import HookKiller.server.common.dto.*;
+import HookKiller.server.common.dto.PapagoTextRequest;
+import HookKiller.server.common.dto.PapagoTextResponse;
 import HookKiller.server.common.exception.NaverErrorException;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.properties.PapagoProperties;
@@ -8,14 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j

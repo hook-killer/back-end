@@ -49,11 +49,10 @@ public record CustomUserDetails(String userId, String role, String nickname) imp
         return true;
     }
     
-    public static CustomUserDetails of(String userId, String role, String nickname) {
+    public static CustomUserDetails of(String userId, String role) {
         return CustomUserDetails.builder()
                 .userId(userId)
                 .role(role)
-                .nickname(nickname)
                 .build();
     }
     

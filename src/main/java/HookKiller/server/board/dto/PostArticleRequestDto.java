@@ -3,7 +3,6 @@ package HookKiller.server.board.dto;
 import HookKiller.server.common.type.LanguageType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,9 @@ public class PostArticleRequestDto {
 
   @NotEmpty(message = "제목이 입력되지 않았습니다.")
   private String title;
+  private String newTitle;
 
   @NotEmpty(message = "내용이 입력되지 않았습니다.")
   private String content;
+  private String newContent;
 }

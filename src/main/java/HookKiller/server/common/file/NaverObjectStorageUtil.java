@@ -91,7 +91,7 @@ public class NaverObjectStorageUtil {
      * @param metadata
      */
     @Async
-    protected void uploadFile(NaverObjectStorageUsageType usageType, String filePath, InputStream uploadTarget, ObjectMetadata metadata) {
+    public void uploadFile(NaverObjectStorageUsageType usageType, String filePath, InputStream uploadTarget, ObjectMetadata metadata) {
         storageObject.putObject(
                 new PutObjectRequest(
                         naverObjectStorageProperties.getBucketName(),

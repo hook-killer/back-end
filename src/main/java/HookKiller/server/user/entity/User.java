@@ -4,15 +4,13 @@ import HookKiller.server.common.AbstractTimeStamp;
 import HookKiller.server.user.type.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
 public class User extends AbstractTimeStamp {
@@ -35,6 +33,11 @@ public class User extends AbstractTimeStamp {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    public void updatePasswordAndNickname(String nickName, String password) {
+        this.nickName = nickName;
+        this.password = password;
+    }
     
     @Builder
     public User(String email, String password, String nickName, String role) {

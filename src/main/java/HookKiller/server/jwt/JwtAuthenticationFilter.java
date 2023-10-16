@@ -5,6 +5,7 @@ import HookKiller.server.auth.exception.TokenException;
 import HookKiller.server.auth.exception.TokenNotFoundException;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.service.CustomUserDetails;
+import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.properties.JwtProperties;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,11 +29,11 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    
+
     private final UserDetailsService userDetailsService;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtProperties jwtProperties;
-    
+
 
     @Value("${auth.jwt.header}") private String HEADER_STRING;
     @Value("${auth.jwt.prefix}") private String TOKEN_PREFIX;
@@ -43,23 +45,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // 토근을 가져옴
         String header = request.getHeader(HEADER_STRING);
-        String username = null;
         String authToken = null;
 
         // Bearer token인 경우 JWT 토큰 유효성 검사 진행
         // AuthenticationManager 역할을 함. -> 토큰이 인증되어있으면 필터로 보내서 context에 저장. 토큰이 인증되어있지 않다면 AuthenticationProvider로 보내어 인증하도록 함.
         // token 검증이 되고 인증 정보가 존재하지 않는 경우 spring security 인증 정보 저장
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
-            authToken = header.replace(TOKEN_PREFIX," ");
+            authToken = header.replace(TOKEN_PREFIX,"");
+            log.warn("AuthToken : {}", authToken);
             try {
-                CustomUserDetails userDetails = CustomUserDetails.of(
-                        jwtTokenProvider.getUserIdFromToken(authToken),
-                        jwtTokenProvider.getUserRoleFromToken(authToken),
-                        jwtTokenProvider.getUserNickNameFromToken(authToken)
-                );
+                AccessTokenDetail accessTokenDetail = jwtTokenProvider.parseAccessToken(authToken);
+
+                UserDetails userDetails =
+                        CustomUserDetails.of(
+                                accessTokenDetail.getUserId().toString(), accessTokenDetail.getRole());
 
                 SecurityContextHolder.getContext().setAuthentication(
-                        new UsernamePasswordAuthenticationToken(userDetails, "user", userDetails.getAuthorities())
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails, "user", userDetails.getAuthorities())
                 );
             } catch (IllegalArgumentException ex) {
                 throw UserNotFoundException.EXCEPTION;

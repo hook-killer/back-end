@@ -13,8 +13,9 @@ import static org.springframework.http.HttpStatus.*;
 public enum AuthException implements BaseErrorCode {
   TOKEN_ERROR(UNAUTHORIZED.value(), "Token_403_1", "토큰 관련 에러입니다. 에러에 대한 구체적인 정의가 필요합니다."),
   INVALID_TOKEN_ERROR(UNAUTHORIZED.value(), "Token_403_2", "토큰이 만료되었거나 형식에 맞지않은 토큰입니다."),
+  TOKEN_NOT_FOUND_ERROR(NOT_FOUND.value(), "Token_404_1", "토큰을 찾을 수 없습니다."),
   USER_NOT_FOUND_ERROR(NOT_FOUND.value(), "User_404_1", "유저를 찾을 수 없습니다."),
-  TOKEN_NOT_FOUND_ERROR(NOT_FOUND.value(), "Token_404_1", "토큰을 찾을 수 없습니다.")
+  PASSWORD_INCORRECT_ERROR(NOT_FOUND.value(), "User_404_2", "해당 비밀번호를 가진 유저를 찾을 수 없습니다.")
   ;
   
   private final Integer statusCode;

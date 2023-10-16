@@ -4,6 +4,7 @@ import HookKiller.server.common.AbstractTimeStamp;
 import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.user.entity.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -51,13 +52,13 @@ public class Article extends AbstractTimeStamp {
   @JoinColumn(name = "board_id")
   private Board board;
 
-  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
   private List<ArticleLike> ArticleLike = new ArrayList<>();
 
-  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
   private List<ArticleContent> articleContent = new ArrayList<>();
 
-  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
   private List<Reply> reply = new ArrayList<>();
 
   @NotNull
@@ -79,6 +80,14 @@ public class Article extends AbstractTimeStamp {
 
   public void updateStatus(ArticleStatus status) {
     articleStatus = status;
+  }
+
+  public void addLikeCount() {
+    this.likeCount++;
+  }
+  public void minusLikeCount() {
+    if(this.likeCount > 0)
+      this.likeCount--;
   }
 
   @Builder

@@ -7,10 +7,8 @@ select 1 from dual;
 -- insert into tbl_user_login_uuid(expriation_at, id, user_id, uuid_key)
 -- values (now(), 1, 1, 'adsfasdf');
 
-insert into tbl_user (email, password, nick_name, role) values ("admin@test.com", "1111", "관리자", "ADMIN");
-
+insert into tbl_user (email, password, nick_name, role) values ("admin@test.com", "11111111", "관리자", "ADMIN");
 insert into tbl_user (email, password, nick_name, role) values ("user@test.com", "1111", "사용자", "USER");
-
 
 insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-09-20 10:00:00", 1, "2023-09-21 10:00:00", 1);
 

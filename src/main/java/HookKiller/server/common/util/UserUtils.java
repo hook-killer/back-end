@@ -4,7 +4,9 @@ package HookKiller.server.common.util;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.common.exception.SecurityContextNotFoundException;
 import HookKiller.server.user.entity.User;
+import HookKiller.server.user.exception.UserNotActiveException;
 import HookKiller.server.user.repository.UserRepository;
+import HookKiller.server.user.type.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,19 @@ public class UserUtils {
     }
     public User getUser() {
         return userRepository.findById(getCurrentUserId()).orElseThrow(()-> UserNotFoundException.EXCEPTION);
+    }
+
+    /**
+     * 요청자가 ACTIVE 상태의 사용자가 아닌 경우 `UserNotActiveException`이 발생하며,
+     * 요청자가 ACTIVE 상태인 사용자인 경우에는 User객체를 반환한다.
+     * @return
+     */
+    public User getUserIsStatusActive() {
+        User user = this.getUser();
+        if(user.getStatus().equals(Status.ACTIVE)) {
+            return user;
+        }
+        throw UserNotActiveException.EXCEPTION;
     }
 
 }

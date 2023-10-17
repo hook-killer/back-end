@@ -34,7 +34,7 @@ public class ArticleController {
   /**
    * 리스트 조회 조회
    */
-  @GetMapping("/{boardId}")
+  @GetMapping("/list/{boardId}")
   public List<ArticleRequestDto> getArticleList(
           @RequestParam(defaultValue = "0", required = false) int page,
           @RequestParam(defaultValue = "10", required = false) int articleLimit,

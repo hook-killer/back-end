@@ -15,12 +15,13 @@ import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.common.dto.MailRequest;
 import HookKiller.server.common.service.MailHelper;
 import HookKiller.server.common.util.SendMailUtil;
+import HookKiller.server.common.util.SecurityUtils;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
 import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.exception.AlreadyExistUserException;
-import HookKiller.server.user.exception.UserNotActiveException;
+import HookKiller.server.user.exception.UserAccountNotActiveException;
 import HookKiller.server.user.repository.UserRepository;
 import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
@@ -30,17 +31,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
-
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final KakaoOauthProperties kakaoOauthProperties;
     private final KakaoOauthHelper kakaoOauthHelper;
     private final TokenGenerateHelper tokenGenerateHelper;
-    private final PasswordEncoder passwordEncoder;
     private final MailHelper mailHelper;
     private static final String KAKAO_OAUTH_QUERY_STRING =
             "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
@@ -55,13 +56,13 @@ public class AuthService {
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
 
             try {
-            MailRequest mailRequest = MailRequest.builder()
-                    .email(user.getEmail())
-                    .build();
-            mailHelper.sendVerificationMail(mailRequest);
+                MailRequest mailRequest = MailRequest.builder()
+                        .email(user.getEmail())
+                        .build();
+                mailHelper.sendVerificationMail(mailRequest);
 
-            } catch (UserNotActiveException e) {
-               throw UserNotActiveException.EXCEPTION;
+            } catch (UserAccountNotActiveException e) {
+                throw UserAccountNotActiveException.EXCEPTION;
             }
         }
 

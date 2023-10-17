@@ -29,7 +29,6 @@ public class UserService {
     
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final KakaoOauthHelper kakaoOauthHelper;
     private final OIDCHelper oidcHelper;
     private final KakaoOauthProperties kakaoOauthProperties;
@@ -45,7 +44,7 @@ public class UserService {
         
         User user = userRepository.save(User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword())
                 .nickName(request.getNickName())
                 .role(UserRole.valueOf(request.getRole()))
                 .loginType(LoginType.DEFAULT)

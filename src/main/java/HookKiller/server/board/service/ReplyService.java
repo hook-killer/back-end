@@ -94,6 +94,10 @@ public class ReplyService {
             .toList();
   }
 
+  /**
+   * TODO : 관리자도 삭제 가능하게 만들기
+   * @param replyId
+   */
   @Transactional
   public void deleteReply(Long replyId) {
     replyRepository

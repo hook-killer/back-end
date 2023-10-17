@@ -1,6 +1,7 @@
 package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.common.util.SecurityUtils;
 import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
 import HookKiller.server.user.type.UserRole;
@@ -12,44 +13,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
 @Getter
+@Setter
 @ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends AbstractTimeStamp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
+    //    @NotNull
     @Column(unique = true)
     private String email;
 
-//    @NotNull
+    //    @NotNull
     private String password;
 
-//    @NotNull
+    //    @NotNull
     private String nickName;
 
     private String thumbnail;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    
+
 //    @Builder
 //    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
 //        this.email = email;
@@ -75,7 +73,7 @@ public class User extends AbstractTimeStamp {
 //        this.role = UserRole.valueOf(role);
 //        this.oauthInfo = oauthInfo;
 //    }
-    
+
     //    private Long certificateKeyId;
 
     private OauthInfo oauthInfo;
@@ -83,15 +81,41 @@ public class User extends AbstractTimeStamp {
     private String verificationToken;
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     private Status status = Status.NOT_ACTIVE;
-//
+
+
+    @Builder
+    public User(
+                String email,
+                String password,
+                String nickName,
+                String thumbnail,
+                UserRole role,
+                OauthInfo oauthInfo,
+                LoginType loginType,
+                Status status
+    ) {
+        this.email = email;
+        this.password = SecurityUtils.passwordEncoder.encode(password);
+        this.nickName = nickName;
+        this.thumbnail = thumbnail;
+        this.role = role;
+        this.status = status;
+        this.oauthInfo = oauthInfo;
+        this.loginType = loginType;
+    }
+
+
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
-//
-//    @Column
-//    @ColumnDefault(value = "false")
-//    private Boolean isDeleted;
+
+    public void updateUserStatus(Status userStatus) {
+        this.status = userStatus;
+    }
+
+    public void setPassword(String password) {
+        this.password = SecurityUtils.passwordEncoder.encode(password);
+    }
 
     public void activeStatus() {
         this.status = Status.ACTIVE;

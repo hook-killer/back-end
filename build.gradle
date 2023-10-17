@@ -30,7 +30,6 @@ dependencies {
     // libs하위 전체 jar 추가방법
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-
     //Naver Effective Log Search & Analytics Log4j SDK 의존성 추가 (네이버 로그쓰기 존나더럽네)
     implementation files("libs/nelo2-java-sdk-core-1.6.6.jar")
     //implementation files("libs/nelo2-java-sdk-log4j2-2.8.5.jar")
@@ -85,6 +84,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // SpringBoot Elastic Search
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

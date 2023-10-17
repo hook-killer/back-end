@@ -37,7 +37,6 @@ public class AdminService {
 
     private final UserUtils userUtils;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final ReplyRepository replyRepository;
     private final ArticleRepository articleRepository;
     private final ReplyContentRepository replyContentRepository;
@@ -59,7 +58,7 @@ public class AdminService {
                 User.builder()
                         .email(registerRequest.getEmail())
                         .nickName(registerRequest.getNickName())
-                        .password(passwordEncoder.encode(registerRequest.getPassword()))
+                        .password(registerRequest.getPassword())
                         .role(ADMIN)
                         .build()
         );

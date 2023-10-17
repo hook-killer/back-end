@@ -1,6 +1,7 @@
 package HookKiller.server.user.entity;
 
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.common.util.SecurityUtils;
 import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
 import HookKiller.server.user.type.UserRole;
@@ -13,20 +14,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 
 @Entity
 @Getter
+@Setter
 @ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends AbstractTimeStamp {
 
     @Id
@@ -80,20 +80,39 @@ public class User extends AbstractTimeStamp {
 
 //    private String expoToken;
 
+    @Builder
+    public User(
+                String email,
+                String password,
+                String nickName,
+                String thumbnail,
+                UserRole role,
+                OauthInfo oauthInfo,
+                LoginType loginType,
+                Status status
+    ) {
+        this.email = email;
+        this.password = SecurityUtils.passwordEncoder.encode(password);
+        this.nickName = nickName;
+        this.thumbnail = thumbnail;
+        this.role = role;
+        this.status = status;
+        this.oauthInfo = oauthInfo;
+        this.loginType = loginType;
+    }
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     private Status status = Status.ACTIVE;
+
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
 
     public void updateUserStatus(Status userStatus) {
         this.status = userStatus;
     }
 
-    @Enumerated(EnumType.STRING)
-    private LoginType loginType;
-//
-//    @Column
-//    @ColumnDefault(value = "false")
-//    private Boolean isDeleted;
+    public void setPassword(String password) {
+        this.password = SecurityUtils.passwordEncoder.encode(password);
+    }
 
 }

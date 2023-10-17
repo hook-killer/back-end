@@ -30,7 +30,8 @@ public enum GlobalException implements BaseErrorCode {
     FILE_IO_ERROR(INTERNAL_SERVER_ERROR.value(), "500-12", "파일 변환 중 오류가 발생하였습니다"),
     MAIL_SEND_ERROR(INTERNAL_SERVER_ERROR.value(), "500-20", "메일 발송중 오류가 발생하였습니다"),
     NAVER_ERROR(INTERNAL_SERVER_ERROR.value(), "500-30", "네이버 번역 도중 오류가 발생하였습니다"),
-    DELETE_FAIL_ERROR(INTERNAL_SERVER_ERROR.value(), "500-02", "삭제처리 도중 오류가 발생하였습니다");
+    DELETE_FAIL_ERROR(INTERNAL_SERVER_ERROR.value(), "500-02", "삭제처리 도중 오류가 발생하였습니다"),
+    TYPE_BAD_REQUEST_ERROR(BAD_REQUEST.value(), "400-1", "잘못된 타입을 요청하였습니다.");
     private final Integer statusCode;
     private final String errorCode;
     private final String reason;

@@ -14,4 +14,5 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
     Optional<ArticleContent> findByArticleAndLanguage(Article article, LanguageType language);
 
     List<ArticleContent> findAllByArticle(Article article);
+
 }

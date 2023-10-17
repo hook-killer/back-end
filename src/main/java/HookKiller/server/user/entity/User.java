@@ -25,8 +25,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends AbstractTimeStamp {
 
     @Id
@@ -88,34 +88,31 @@ public class User extends AbstractTimeStamp {
                 String thumbnail,
                 UserRole role,
                 OauthInfo oauthInfo,
-                LoginType loginType
+                LoginType loginType,
+                Status status
     ) {
         this.email = email;
         this.password = SecurityUtils.passwordEncoder.encode(password);
         this.nickName = nickName;
         this.thumbnail = thumbnail;
         this.role = role;
+        this.status = status;
         this.oauthInfo = oauthInfo;
         this.loginType = loginType;
     }
 
     @Enumerated(EnumType.STRING)
-    @Builder.Default
     private Status status = Status.ACTIVE;
+
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
 
     public void updateUserStatus(Status userStatus) {
         this.status = userStatus;
     }
 
-    @Enumerated(EnumType.STRING)
-    private LoginType loginType;
-//
-//    @Column
-//    @ColumnDefault(value = "false")
-//    private Boolean isDeleted;
-
-
     public void setPassword(String password) {
         this.password = SecurityUtils.passwordEncoder.encode(password);
     }
+
 }

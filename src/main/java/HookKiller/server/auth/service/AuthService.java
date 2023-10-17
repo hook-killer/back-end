@@ -12,6 +12,7 @@ import HookKiller.server.auth.helper.KakaoOauthHelper;
 import HookKiller.server.auth.helper.OIDCHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
 import HookKiller.server.common.dto.AccessTokenDetail;
+import HookKiller.server.common.util.SecurityUtils;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
 import HookKiller.server.properties.KakaoOauthProperties;
@@ -25,6 +26,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -37,14 +40,11 @@ public class AuthService {
   private final OIDCHelper oidcHelper;
   private final KakaoOauthHelper kakaoOauthHelper;
   private final TokenGenerateHelper tokenGenerateHelper;
-  private final PasswordEncoder passwordEncoder;
   private static final String KAKAO_OAUTH_QUERY_STRING =
           "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
 
   public ResponseEntity<AuthResponse> loginExecute(AuthRequest request) {
     User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> UserNotFoundException.EXCEPTION );
-    String requestEncodePassword = passwordEncoder.encode(request.getPassword());
-    
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
       throw PasswordIncorrectException.EXCEPTION;
     }

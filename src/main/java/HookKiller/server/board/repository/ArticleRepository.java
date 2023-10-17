@@ -1,6 +1,7 @@
 package HookKiller.server.board.repository;
 
 import HookKiller.server.board.entity.Article;
+import HookKiller.server.board.entity.ArticleContent;
 import HookKiller.server.board.entity.Board;
 
 import HookKiller.server.common.type.ArticleStatus;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,4 +20,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   Page<Article> findAllByBoardAndArticleStatusOrderByCreateAtDesc(Board board, ArticleStatus status, Pageable pageable);
 
   Page<Article> findAllByCreatedUserOrderByCreateAtDesc(User user, Pageable pageable);
+  
+  Optional<Article> findByArticleContentExistsOrderByUpdateAt(ArticleContent articleContent);
+  
+  List<Article> findAllByArticleContentExistsOrderByUpdateAt(ArticleContent articleContent);
 }

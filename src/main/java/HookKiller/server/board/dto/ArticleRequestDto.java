@@ -19,16 +19,13 @@ public class ArticleRequestDto extends AbstractTimeStamp{
     private Long boardId;
 
     private Long articleId;
-
-    @Enumerated(EnumType.STRING)
+    
     private LanguageType orgArticleLanguage;
 
-    @Enumerated(EnumType.STRING)
     private ArticleStatus status;
 
     private int likeCount;
 
-    @Enumerated(EnumType.STRING)
     private LanguageType contentLanguage;
 
     private String title;

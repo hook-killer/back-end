@@ -2,7 +2,8 @@ package HookKiller.server.board.repository;
 
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.Board;
-import HookKiller.server.board.type.ArticleStatus;
+
+import HookKiller.server.common.type.ArticleStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

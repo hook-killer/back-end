@@ -2,12 +2,13 @@ package HookKiller.server.board.dto;
 
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.ArticleContent;
-import HookKiller.server.board.type.ArticleStatus;
+
 import HookKiller.server.common.AbstractTimeStamp;
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
+import HookKiller.server.user.entity.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -32,8 +33,11 @@ public class ArticleRequestDto extends AbstractTimeStamp {
 
     private String title;
 
-    @Lob
     private String content;
+
+    private User createdUser;
+
+    private User updatedUser;
 
     public static ArticleRequestDto of(Article article, ArticleContent articleContent) {
         return ArticleRequestDto.builder()

@@ -41,18 +41,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.info("request: {}", request.getHeader(HEADER_STRING));
+        log.info("request: {}gdgd", request.getHeader(HEADER_STRING));
 
         // 토근을 가져옴
-        String header = request.getHeader(HEADER_STRING).replace("Bearer ","");
+        String header = request.getHeader(HEADER_STRING);
         String authToken = null;
 
         log.error("JWT HEADER : {}", header) ;
         // Bearer token인 경우 JWT 토큰 유효성 검사 진행
         // AuthenticationManager 역할을 함. -> 토큰이 인증되어있으면 필터로 보내서 context에 저장. 토큰이 인증되어있지 않다면 AuthenticationProvider로 보내어 인증하도록 함.
         // token 검증이 되고 인증 정보가 존재하지 않는 경우 spring security 인증 정보 저장
-        if (header != null && !header.equals("")) {
-            authToken = header;
+        if (header != null && header.startsWith(TOKEN_PREFIX) && !header.equalsIgnoreCase(TOKEN_PREFIX)) {
+            authToken = header.replace(TOKEN_PREFIX,"");
             log.warn("AuthToken : {}", authToken);
             try {
                 AccessTokenDetail accessTokenDetail = jwtTokenProvider.parseAccessToken(authToken);

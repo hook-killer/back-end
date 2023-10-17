@@ -22,6 +22,6 @@ public class MailController {
 
     @GetMapping("/verify/{email}")
     public ResponseEntity<MailRequest> sendMail(@PathVariable String email) {
-        return mailHelper.sendVerificationMail(MailRequest.builder().email(email).build());
+        return this.mailHelper.sendMail(MailRequest.builder().email(email).build());
     }
 }

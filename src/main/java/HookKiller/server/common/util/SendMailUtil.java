@@ -30,7 +30,6 @@ import static org.apache.commons.codec.CharEncoding.UTF_8;
 public class SendMailUtil {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
-    private final UserRepository userRepository;
 
 
     /**
@@ -59,16 +58,6 @@ public class SendMailUtil {
             throw MailSendException.EXCEPTION;
         }
     }
-
-    public String generateVerificationLink(User user) {
-        String verificationToken = generateUniqueToken();
-
-        user.activeStatus();
-        userRepository.save(user);
-
-        return "http://localhost:8080/mail/verify?token=" + verificationToken;
-    }
-
 
     //Valid, NotNull를 쓸까했는데... 안먹는걸로 기억이나서..
     private void parameterValidate(String toUser, String title, Map<String, Object> content) {

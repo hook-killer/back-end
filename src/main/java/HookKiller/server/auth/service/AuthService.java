@@ -9,34 +9,27 @@ import HookKiller.server.auth.dto.response.OauthTokenResponse;
 import HookKiller.server.auth.exception.PasswordIncorrectException;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.helper.KakaoOauthHelper;
-import HookKiller.server.auth.helper.OIDCHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
 import HookKiller.server.common.dto.AccessTokenDetail;
 import HookKiller.server.common.dto.MailRequest;
 import HookKiller.server.common.service.MailHelper;
-import HookKiller.server.common.util.SendMailUtil;
-import HookKiller.server.common.util.SecurityUtils;
 import HookKiller.server.jwt.JwtTokenProvider;
-import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
 import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.User;
-import HookKiller.server.user.exception.AlreadyExistUserException;
-import HookKiller.server.user.exception.UserAccountNotActiveException;
 import HookKiller.server.user.repository.UserRepository;
-import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class AuthService {
+
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final KakaoOauthProperties kakaoOauthProperties;
@@ -55,15 +48,9 @@ public class AuthService {
 
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
 
-            try {
-                MailRequest mailRequest = MailRequest.builder()
-                        .email(user.getEmail())
-                        .build();
-                mailHelper.sendVerificationMail(mailRequest);
-
-            } catch (UserAccountNotActiveException e) {
-                throw UserAccountNotActiveException.EXCEPTION;
-            }
+            this.mailHelper.sendMail(MailRequest.builder()
+                    .email(user.getEmail())
+                    .build());
         }
 
         AuthResponse res = AuthResponse.builder()
@@ -98,27 +85,6 @@ public class AuthService {
                 kakaoOauthHelper.getOauthToken(code, referer)
         );
     }
-
-    // oidc 사용 시 필요없음
-//  public OAuthResponse registerUserByKakaoCode(String code) {
-//    String accessToken = kakaoOauthHelper.getOauthTokenTest(code).getAccessToken();
-//
-//    KakaoUserInfoDto userInfo = kakaoOauthHelper.getUserInfo(accessToken);
-//
-//    User user = userRepository.findByOauthInfo(userInfo.toOauthInfo()).orElseGet(
-//            () -> userRepository.save(
-//                    User.builder()
-//                            .oauthInfo(userInfo.toOauthInfo())
-//                            .email(userInfo.getEmail())
-//                            .nickName(userInfo.getProfile().getNickname())
-//                            .password(UUID.randomUUID().toString())
-//                            .role(USER.getValue())
-//                            .loginType(KAKAO)
-//                            .build()
-//            )
-//    );
-//    return tokenGenerateHelper.execute(user);
-//  }
 
     // 받아온 idToken으로 우리 서비스에 로그인 할 수 있는 accessToken 받아오기
     public OAuthResponse loginUserByIdToken(String idToken) {

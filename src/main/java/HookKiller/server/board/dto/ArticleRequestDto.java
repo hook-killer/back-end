@@ -14,7 +14,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ArticleRequestDto extends AbstractTimeStamp {
+public class ArticleRequestDto extends AbstractTimeStamp{
 
     private Long boardId;
 

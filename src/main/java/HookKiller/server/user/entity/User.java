@@ -12,14 +12,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -35,21 +33,21 @@ public class User extends AbstractTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
+    //    @NotNull
     @Column(unique = true)
     private String email;
 
-//    @NotNull
+    //    @NotNull
     private String password;
 
-//    @NotNull
+    //    @NotNull
     private String nickName;
 
     private String thumbnail;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    
+
 //    @Builder
 //    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
 //        this.email = email;
@@ -75,7 +73,7 @@ public class User extends AbstractTimeStamp {
 //        this.role = UserRole.valueOf(role);
 //        this.oauthInfo = oauthInfo;
 //    }
-    
+
     //    private Long certificateKeyId;
 
     private OauthInfo oauthInfo;
@@ -86,7 +84,11 @@ public class User extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Status status = Status.ACTIVE;
-//
+
+    public void updateUserStatus(Status userStatus) {
+        this.status = userStatus;
+    }
+
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 //

@@ -2,6 +2,8 @@ package HookKiller.server.common.util;
 
 import HookKiller.server.common.exception.IllegalArgumentException;
 import HookKiller.server.common.exception.MailSendException;
+import HookKiller.server.user.entity.User;
+import HookKiller.server.user.repository.UserRepository;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,6 +16,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.Map;
 
+import static HookKiller.server.common.util.TokenGenerator.generateUniqueToken;
 import static org.apache.commons.codec.CharEncoding.UTF_8;
 
 /**
@@ -27,6 +30,7 @@ import static org.apache.commons.codec.CharEncoding.UTF_8;
 public class SendMailUtil {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
+    private final UserRepository userRepository;
 
 
     /**
@@ -54,6 +58,15 @@ public class SendMailUtil {
             log.error("[SendMail Failed] Exception Reason >>> {}, ToUser >>> {}, Title >>> {}, PagePath >>> {}", e.getClass(), toUser, title, pagePath);
             throw MailSendException.EXCEPTION;
         }
+    }
+
+    public String generateVerificationLink(User user) {
+        String verificationToken = generateUniqueToken();
+
+        user.activeStatus();
+        userRepository.save(user);
+
+        return "http://localhost:8080/mail/verify?token=" + verificationToken;
     }
 
 

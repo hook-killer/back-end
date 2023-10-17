@@ -80,12 +80,11 @@ public class User extends AbstractTimeStamp {
 
     private OauthInfo oauthInfo;
 
-//    private String expoToken;
-
+    private String verificationToken;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Status status = Status.ACTIVE;
+    private Status status = Status.NOT_ACTIVE;
 //
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
@@ -94,4 +93,7 @@ public class User extends AbstractTimeStamp {
 //    @ColumnDefault(value = "false")
 //    private Boolean isDeleted;
 
+    public void activeStatus() {
+        this.status = Status.ACTIVE;
+    }
 }

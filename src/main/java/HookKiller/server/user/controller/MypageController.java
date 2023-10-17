@@ -68,7 +68,7 @@ public class MypageController {
      * @param request
      * @return
      */
-    @GetMapping("/{searchType}")
+    @GetMapping("/mylist/{searchType}")
     public ResponseEntity<Object> getList(
             @PathVariable String searchType,
             @RequestParam(defaultValue = "0", required = false) int page,

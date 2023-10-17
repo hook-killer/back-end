@@ -15,6 +15,4 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
     List<ArticleContent> findAllByArticle(Article article);
 
-    List<ArticleContent> findAllByAuthor(User user);
-
 }

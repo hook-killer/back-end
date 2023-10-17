@@ -202,10 +202,10 @@ public class NoticeService {
                     .filter(content -> choiceContent != content)
                     .forEach(content -> {
                                 if (finalChgTitle) {
-                                    translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle());
+                                    content.setTitle(translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle()));
                                 }
                                 if (finalChgContent) {
-                                    translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getContent());
+                                    content.setContent(translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getContent()));
                                 }
                             }
                     );

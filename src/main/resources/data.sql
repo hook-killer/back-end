@@ -1,5 +1,9 @@
 select 1 from dual;
 
+insert into tbl_board (name, board_type, description) values("한국", "KOREA", "한국어게시판");
+insert into tbl_board (name, board_type, description) values("일본", "JAPAN", "일본어게시판");
+insert into tbl_board (name, board_type, description) values("중국", "CHINA", "중국어게시판");
+
 -- insert into tbl_user(is_deleted, created_at, id, login_at, update_at, uuid_id, email, login_type, nick_name, password,
 --                      role, status, thumbnail)
 -- values (false, now(), now(), now(), now(), 1, 'bons', 'GOOGLE', 'ddd', 'ddd', 'ADMIN', 'ACTIVE', 'ADFASF');

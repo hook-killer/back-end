@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -33,6 +34,28 @@ public class SecurityConfig {
             "/hello"
     };
 
+    private static String[] getMethodWhiteList = {
+            //공지사항
+            "/notice",
+            "/notice/{noticeArticleId}"
+    };
+
+    private static String[] postMethodWhiteList = {
+
+    };
+
+    private static String[] putMethodWhiteList = {
+
+    };
+
+    private static String[] deleteMethodWhiteList = {
+
+    };
+
+    private static String[] postAdminPathList = {
+
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -41,18 +64,19 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용안함
                 .authorizeHttpRequests(authorization -> authorization
-                                    .requestMatchers(
-                                            "/auth/**",
-                                            "/auth/oauth/**",
-                                            "/auth/oauth/kakao/**",
-                                            "/auth/oauth/kakao/link/**",
-                                            "/auth/oauth/kakao/register/**",
-                                            "/mail/**",
-                                            "/health"
-                                            ).permitAll()
-                                .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음
-                                .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
-                        )
+                        .requestMatchers(HttpMethod.GET, getMethodWhiteList).permitAll()
+                        .requestMatchers(
+                                "/auth/**",
+                                "/auth/oauth/**",
+                                "/auth/oauth/kakao/**",
+                                "/auth/oauth/kakao/link/**",
+                                "/auth/oauth/kakao/register/**",
+                                "/mail/**",
+                                "/health"
+                        ).permitAll()
+                        .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
+                )
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource)) //CORS Spring Boot 설정
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

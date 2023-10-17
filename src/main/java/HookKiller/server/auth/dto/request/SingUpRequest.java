@@ -18,8 +18,9 @@ public class SingUpRequest {
   private String nickName;
   
   @NotEmpty(message = "패스워드 입력은 필수 입니다.")
-  @Length(min = 1)
-//  @Pattern(등등 추가)
+  @Length(min = 8)
+//  @Pattern(regexp = " ^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$",
+//          message = "'숫자', '문자', '특수문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용")
   private String password;
   
   private String role;

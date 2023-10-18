@@ -65,7 +65,7 @@ public class AdminController {
      * 계정 상태 변경
      */
     @PutMapping("/account/status")
-    public void modifyAccountStatus(AccountStatusRequestDto request) {
+    public void modifyAccountStatus(@RequestBody @Valid AccountStatusRequestDto request) {
         log.info("계정 ID {} >>> {}", request.getUserId(), request.getAccountStatus());
         adminService.modifyAcctStat(request.getUserId(), request.getAccountStatus());
     }

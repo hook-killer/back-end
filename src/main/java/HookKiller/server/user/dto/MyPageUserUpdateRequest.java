@@ -10,7 +10,6 @@ import lombok.Setter;
 public class MyPageUserUpdateRequest {
 
     private Long userId;
-    private String email;
     private String password;
     private String thumbnail;
     private String nickName;

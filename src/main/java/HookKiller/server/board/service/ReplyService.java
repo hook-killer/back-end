@@ -10,6 +10,7 @@ import HookKiller.server.board.repository.ArticleRepository;
 import HookKiller.server.board.repository.ReplyContentRepository;
 import HookKiller.server.board.repository.ReplyRepository;
 import HookKiller.server.common.service.TranslateService;
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.entity.User;
@@ -30,80 +31,82 @@ import static HookKiller.server.board.type.ReplyStatus.TURE;
 @RequiredArgsConstructor
 public class ReplyService {
 
-  private final UserUtils userUtils;
-  private final ArticleRepository articleRepository;
-  private final ReplyRepository replyRepository;
-  private final ReplyContentRepository replyContentRepository;
-  private final TranslateService translateService;
+    private final UserUtils userUtils;
+    private final ArticleRepository articleRepository;
+    private final ReplyRepository replyRepository;
+    private final ReplyContentRepository replyContentRepository;
+    private final TranslateService translateService;
 
-  @Transactional
-  public void createReply(ReplyResponseDto responseDto) {
+    @Transactional
+    public void createReply(ReplyResponseDto responseDto) {
+        User user = userUtils.getUser();
 
-    User user = userUtils.getUser();
+        Reply reply = replyRepository.save(
+                Reply.builder()
+                        .replyStatus(FALSE)
+                        .article(articleRepository.findByIdAndArticleStatus(responseDto.getArticleId(), ArticleStatus.PUBLIC)
+                                .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION))
+                        .orgReplyLanguage(responseDto.getOrgReplyLanguage())
+                        .createdUser(user)
+                        .updatedUser(user)
+                        .build()
+        );
 
-    Reply reply = replyRepository.save(
-            Reply.builder()
-                    .replyStatus(FALSE)
-                    .orgReplyLanguage(responseDto.getOrgReplyLanguage())
-                    .createdUser(user)
-                    .updatedUser(user)
-                    .build()
-    );
+        List<ReplyContent> replyContentList = new ArrayList<>();
+        replyContentList.add(
+                ReplyContent.builder()
+                        .reply(reply)
+                        .language(responseDto.getOrgReplyLanguage())
+                        .content(responseDto.getContent())
+                        .build()
+        );
 
-    List<ReplyContent> replyContentList = new ArrayList<>();
-    replyContentList.add(
-            ReplyContent.builder()
-                    .reply(reply)
-                    .language(responseDto.getOrgReplyLanguage())
-                    .content(responseDto.getContent())
-                    .build()
-    );
+        responseDto
+                .getOrgReplyLanguage()
+                .getTranslateTargetLanguage()
+                .forEach(targetLanguage ->
+                        replyContentList.add(
+                                ReplyContent
+                                        .builder()
+                                        .reply(reply)
+                                        .language(targetLanguage)
+                                        .content(
+                                                translateService.naverPapagoTextTranslate(
+                                                        responseDto.getOrgReplyLanguage(), targetLanguage, responseDto.getContent()
+                                                )
+                                        )
+                                        .build()
+                        )
+                );
 
-    responseDto
-            .getOrgReplyLanguage()
-            .getTranslateTargetLanguage()
-            .forEach(targetLanguage ->
-                    replyContentList.add(
-                            ReplyContent
-                                    .builder()
-                                    .reply(reply)
-                                    .language(targetLanguage)
-                                    .content(
-                                            translateService.naverPapagoTextTranslate(
-                                                    responseDto.getOrgReplyLanguage(), targetLanguage, responseDto.getContent()
-                                            )
-                                    )
-                                    .build()
-                    )
-            );
-
-    replyContentRepository.saveAll(replyContentList);
-  }
+        replyContentRepository.saveAll(replyContentList);
+    }
 
 
-  @Transactional(readOnly = true)
-  public List<ReplyResponseDto> getReplyList(Long articleId, LanguageType language) {
-    Article article = articleRepository.findById(articleId).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
-    List<Reply> replyList = replyRepository.findAllByArticleAndReplyStatus(article, FALSE);
+    @Transactional(readOnly = true)
+    public List<ReplyResponseDto> getReplyList(Long articleId, LanguageType language) {
+        Article article = articleRepository.findById(articleId).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
+        List<Reply> replyList = replyRepository.findAllByArticleAndReplyStatus(article, FALSE);
 
-    return replyList.stream()
-            .map(reply ->
-                    ReplyResponseDto.of(reply, replyContentRepository
-                            .findByReplyAndLanguage(reply, language)
-                            .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)))
-            .toList();
-  }
+        return replyList.stream()
+                .map(reply ->
+                        ReplyResponseDto.of(reply, replyContentRepository
+                                .findByReplyAndLanguage(reply, language)
+                                .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)))
+                .toList();
+    }
 
-  /**
-   * TODO : 관리자도 삭제 가능하게 만들기
-   * @param replyId
-   */
-  @Transactional
-  public void deleteReply(Long replyId) {
-    replyRepository
-            .findById(replyId)
-            .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
-            .updateStatus(TURE);
-  }
+    /**
+     * TODO : 관리자도 삭제 가능하게 만들기
+     *
+     * @param replyId
+     */
+    @Transactional
+    public void deleteReply(Long replyId) {
+        replyRepository
+                .findById(replyId)
+                .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
+                .updateStatus(TURE);
+    }
 
 }

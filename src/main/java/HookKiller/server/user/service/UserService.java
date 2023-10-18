@@ -35,7 +35,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickName(request.getNickName())
-                .role(UserRole.valueOf(request.getRole()))
+                .role(UserRole.USER)
                 .loginType(LoginType.DEFAULT)
                 .build());
         

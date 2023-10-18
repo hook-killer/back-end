@@ -7,6 +7,9 @@ import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.dto.response.OauthLoginLinkResponse;
 import HookKiller.server.auth.dto.response.OauthTokenResponse;
 import HookKiller.server.auth.service.AuthService;
+import HookKiller.server.common.dto.MailRequest;
+import HookKiller.server.common.service.MailHelper;
+import HookKiller.server.common.util.EmailVerificationUtil;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.service.UserService;
 import jakarta.validation.Valid;
@@ -21,14 +24,26 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    
     private final AuthService authService;
     private final UserService userService;
+    private final MailHelper mailHelper;
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid SingUpRequest request) {
         return userService.registerUser(request);
     }
+
+    @GetMapping("/verifyEmail")
+    public ResponseEntity<String> verifyMail(@RequestParam String verificationToken) {
+        mailHelper.verifyEmail(verificationToken);
+        return ResponseEntity.ok("이메일 인증 완료");
+    }
+//
+//    @PostMapping("/sendVerificationEmail")
+//    public ResponseEntity<MailRequest> sendMail(@RequestBody MailRequest request) {
+//        return this.mailHelper.sendMail(request);
+//    }
+
     
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest body) {

@@ -47,15 +47,14 @@ public class AuthService {
         }
 
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
-
-            this.mailHelper.sendMail(MailRequest.builder()
-                    .email(user.getEmail())
-                    .build());
+             mailHelper.sendVerificationMail(MailRequest.builder().email(user.getEmail()).verificationToken(user.getVerificationToken()).build());
+             return ResponseEntity.ok(AuthResponse.builder().build());
         }
 
         AuthResponse res = AuthResponse.builder()
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
                 .build();
+
         return ResponseEntity.ok(res);
     }
 

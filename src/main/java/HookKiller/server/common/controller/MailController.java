@@ -20,8 +20,8 @@ public class MailController {
      * @return
      */
 
-    @GetMapping("/verify/{email}")
-    public ResponseEntity<MailRequest> sendMail(@PathVariable String email) {
-        return this.mailHelper.sendMail(MailRequest.builder().email(email).build());
-    }
+//    @PostMapping("/sendVerificationEmail")
+//    public ResponseEntity<MailRequest> sendMail(@RequestBody String email) {
+//        return this.mailHelper.sendVerificationMail(MailRequest.builder().email(email).build());
+//    }
 }

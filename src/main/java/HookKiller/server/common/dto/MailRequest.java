@@ -8,4 +8,5 @@ import lombok.Getter;
 public class MailRequest {
 
     private String email;
+    private String verificationToken;
 }

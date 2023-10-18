@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "tbl_certificate_key")
 public class CertificateKey {
 
     @Id

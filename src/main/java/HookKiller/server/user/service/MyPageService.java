@@ -15,7 +15,6 @@ import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.dto.MyPageUserUpdateRequest;
 import HookKiller.server.user.dto.MyPageUserResponse;
 import HookKiller.server.user.entity.User;
-import HookKiller.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -23,8 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
 

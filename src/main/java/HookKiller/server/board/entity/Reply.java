@@ -55,6 +55,7 @@ public class Reply extends AbstractTimeStamp {
     private Article article;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private LanguageType orgReplyLanguage;
 
     @NotNull

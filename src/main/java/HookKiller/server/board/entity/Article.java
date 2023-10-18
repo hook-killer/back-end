@@ -62,6 +62,7 @@ public class Article extends AbstractTimeStamp {
   private List<Reply> reply = new ArrayList<>();
 
   @NotNull
+  @Enumerated(EnumType.STRING)
   private LanguageType orgArticleLanguage;
 
   @NotNull

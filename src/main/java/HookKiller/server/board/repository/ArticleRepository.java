@@ -22,7 +22,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   
   Page<Article> findAllByCreatedUserOrderByCreateAtDesc(User user, Pageable pageable);
 
-  Page<Article> findAllByBoardAndCreateAtBetweenOrderByLikeCountDesc(Board board, Timestamp startTimestamp, Timestamp endTimestamp, Pageable pageable);
+  Page<Article> findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(
+          Board board, ArticleStatus status, Timestamp startTimestamp, Timestamp endTimestamp, Pageable pageable
+  );
 
   @Query(
           value = "select a.id, u.nick_name as nickName, ac.title, ac.content, a.like_count as likeCount  " +

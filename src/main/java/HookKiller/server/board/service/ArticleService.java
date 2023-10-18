@@ -237,7 +237,8 @@ public class ArticleService {
 
         Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
 
-        return articleRepository.findAllByBoardAndCreateAtBetweenOrderByLikeCountDesc(board ,sevenDaysAgoTimestamp, currentTimestamp, PageRequest.of(page, limit))
+        return articleRepository
+                .findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(board , PUBLIC, sevenDaysAgoTimestamp, currentTimestamp, PageRequest.of(page, limit))
                 .stream()
                 .map(article -> {
                     ArticleContent content =  articleContentRepository.findByArticleAndLanguage(article, language).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);

@@ -3,6 +3,8 @@ package HookKiller.server.board.entity;
 import HookKiller.server.common.type.LanguageType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,7 @@ public class ReplyContent {
     private Reply reply;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private LanguageType language;
 
     @Column

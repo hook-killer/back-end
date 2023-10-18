@@ -47,7 +47,7 @@ public class Reply extends AbstractTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "reply", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reply", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ReplyContent> replyContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,6 +55,7 @@ public class Reply extends AbstractTimeStamp {
     private Article article;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private LanguageType orgReplyLanguage;
 
     @NotNull
@@ -71,12 +72,13 @@ public class Reply extends AbstractTimeStamp {
 
     @Builder
     public Reply(Long id, LanguageType orgReplyLanguage, ReplyStatus replyStatus,
-                 User createdUser, User updatedUser) {
+                 User createdUser, User updatedUser, Article article) {
         this.id = id;
         this.orgReplyLanguage = orgReplyLanguage;
         this.replyStatus = replyStatus;
         this.createdUser = createdUser;
         this.updatedUser = updatedUser;
+        this.article = article;
     }
 
     public void updateStatus(ReplyStatus status) {

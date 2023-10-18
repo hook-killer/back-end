@@ -40,12 +40,23 @@ public class ArticleRequestDto extends AbstractTimeStamp{
     private User updatedUser;
 
     public static ArticleRequestDto of(Article article, ArticleContent articleContent) {
-        return ArticleRequestDto.builder()
+        ArticleRequestDto result = ArticleRequestDto.builder()
+                .boardId(article.getBoard().getId())
                 .articleId(article.getId())
                 .title(articleContent.getTitle())
                 .content(articleContent.getContent())
                 .likeCount(article.getLikeCount())
+                .status(article.getArticleStatus())
+                .orgArticleLanguage(article.getOrgArticleLanguage())
+                .contentLanguage(articleContent.getLanguage())
+                .createdUser(article.getCreatedUser())
+                .updatedUser(article.getUpdatedUser())
+                .likeCount(article.getLikeCount())
                 .build();
+        result.setCreateAt(article.getCreateAt());
+        result.setUpdateAt(article.getUpdateAt());
+
+        return result;
     }
 
 }

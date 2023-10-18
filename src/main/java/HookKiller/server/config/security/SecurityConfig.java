@@ -39,6 +39,7 @@ public class SecurityConfig {
 
                 "/article/list/{boardId}",
                 "/article/{articleId}",
+                "/article/popular/{boardId}",
 
                 "/reply/{articleId}",
         });

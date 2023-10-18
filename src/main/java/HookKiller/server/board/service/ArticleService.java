@@ -1,6 +1,7 @@
 package HookKiller.server.board.service;
 
 import HookKiller.server.board.dto.ArticleRequestDto;
+import HookKiller.server.board.dto.PopularArticleResponse;
 import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.ArticleContent;
@@ -25,6 +26,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,5 +223,29 @@ public class ArticleService {
             return CommonBooleanResultResponse.builder().result(true).message(ArticleConstants.ARTICLE_DELETE_SUCCESS_RTN_MSG).build();
         }
         return CommonBooleanResultResponse.builder().result(false).message(ArticleConstants.ARTICLE_DELETE_FAIL_RTN_MSG).build();
+    }
+
+    public List<PopularArticleResponse> getPopularArticlesByBoardId(int page, int limit, Long boardId, LanguageType language) {
+        // 현재 시간을 가져와 Timestamp로 변환
+        Instant currentInstant = Instant.now();
+        Timestamp currentTimestamp = Timestamp.from(currentInstant);
+
+        // 7일 전의 시간을 계산하고 Timestamp로 변환
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+        Instant sevenDaysAgoInstant = sevenDaysAgo.atZone(ZoneId.systemDefault()).toInstant();
+        Timestamp sevenDaysAgoTimestamp = Timestamp.from(sevenDaysAgoInstant);
+
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+
+        return articleRepository.findAllByBoardAndCreateAtBetweenOrderByLikeCountDesc(board ,sevenDaysAgoTimestamp, currentTimestamp, PageRequest.of(page, limit))
+                .stream()
+                .map(article -> {
+                    ArticleContent content =  articleContentRepository.findByArticleAndLanguage(article, language).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
+                    return PopularArticleResponse.builder()
+                            .articleId(article.getId())
+                            .title(content.getTitle())
+                            .build();
+                })
+                .toList();
     }
 }

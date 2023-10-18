@@ -54,10 +54,7 @@ public class MypageController {
      */
     @PutMapping("/thumnail")
     public ResponseEntity<CommonBooleanResultResponse> updateUserThumnailPath(@RequestBody MyPageUserUpdateRequest request) {
-        myPageService.updateUserThumbnailPath(request);
-        return ResponseEntity.ok(
-                CommonBooleanResultResponse.builder().result(true).message("수정이 완료되었습니다.").build()
-        );
+        return ResponseEntity.ok(myPageService.updateUserThumbnailPath(request));
     }
 
     /**

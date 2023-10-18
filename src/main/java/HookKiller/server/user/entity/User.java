@@ -78,7 +78,11 @@ public class User extends AbstractTimeStamp {
 
     private OauthInfo oauthInfo;
 
-//    private String expoToken;
+    private String verificationToken;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NOT_ACTIVE;
+
 
     @Builder
     public User(
@@ -101,8 +105,6 @@ public class User extends AbstractTimeStamp {
         this.loginType = loginType;
     }
 
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
 
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
@@ -115,4 +117,7 @@ public class User extends AbstractTimeStamp {
         this.password = SecurityUtils.passwordEncoder.encode(password);
     }
 
+    public void activeStatus() {
+        this.status = Status.ACTIVE;
+    }
 }

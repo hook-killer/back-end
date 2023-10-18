@@ -119,7 +119,8 @@ public class SecurityConfig {
                                 "/auth/oauth/kakao/link/**",
                                 "/auth/oauth/kakao/register/**",
                                 "/mail/**",
-                                "/health"
+                                "/health",
+                                "/search/**"                          
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, permitAllMappingList.get(HttpMethod.GET)).permitAll()
                         .requestMatchers(HttpMethod.POST, permitAllMappingList.get(HttpMethod.POST)).permitAll()

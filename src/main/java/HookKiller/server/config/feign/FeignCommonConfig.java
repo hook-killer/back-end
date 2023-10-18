@@ -17,10 +17,11 @@ import org.springframework.context.annotation.Configuration;
 public class FeignCommonConfig {
 
     @Bean
-    public Decoder feignDecoder() {
-        return new JacksonDecoder(customObjectMapper());
+    public Decoder feignDecoder(ObjectMapper customObjectMapper) {
+        return new JacksonDecoder(customObjectMapper);
     }
 
+    @Bean
     public ObjectMapper customObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());

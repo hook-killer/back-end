@@ -11,11 +11,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -28,33 +29,80 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
-    // TODO : 추후 WhiteList 항목 코드 변경 필요
-    private static String[] tempWhiteListArray = {
-            "/health",
-            "/hello"
-    };
+    private static Map<HttpMethod, String[]> permitAllMappingList = new HashMap<>() {{
+        put(HttpMethod.GET, new String[]{
+                // Infra Path
+                "/health",
 
-    private static String[] getMethodWhiteList = {
-            //공지사항
-            "/notice",
-            "/notice/{noticeArticleId}"
-    };
+                "/notice",
+                "/notice/{noticeArticleId}",
 
-    private static String[] postMethodWhiteList = {
+                "/article/list/{boardId}",
+                "/article/{articleId}",
 
-    };
+                "/reply/{articleId}",
+        });
+        put(HttpMethod.POST, new String[]{
+        });
+        put(HttpMethod.PUT, new String[]{});
+        put(HttpMethod.DELETE, new String[]{});
+    }};
 
-    private static String[] putMethodWhiteList = {
 
-    };
+    private static Map<HttpMethod, String[]> authMappingList = new HashMap<>() {{
+        put(HttpMethod.GET, new String[]{
+                "/mypage",
+                "/mypage/mylist/{searchType}",
 
-    private static String[] deleteMethodWhiteList = {
+                "/article/like/{articleId}"
+        });
+        put(HttpMethod.POST, new String[]{
+                "/article",
 
-    };
+                "/reply",
 
-    private static String[] postAdminPathList = {
+                "/file/image",
+                "/file/images",
 
-    };
+                "/article/like/{articleId}"
+        });
+        put(HttpMethod.PUT, new String[]{
+                "/article",
+
+                "/mypage",
+                "/mypage/thumnail",
+
+        });
+        put(HttpMethod.DELETE, new String[]{
+                "/article/{articleId}",
+
+                "/reply/{replyId}"
+        });
+    }};
+
+    private static Map<HttpMethod, String[]> adminMappingList = new HashMap<>() {{
+        put(HttpMethod.GET, new String[]{
+                "/admin/account/{userId}",
+                "/admin/account/list/{role}",
+                "/admin/account/article/{userId}",
+                "/admin/account/reply/{userId}"
+        });
+        put(HttpMethod.POST, new String[]{
+                "/admin/register",
+
+                "/notice"
+        });
+        put(HttpMethod.PUT, new String[]{
+                "/admin/account/status",
+
+                "/notice"
+
+        });
+        put(HttpMethod.DELETE, new String[]{
+                "/notice",
+                "/notice/{noticeArticleId}"
+        });
+    }};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,7 +112,6 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용안함
                 .authorizeHttpRequests(authorization -> authorization
-                        .requestMatchers(HttpMethod.GET, getMethodWhiteList).permitAll()
                         .requestMatchers(
                                 "/auth/**",
                                 "/auth/oauth/**",
@@ -74,8 +121,19 @@ public class SecurityConfig {
                                 "/mail/**",
                                 "/health"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, permitAllMappingList.get(HttpMethod.GET)).permitAll()
+                        .requestMatchers(HttpMethod.POST, permitAllMappingList.get(HttpMethod.POST)).permitAll()
+                        .requestMatchers(HttpMethod.PUT, permitAllMappingList.get(HttpMethod.PUT)).permitAll()
+                        .requestMatchers(HttpMethod.DELETE, permitAllMappingList.get(HttpMethod.DELETE)).permitAll()
                         .requestMatchers("/user/**").authenticated() // 인증이 되면 들어갈 수 있음
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN") // 관리자 권한만 들어갈 수 있음
+                        .requestMatchers(HttpMethod.GET, authMappingList.get(HttpMethod.GET)).authenticated()
+                        .requestMatchers(HttpMethod.POST, authMappingList.get(HttpMethod.POST)).authenticated()
+                        .requestMatchers(HttpMethod.PUT, authMappingList.get(HttpMethod.PUT)).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, authMappingList.get(HttpMethod.DELETE)).authenticated()
+                        .requestMatchers(HttpMethod.GET, adminMappingList.get(HttpMethod.GET)).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, adminMappingList.get(HttpMethod.POST)).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, adminMappingList.get(HttpMethod.PUT)).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, adminMappingList.get(HttpMethod.DELETE)).hasAuthority("ADMIN")
                 )
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource)) //CORS Spring Boot 설정
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))

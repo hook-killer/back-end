@@ -56,7 +56,6 @@ public class NoticeService {
      * 1. ArticleStatus가 공개중(PUBLIC)인 상태
      * 2. 생성일이 최신 순서로
      * 3. Content에서 선택한 언어로 번역된 데이터가 존재하는 경우
-     * TODO : 페이지네이션
      *
      * @return
      */

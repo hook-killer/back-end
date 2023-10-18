@@ -1,5 +1,6 @@
 package HookKiller.server.auth.dto.request;
 
+import HookKiller.server.user.type.UserRole;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -22,6 +23,5 @@ public class SingUpRequest {
 //  @Pattern(등등 추가)
   private String password;
   
-  private String role;
-
+  private UserRole role;
 }

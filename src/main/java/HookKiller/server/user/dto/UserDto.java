@@ -17,11 +17,14 @@ public class UserDto extends AbstractTimeStamp {
     private Timestamp createdAt;
 
     public static UserDto from(User user) {
-        return UserDto.builder()
+        UserDto result = UserDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .nickName(user.getNickName())
                 .createdAt(user.getCreateAt())
                 .build();
+        result.setCreateAt(user.getCreateAt());
+        result.setUpdateAt(user.getUpdateAt());
+        return result;
     }
 }

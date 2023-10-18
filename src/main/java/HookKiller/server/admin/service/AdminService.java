@@ -101,14 +101,8 @@ public class AdminService {
         log.info("계정 리스트 >>> {}", role);
         return userRepository.findAllByRoleAndStatusOrderByCreateAtDesc(role, userStatus, PageRequest.of(page, limit))
                 .stream()
-                .map(account ->
-                        UserDto.builder()
-                                .id(account.getId())
-                                .email(account.getEmail())
-                                .nickName(account.getNickName())
-                                .createdAt(account.getCreateAt())
-                                .build()
-                ).toList();
+                .map(UserDto::from)
+                .toList();
     }
 
     /**

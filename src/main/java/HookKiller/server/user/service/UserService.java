@@ -31,6 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final KakaoOauthHelper kakaoOauthHelper;
     private final TokenGenerateHelper tokenGenerateHelper;
+    private final MailHelper mailHelper;
 
     @Transactional
     public ResponseEntity<User> registerUser(@RequestBody SingUpRequest request) {

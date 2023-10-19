@@ -29,5 +29,9 @@ public class SearchService {
             .map(SimpleArticleVo::from)
             .toList();
   }
+  
+  public List<SimpleArticleVo> getAllSearchResultByWord(String word) {
+    return articleRepository.retrieveAllArticleByWord(word).stream().map(SimpleArticleVo::from).toList();
+  }
 }
 

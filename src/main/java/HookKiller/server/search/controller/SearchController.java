@@ -27,4 +27,10 @@ public class SearchController {
           @RequestParam int limit) {
     return searchService.getSearchResult(word, PageRequest.of(offset, limit));
   }
+  
+  @GetMapping("/all/{word}")
+  public List<SimpleArticleVo> searchAllArticlesByWord(
+          @PathVariable String word) {
+    return searchService.getAllSearchResultByWord(word);
+  }
 }

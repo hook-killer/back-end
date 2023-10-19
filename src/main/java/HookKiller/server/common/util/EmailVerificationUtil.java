@@ -12,7 +12,7 @@
 
         public String generateVerificationLink(String verificationToken) {
 
-            return String.format("http://%s/auth/verifyEmail?verificationToken=" + verificationToken, hookMailProperties.getRegisterDomain());
+            return String.format("http://%s/verifyEmail?verificationToken=" + verificationToken, hookMailProperties.getRegisterDomain());
         }
 
     }

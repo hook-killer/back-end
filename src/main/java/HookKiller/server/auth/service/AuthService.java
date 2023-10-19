@@ -79,7 +79,7 @@ public class AuthService {
     // 카카오 로그인 후 토큰 받기
     public OauthTokenResponse getCredentialFromKaKao(String code, String referer) {
         log.info("referer : {}", referer);
-        log.info("referer + 리다이렉트 : {}", referer + "/kakao/callback");
+        log.info("referer + 리다이렉트 : {}", referer + "/auth/oauth/kakao");
         return OauthTokenResponse.from(
                 kakaoOauthHelper.getOauthToken(code, referer)
         );

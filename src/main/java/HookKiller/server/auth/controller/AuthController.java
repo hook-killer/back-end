@@ -38,12 +38,6 @@ public class AuthController {
         mailHelper.verifyEmail(verificationToken);
         return ResponseEntity.ok("이메일 인증 완료");
     }
-//
-//    @PostMapping("/sendVerificationEmail")
-//    public ResponseEntity<MailRequest> sendMail(@RequestBody MailRequest request) {
-//        return this.mailHelper.sendMail(request);
-//    }
-
     
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest body) {
@@ -62,7 +56,7 @@ public class AuthController {
 
     // kakao Oauth 링크를 프론트에 전달해줌.
     // 전달한 링크에서 클라이언트가 카카오로그인 요청
-    @GetMapping("/oauth/kakao/link")
+    @GetMapping("/oauth/kakao/callback")
     public OauthLoginLinkResponse getKakaoLoginLink(
             @RequestHeader(required = false) String referer, // referer는 http://localhost:8080/ 과 같이 제공됨
             @RequestHeader(required = false) String host
@@ -92,13 +86,6 @@ public class AuthController {
         }
         return authService.getCredentialFromKaKao(code, referer);
     }
-    
-    // oidc를 안쓰면 코드만으로도 회원가입이 가능함. 근데 우리는 oidc를 쓰니까 일단 막아놓자
-//    @GetMapping("/oauth/kakao/develop")
-//    public OAuthResponse registerUserByCode(@RequestParam String code) {
-//        log.error("김종원이 승리했다.");
-//        return authService.registerUserByKakaoCode(code);
-//    }
     
     // 받은 idToken으로 카카오 서버의 사용자 정보를 사용할 수 있는지 OIDC로 인증 및 인가 받고 회원가입 처리
     @PostMapping("/oauth/kakao/register")

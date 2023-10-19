@@ -28,11 +28,16 @@ public class ReplyResponseDto extends AbstractTimeStamp {
   private String content;
 
   public static ReplyResponseDto of(Reply reply, ReplyContent replyContent) {
-    return ReplyResponseDto.builder()
+    ReplyResponseDto result = ReplyResponseDto.builder()
             .replyId(reply.getId())
+            .articleId(reply.getArticle().getId())
             .createUser(reply.getCreatedUser())
             .content(replyContent.getContent())
+            .orgReplyLanguage(reply.getOrgReplyLanguage())
             .build();
+    result.setCreateAt(reply.getCreateAt());
+    result.setUpdateAt(reply.getUpdateAt());
+    return result;
   }
 
 }

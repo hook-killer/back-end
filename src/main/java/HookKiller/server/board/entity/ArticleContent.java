@@ -54,9 +54,6 @@ public class ArticleContent {
     @Lob
     private String content;
 
-
-    private Long userId;
-
     @Builder
     public ArticleContent(Article article, LanguageType language, String title, String content) {
         this.article = article;

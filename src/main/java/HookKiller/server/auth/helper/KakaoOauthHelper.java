@@ -31,7 +31,7 @@ public class KakaoOauthHelper {
     log.info("referer 1 : {}", referer);
     return kakaoOauthClient.kakaoAuth(
             kakaoOauthProperties.getKakaoClientId(),
-            referer + "/kakao/callback",
+            referer + "/auth/oauth/kakao",
             code,
             kakaoOauthProperties.getKakaoClientSecret()
     );

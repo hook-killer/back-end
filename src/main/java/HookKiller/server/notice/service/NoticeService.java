@@ -56,7 +56,6 @@ public class NoticeService {
      * 1. ArticleStatus가 공개중(PUBLIC)인 상태
      * 2. 생성일이 최신 순서로
      * 3. Content에서 선택한 언어로 번역된 데이터가 존재하는 경우
-     * TODO : 페이지네이션
      *
      * @return
      */
@@ -72,7 +71,8 @@ public class NoticeService {
                             .filter(content -> content.getLanguage().equals(languageType))
                             .findFirst()
                             .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
-                    return NoticeArticleDto.builder()
+
+                    NoticeArticleDto listDtoResult = NoticeArticleDto.builder()
                             .id(noticeArticle.getId())
                             .language(noticeArticle.getLanguage())
                             .status(noticeArticle.getStatus())
@@ -80,6 +80,9 @@ public class NoticeService {
                             .updatedUser(noticeArticle.getUpdatedUser())
                             .title(noticeContent.getTitle())
                             .build();
+                    listDtoResult.setCreateAt(noticeArticle.getCreateAt());
+                    listDtoResult.setUpdateAt(noticeArticle.getUpdateAt());
+                    return listDtoResult;
                 })
                 .toList();
     }
@@ -98,7 +101,7 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(!user.getRole().equals(UserRole.ADMIN))
+        if (!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         NoticeArticle noticeArticle = noticeArticleRepository.save(
@@ -151,7 +154,7 @@ public class NoticeService {
      * 3. 공지사항 게시물이 NoticeArticleId와 공개상태인지로 조회시 존재하지 않는 경우 → NoticeNotFoundException이 발생한다.
      * 4. 요청한 언어가 DB에 없는 경우 → NoticeNotFoundException이 발생한다
      * 5. 번역이 실패한 경우 → NaverErrorException이 발생한다.
-     *
+     * <p>
      * 어떤 경우도 Exception이 발생하면 수정이 적용되지 않고 Rollback된다.
      *
      * @param request
@@ -162,7 +165,7 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(!user.getRole().equals(UserRole.ADMIN))
+        if (!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
         // 변경여부 확인을 위한 변수
@@ -202,10 +205,10 @@ public class NoticeService {
                     .filter(content -> choiceContent != content)
                     .forEach(content -> {
                                 if (finalChgTitle) {
-                                    translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle());
+                                    content.setTitle(translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle()));
                                 }
                                 if (finalChgContent) {
-                                    translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getContent());
+                                    content.setContent(translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getContent()));
                                 }
                             }
                     );
@@ -226,11 +229,13 @@ public class NoticeService {
         User user = userUtils.getUser();
 
         //관리자 권한 확인
-        if(!user.getRole().equals(UserRole.ADMIN))
+        if (!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
 
-        noticeArticleRepository.findById(id).orElseThrow(() ->
-                NoticeNotFoundException.EXCEPTION).updateStatus(DELETE);
+        noticeArticleRepository.findById(id)
+                .orElseThrow(
+                        () -> NoticeNotFoundException.EXCEPTION
+                ).updateStatus(DELETE);
     }
 
 }

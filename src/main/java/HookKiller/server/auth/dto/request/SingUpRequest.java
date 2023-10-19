@@ -1,5 +1,6 @@
 package HookKiller.server.auth.dto.request;
 
+import HookKiller.server.user.type.UserRole;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -22,5 +23,6 @@ public class SingUpRequest {
 //  @Pattern(regexp = " ^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$",
 //          message = "'숫자', '문자', '특수문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용")
   private String password;
-
+  
+  private UserRole role;
 }

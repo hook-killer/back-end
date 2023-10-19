@@ -3,12 +3,10 @@ package HookKiller.server.user.service;
 import HookKiller.server.auth.dto.OIDCUserInfo;
 import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.response.OAuthResponse;
-import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.helper.KakaoOauthHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
 import HookKiller.server.common.dto.MailRequest;
 import HookKiller.server.common.service.MailHelper;
-import HookKiller.server.common.util.EmailVerificationUtil;
 import HookKiller.server.common.util.TokenGenerator;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.exception.AlreadyExistUserException;
@@ -29,12 +27,10 @@ import static HookKiller.server.user.type.UserRole.USER;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
-
-    private final MailHelper mailHelper;
+    
     private final UserRepository userRepository;
     private final KakaoOauthHelper kakaoOauthHelper;
     private final TokenGenerateHelper tokenGenerateHelper;
-    private final EmailVerificationUtil emailVerificationUtil;
 
     @Transactional
     public ResponseEntity<User> registerUser(@RequestBody SingUpRequest request) {

@@ -1,6 +1,7 @@
 package HookKiller.server.board.controller;
 
 import HookKiller.server.board.dto.ArticleRequestDto;
+import HookKiller.server.board.dto.PopularArticleResponse;
 import HookKiller.server.board.dto.PostArticleRequestDto;
 import HookKiller.server.board.service.ArticleService;
 import HookKiller.server.board.type.ArticleConstants;
@@ -76,6 +77,26 @@ public class ArticleController {
   @DeleteMapping("/{articleId}")
   public ResponseEntity<CommonBooleanResultResponse> deleteArticle(@PathVariable Long articleId) {
     return ResponseEntity.ok(articleService.deleteArticle(articleId));
+  }
+
+  /**
+   * 최근 7일간의 추천이 많았던 게시물에 대해서 확인이 가능하다.
+   * @param boardId 조회를 희망하는 BoardId
+   * @param page
+   * @param limit
+   * @param request
+   * @return
+   */
+  @GetMapping("/popular/{boardId}")
+  public ResponseEntity<List<PopularArticleResponse>> getPopularArticlesByBoardId(
+          @PathVariable Long boardId,
+          @RequestParam(defaultValue = "0", required = false) int page,
+          @RequestParam(defaultValue = "10", required = false) int limit,
+          HttpServletRequest request
+  ) {
+    return ResponseEntity.ok(
+            articleService.getPopularArticlesByBoardId(page, limit, boardId, LanguageType.findTypeByRequest(request))
+    );
   }
 
 }

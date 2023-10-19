@@ -9,8 +9,6 @@ import HookKiller.server.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.sql.Timestamp;
-
 @Getter
 @Builder
 public class NoticeArticleDto extends AbstractTimeStamp {
@@ -22,11 +20,9 @@ public class NoticeArticleDto extends AbstractTimeStamp {
     private User updatedUser;
     private String content;
     private String title;
-    private Timestamp createAt;
-    private Timestamp updateAt;
 
     public static NoticeArticleDto of(NoticeArticle noticeArticle, NoticeContent noticeContent) {
-        return NoticeArticleDto.builder()
+        NoticeArticleDto result = NoticeArticleDto.builder()
                 .id(noticeArticle.getId())
                 .language(noticeContent.getLanguage())
                 .status(noticeArticle.getStatus())
@@ -34,8 +30,9 @@ public class NoticeArticleDto extends AbstractTimeStamp {
                 .updatedUser(noticeArticle.getUpdatedUser())
                 .content(noticeContent.getContent())
                 .title(noticeContent.getTitle())
-                .createAt(noticeArticle.getCreateAt())
-                .updateAt(noticeArticle.getUpdateAt())
                 .build();
+        result.setCreateAt(noticeArticle.getCreateAt());
+        result.setUpdateAt(noticeArticle.getUpdateAt());
+        return result;
     }
 }

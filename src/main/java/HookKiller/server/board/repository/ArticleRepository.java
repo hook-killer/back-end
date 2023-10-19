@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.sql.Timestamp
 import java.util.Optional;
 
 
@@ -21,7 +22,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   Page<Article> findAllByBoardAndArticleStatusOrderByCreateAtDesc(Board board, ArticleStatus status, Pageable pageable);
   
   Page<Article> findAllByCreatedUserOrderByCreateAtDesc(User user, Pageable pageable);
-  
+
+  Page<Article> findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(
+          Board board, ArticleStatus status, Timestamp startTimestamp, Timestamp endTimestamp, Pageable pageable
+  );
+
   @Query(
           value = "select a.id, u.nick_name as nickName, ac.title, ac.content, a.like_count as likeCount  " +
                   "from tbl_article a " +

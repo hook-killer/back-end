@@ -6,6 +6,8 @@ hook:
     username: hook
     password: hook1234!
     port: 3306
+  mail:
+    register-domain: hook-killer.sh-bong.site:8080
 
 
 spring:
@@ -21,7 +23,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: none
-
 
 # 로그파일 설정 필요 (Naver Log System으로 발송하기 위함)
 logging:

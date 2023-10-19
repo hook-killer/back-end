@@ -30,7 +30,6 @@ public class UserUtils {
             throw SecurityContextNotFoundException.EXCEPTION;
         }
         log.info("principal : {}", authentication.getPrincipal().toString());
-        log.info("authentication.details : {}", authentication.getDetails().toString());
         return Long.valueOf(authentication.getName());
     }
     public User getUser() {

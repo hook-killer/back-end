@@ -2,6 +2,8 @@ package HookKiller.server.common.util;
 
 import HookKiller.server.common.exception.IllegalArgumentException;
 import HookKiller.server.common.exception.MailSendException;
+import HookKiller.server.user.entity.User;
+import HookKiller.server.user.repository.UserRepository;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,6 +16,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.Map;
 
+import static HookKiller.server.common.util.TokenGenerator.generateUniqueToken;
 import static org.apache.commons.codec.CharEncoding.UTF_8;
 
 /**
@@ -55,7 +58,6 @@ public class SendMailUtil {
             throw MailSendException.EXCEPTION;
         }
     }
-
 
     //Valid, NotNull를 쓸까했는데... 안먹는걸로 기억이나서..
     private void parameterValidate(String toUser, String title, Map<String, Object> content) {

@@ -47,15 +47,14 @@ public class AuthService {
         }
 
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
-
-            this.mailHelper.sendMail(MailRequest.builder()
-                    .email(user.getEmail())
-                    .build());
+             mailHelper.sendVerificationMail(MailRequest.builder().email(user.getEmail()).verificationToken(user.getVerificationToken()).build());
+             return ResponseEntity.ok(AuthResponse.builder().build());
         }
 
         AuthResponse res = AuthResponse.builder()
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
                 .build();
+
         return ResponseEntity.ok(res);
     }
 
@@ -80,7 +79,7 @@ public class AuthService {
     // 카카오 로그인 후 토큰 받기
     public OauthTokenResponse getCredentialFromKaKao(String code, String referer) {
         log.info("referer : {}", referer);
-        log.info("referer + 리다이렉트 : {}", referer + "/kakao/callback");
+        log.info("referer + 리다이렉트 : {}", referer + "/auth/oauth/kakao");
         return OauthTokenResponse.from(
                 kakaoOauthHelper.getOauthToken(code, referer)
         );

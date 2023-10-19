@@ -16,7 +16,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.Map;
 
-import static HookKiller.server.common.util.TokenGenerator.generateUniqueToken;
 import static org.apache.commons.codec.CharEncoding.UTF_8;
 
 /**

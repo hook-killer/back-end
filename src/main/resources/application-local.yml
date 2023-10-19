@@ -7,7 +7,7 @@ hook:
     password: hooklocal1234!
     port: 3306
   mail:
-    register-domain: localhost:8080
+    register-domain: localhost:3000
 # Test용
 
 

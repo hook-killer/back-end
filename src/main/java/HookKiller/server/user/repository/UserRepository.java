@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> findAllByRoleAndStatusOrderByCreateAtDesc(UserRole role, Status status, Pageable pageable);
 
     Optional<User> findByOauthInfo(OauthInfo oauthInfo);
+
+    Optional<User> findByVerificationToken(String verificationToken);
 }

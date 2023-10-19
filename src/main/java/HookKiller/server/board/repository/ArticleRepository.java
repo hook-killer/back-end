@@ -37,7 +37,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
                   "where ac.title like concat('%', :word, '%') or ac.content like concat('%', :word, '%')", nativeQuery = true
   )
   Page<ArticleInterface> retrieveArticleListDown(@Param(value = "word") String word, Pageable pageable);
-  
+
   @Query(
           value = "select a.id, u.nick_name as nickName, ac.title, ac.content, a.like_count as likeCount  " +
                   "from tbl_article a " +

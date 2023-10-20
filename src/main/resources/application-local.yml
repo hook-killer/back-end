@@ -1,20 +1,15 @@
 # TODO : 각자 개발용 URL, 개인 Database명 입력 필요, 해당 2개의 속성은 커밋 제외 필수!!!!!
-#hook:
-#  db:
-#    url:
-#    database:
-#    username: hooklocal
-#    password: hooklocal1234!
-#    port: 3306
-
-# Test용 (Mr.재운DB)
 hook:
   db:
-    url: db-i28dv-kr.vpc-pub-cdb.ntruss.com
-    database: studydb
-    username: study
-    password: bitcamp!@#123
+    url: db-it7f7-kr.vpc-pub-cdb.ntruss.com
+    database: jw
+    username: hooklocal
+    password: hooklocal1234!
     port: 3306
+  mail:
+    register-domain: localhost:3000
+# Test용
+
 
 spring:
   jpa:
@@ -27,7 +22,7 @@ spring:
 
     hibernate:
       # 매번 create생성 시키기 위함
-      ddl-auto: create
+      ddl-auto: create-drop
 
     # DDL(CREATE TABLE) 등의 문구를 직접 보기 위한 설정
     generate-ddl: true
@@ -39,3 +34,4 @@ spring:
   sql:
     init:
       mode: always
+

@@ -30,7 +30,6 @@ dependencies {
     // libs하위 전체 jar 추가방법
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-
     //Naver Effective Log Search & Analytics Log4j SDK 의존성 추가 (네이버 로그쓰기 존나더럽네)
     implementation files("libs/nelo2-java-sdk-core-1.6.6.jar")
     //implementation files("libs/nelo2-java-sdk-log4j2-2.8.5.jar")
@@ -58,7 +57,18 @@ dependencies {
 
     // Security + JWT
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Oauth 2.0
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    //feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+    implementation 'io.github.openfeign:feign-jackson:12.4'
+    implementation 'io.github.openfeign:feign-httpclient:12.4'
+    implementation 'io.github.openfeign:feign-core:12.4'
 
     // Amazon AWS Java SDK s3 And File
     implementation 'commons-io:commons-io:2.13.0'
@@ -70,11 +80,13 @@ dependencies {
     // IAMPORT
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.23'
 
-
     // Lombok And Annotation Processor
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // SpringBoot Elastic Search
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

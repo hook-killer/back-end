@@ -1,10 +1,20 @@
 package HookKiller.server.config;
 
 
+import HookKiller.server.properties.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@EnableConfigurationProperties({})
+@EnableConfigurationProperties(
+    {
+        JwtProperties.class,
+        CorsProperties.class,
+        NaverObjectStorageProperties.class,
+        KakaoOauthProperties.class,
+        PapagoProperties.class,
+        HookMailProperties.class,
+    }
+)
 @Configuration
 public class ConfigurationProperties {
 }

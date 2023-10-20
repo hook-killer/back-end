@@ -2,6 +2,51 @@ spring:
   profiles:
     active: local
     include:
-      - security
       - db
+      - auth
+      - papago
 
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  # 파일 한개 최대 20MB, 최대 Request 600MB로 20MB사진 30장까지 허용
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 600MB
+
+naver:
+  storage:
+    end-point: https://kr.object.ncloudstorage.com
+    region-name: kr-standard
+    bucket-name: hook-killer-file-bucket
+
+auth:
+  jwt:
+    header: "Authorization"
+    prefix: "Bearer "
+    secret-key: hokasdofkoasdkfoafjasdlkfjsadlkfjeijflasdkfjasdfasdfasdfaefargagstrghehasdfasfaegargasfsadfdaga
+    access-exp: 36000
+    refresh-exp: 3600
+    issuer: hookkiller
+    exclude-path: [
+      "/api/**",
+      "/user/**"
+    ]
+
+oauth2:
+  kakao:
+    base-url: https://kauth.kakao.com
+    client-id: 2899d52a6041d90ae4c9b9645a7c291d
+    client-secret: 9nI9kKWteLr6kMH50gXTs8HbJ5qvRVq4
+    redirect-url: http://localhost:3000/auth/oauth/kakao
+    app-id: d13220db279c497ef47b29323ceb2e20
+    admin-key: 262a014744528270dde2033856929ddb

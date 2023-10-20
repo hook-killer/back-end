@@ -7,9 +7,8 @@ import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.dto.response.OauthLoginLinkResponse;
 import HookKiller.server.auth.dto.response.OauthTokenResponse;
 import HookKiller.server.auth.service.AuthService;
-import HookKiller.server.common.dto.MailRequest;
 import HookKiller.server.common.service.MailHelper;
-import HookKiller.server.common.util.EmailVerificationUtil;
+import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.service.UserService;
 import jakarta.validation.Valid;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
+    private final KakaoOauthProperties kakaoOauthProperties;
     private final AuthService authService;
     private final UserService userService;
     private final MailHelper mailHelper;
@@ -56,7 +55,7 @@ public class AuthController {
 
     // kakao Oauth 링크를 프론트에 전달해줌.
     // 전달한 링크에서 클라이언트가 카카오로그인 요청
-    @GetMapping("/oauth/kakao/callback")
+    @GetMapping("/oauth/kakao/link")
     public OauthLoginLinkResponse getKakaoLoginLink(
             @RequestHeader(required = false) String referer, // referer는 http://localhost:8080/ 과 같이 제공됨
             @RequestHeader(required = false) String host
@@ -69,22 +68,28 @@ public class AuthController {
         return authService.getKakaoOauthLink(referer);
     }
 
-    // 요청한 카카오 로그인 후 받은 링크의 code로 idToken발급
+     //요청한 카카오 로그인 후 받은 링크의 code로 idToken발급
+//    @GetMapping("/oauth/kakao")
+//    public OauthTokenResponse getKakaoCredentialInfo(
+//            @RequestParam String code
+//            ) {
+//        return authService.getCredentialFromKaKao(code, kakaoOauthProperties.getKakaoRedirectUrl());
+//        log.info("token에서의 referer : {}", referer);
+//        log.info("token에서의 code : {}", code);
+//        log.info("token에서의 host : {}", host);
+//
+//        if (!referer.contains(host)) {
+//            log.info("referer가 host를 포함하나? {}", referer.contains(host));
+//            String format = String.format("https://%s/", host);
+//            return authService.getCredentialFromKaKao(code, format); // http://localhost:8080/ + kakao/callback
+//        }
+//        return authService.getCredentialFromKaKao(code, referer);
+//    }
+
     @GetMapping("/oauth/kakao")
-    public OauthTokenResponse getKakaoCredentialInfo(
-            @RequestParam String code,
-            @RequestHeader(required = false) String referer,
-            @RequestHeader(required = false) String host
-            ) {
-        log.info("token에서의 referer : {}", referer);
-        log.info("token에서의 code : {}", code);
-        // dev, production 환경에서
-        if (referer.contains(host)) {
-            log.info("referer가 host를 포함하나? {}", referer.contains(host));
-            String format = String.format("http://%s", host);
-            return authService.getCredentialFromKaKao(code, format); // http://localhost:8080/ + kakao/callback
-        }
-        return authService.getCredentialFromKaKao(code, referer);
+    public OAuthResponse registerUserForTest(@RequestParam String code) {
+        log.error("oauth KaKao Code >>> {}", code);
+        return authService.registerUserKakaoCode(code);
     }
     
     // 받은 idToken으로 카카오 서버의 사용자 정보를 사용할 수 있는지 OIDC로 인증 및 인가 받고 회원가입 처리

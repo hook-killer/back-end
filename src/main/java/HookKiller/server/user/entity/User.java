@@ -33,14 +33,11 @@ public class User extends AbstractTimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @NotNull
     @Column(unique = true)
     private String email;
 
-    //    @NotNull
     private String password;
 
-    //    @NotNull
     private String nickName;
 
     private String thumbnail;

@@ -1,5 +1,6 @@
 package HookKiller.server.auth.service;
 
+import HookKiller.server.auth.dto.KakaoUserInfoDto;
 import HookKiller.server.auth.dto.OIDCUserInfo;
 import HookKiller.server.auth.dto.request.AuthRequest;
 import HookKiller.server.auth.dto.response.AuthResponse;
@@ -16,12 +17,18 @@ import HookKiller.server.common.service.MailHelper;
 import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.User;
+import HookKiller.server.user.repository.RefreshTokenRepository;
 import HookKiller.server.user.repository.UserRepository;
+import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
 
@@ -74,6 +81,24 @@ public class AuthService {
                         kakaoOauthProperties.getKakaoClientId(),
                         kakaoOauthProperties.getKakaoRedirectUrl()
                 ));
+    }
+
+    public OAuthResponse registerUserKakaoCode(String code) {
+        String idToken = kakaoOauthHelper.getOauthTokenTest(code).getIdToken();
+        OIDCUserInfo userInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
+
+        User user = userRepository.findByEmail(userInfo.getEmail())
+                .orElse( userRepository.save(User.builder()
+                        .email(userInfo.getEmail())
+                        .password(UUID.randomUUID().toString())
+                        .nickName(userInfo.getNickName())
+                        .thumbnail(userInfo.getThumbnailImg())
+                        .loginType(LoginType.KAKAO)
+                        .role(UserRole.USER)
+                        .oauthInfo(userInfo.getOauthInfo())
+                        .build()));
+
+        return tokenGenerateHelper.execute(user);
     }
 
     // 카카오 로그인 후 토큰 받기

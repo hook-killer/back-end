@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.UUID;
+
 import static HookKiller.server.user.type.UserRole.USER;
 
 @Service
@@ -61,7 +63,7 @@ public class UserService {
         });
         return tokenGenerateHelper.execute(userRepository.save(User.builder()
                 .email(oidcUserInfo.getEmail())
-                .password("testtesttest")
+                .password(UUID.randomUUID().toString())
                 .nickName(oidcUserInfo.getNickName())
                 .thumbnail(oidcUserInfo.getThumbnailImg())
                 .loginType(LoginType.DEFAULT)

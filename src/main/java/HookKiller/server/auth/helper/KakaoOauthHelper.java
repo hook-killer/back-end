@@ -31,10 +31,19 @@ public class KakaoOauthHelper {
     log.info("referer 1 : {}", referer);
     return kakaoOauthClient.kakaoAuth(
             kakaoOauthProperties.getKakaoClientId(),
-            referer + "/auth/oauth/kakao",
+            referer ,
             code,
             kakaoOauthProperties.getKakaoClientSecret()
     );
+  }
+
+  public KakaoTokenResponse getOauthTokenTest(String code) {
+
+    return kakaoOauthClient.kakaoAuth(
+            kakaoOauthProperties.getKakaoClientId(),
+            kakaoOauthProperties.getKakaoRedirectUrl(),
+            code,
+            kakaoOauthProperties.getKakaoClientSecret());
   }
   
   public OIDCDto getOIDCDecodePayload(String token) {

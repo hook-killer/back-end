@@ -17,11 +17,15 @@ import HookKiller.server.jwt.JwtTokenProvider;
 import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.repository.UserRepository;
+import HookKiller.server.user.type.LoginType;
 import HookKiller.server.user.type.Status;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
 
@@ -47,12 +51,14 @@ public class AuthService {
         }
 
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
-             mailHelper.sendVerificationMail(MailRequest.builder().email(user.getEmail()).verificationToken(user.getVerificationToken()).build());
-             return ResponseEntity.ok(AuthResponse.builder().build());
+            mailHelper.sendVerificationMail(MailRequest.builder().email(user.getEmail()).verificationToken(user.getVerificationToken()).build());
+            return ResponseEntity.ok(AuthResponse.builder().build());
         }
 
         AuthResponse res = AuthResponse.builder()
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
+                .role(user.getRole().getValue())
+                .nickName(user.getNickName())
                 .build();
 
         return ResponseEntity.ok(res);
@@ -74,6 +80,29 @@ public class AuthService {
                         kakaoOauthProperties.getKakaoClientId(),
                         kakaoOauthProperties.getKakaoRedirectUrl()
                 ));
+    }
+
+    public OAuthResponse registerUserKakaoCode(String code) {
+        String idToken = kakaoOauthHelper.getOauthTokenTest(code).getIdToken();
+        OIDCUserInfo userInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
+
+        User user =
+                userRepository.findByEmail(userInfo.getEmail())
+                        .orElseGet(() ->
+                                userRepository.findByEmail(userInfo.getEmail())
+                                        .orElse(userRepository.save(User.builder()
+                                                .email(userInfo.getEmail())
+                                                .password(UUID.randomUUID().toString())
+                                                .nickName(userInfo.getNickName())
+                                                .thumbnail(userInfo.getThumbnailImg())
+                                                .loginType(LoginType.KAKAO)
+                                                .role(UserRole.USER)
+                                                .status(Status.ACTIVE)
+                                                .oauthInfo(userInfo.getOauthInfo())
+                                                .build())));
+
+
+        return tokenGenerateHelper.execute(user);
     }
 
     // 카카오 로그인 후 토큰 받기

@@ -21,12 +21,10 @@ public class TokenGenerateHelper {
 
     @Transactional
     public OAuthResponse execute(User user) {
-        log.info("TokenGenerateHelper 들어옴! userid : {}", user.getId());
         String newAccessToken =
                 jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue());
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
-        log.info("new AccessToken : {}, new RefreshToken : {}", newAccessToken, newRefreshToken);
-        
+
         RefreshTokenEntity newRefreshTokenEntity =
                 RefreshTokenEntity.builder()
                         .refreshToken(newRefreshToken)
@@ -39,6 +37,10 @@ public class TokenGenerateHelper {
                 .userId(user.getId())
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
+                .email(user.getEmail())
+                .role(user.getRole().getValue())
+                .nickName(user.getNickName())
+                .thumbnail(user.getThumbnail())
                 .build();
     }
 }

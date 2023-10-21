@@ -94,6 +94,7 @@ public class ArticleController {
           @RequestParam(defaultValue = "10", required = false) int limit,
           HttpServletRequest request
   ) {
+    log.info("popular controller 들어옴");
     return ResponseEntity.ok(
             articleService.getPopularArticlesByBoardId(page, limit, boardId, LanguageType.findTypeByRequest(request))
     );

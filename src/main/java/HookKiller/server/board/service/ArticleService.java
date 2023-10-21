@@ -236,11 +236,14 @@ public class ArticleService {
         Timestamp sevenDaysAgoTimestamp = Timestamp.from(sevenDaysAgoInstant);
 
         Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        
+        log.info("board : {}", board.toString());
 
         return articleRepository
                 .findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(board , PUBLIC, sevenDaysAgoTimestamp, currentTimestamp, PageRequest.of(page, limit))
                 .stream()
                 .map(article -> {
+                    log.info("request article content : {}, {}, {}", board.getId(), article.getId(), language.getLanguageCode());
                     ArticleContent content =  articleContentRepository.findByArticleAndLanguage(article, language).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
                     return PopularArticleResponse.builder()
                             .articleId(article.getId())

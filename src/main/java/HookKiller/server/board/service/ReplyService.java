@@ -1,5 +1,6 @@
 package HookKiller.server.board.service;
 
+import HookKiller.server.board.dto.PostReplyRequestDto;
 import HookKiller.server.board.dto.ReplyResponseDto;
 import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.Reply;
@@ -22,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static HookKiller.server.board.type.ReplyStatus.FALSE;
-import static HookKiller.server.board.type.ReplyStatus.TURE;
+import static HookKiller.server.board.type.ReplyStatus.USABLE;
+import static HookKiller.server.board.type.ReplyStatus.DELETED;
 
 
 @Slf4j
@@ -38,15 +39,16 @@ public class ReplyService {
     private final TranslateService translateService;
 
     @Transactional
-    public void createReply(ReplyResponseDto responseDto) {
+    public void createReply(PostReplyRequestDto requestDto) {
         User user = userUtils.getUser();
 
+        log.error("requestDTO : {}", requestDto.toString());
         Reply reply = replyRepository.save(
                 Reply.builder()
-                        .replyStatus(FALSE)
-                        .article(articleRepository.findByIdAndArticleStatus(responseDto.getArticleId(), ArticleStatus.PUBLIC)
+                        .replyStatus(USABLE)
+                        .article(articleRepository.findByIdAndArticleStatus(requestDto.getArticleId(), ArticleStatus.PUBLIC)
                                 .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION))
-                        .orgReplyLanguage(responseDto.getOrgReplyLanguage())
+                        .orgReplyLanguage(requestDto.getOrgReplyLanguage())
                         .createdUser(user)
                         .updatedUser(user)
                         .build()
@@ -56,12 +58,12 @@ public class ReplyService {
         replyContentList.add(
                 ReplyContent.builder()
                         .reply(reply)
-                        .language(responseDto.getOrgReplyLanguage())
-                        .content(responseDto.getContent())
+                        .language(requestDto.getOrgReplyLanguage())
+                        .content(requestDto.getContent())
                         .build()
         );
 
-        responseDto
+        requestDto
                 .getOrgReplyLanguage()
                 .getTranslateTargetLanguage()
                 .forEach(targetLanguage ->
@@ -72,7 +74,7 @@ public class ReplyService {
                                         .language(targetLanguage)
                                         .content(
                                                 translateService.naverPapagoTextTranslate(
-                                                        responseDto.getOrgReplyLanguage(), targetLanguage, responseDto.getContent()
+                                                        requestDto.getOrgReplyLanguage(), targetLanguage, requestDto.getContent()
                                                 )
                                         )
                                         .build()
@@ -86,7 +88,7 @@ public class ReplyService {
     @Transactional(readOnly = true)
     public List<ReplyResponseDto> getReplyList(Long articleId, LanguageType language) {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
-        List<Reply> replyList = replyRepository.findAllByArticleAndReplyStatus(article, FALSE);
+        List<Reply> replyList = replyRepository.findAllByArticleAndReplyStatus(article, USABLE);
 
         return replyList.stream()
                 .map(reply ->
@@ -106,7 +108,7 @@ public class ReplyService {
         replyRepository
                 .findById(replyId)
                 .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
-                .updateStatus(TURE);
+                .updateStatus(DELETED);
     }
 
 }

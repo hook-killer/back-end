@@ -10,4 +10,8 @@ public class OAuthResponse {
     private String accessToken;
     private String refreshToken;
     private Long userId;
+    private String nickName;
+    private String role;
+    private String email;
+    private String thumbnail;
 }

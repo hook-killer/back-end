@@ -37,6 +37,10 @@ public class TokenGenerateHelper {
                 .userId(user.getId())
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
+                .email(user.getEmail())
+                .role(user.getRole().getValue())
+                .nickName(user.getNickName())
+                .thumbnail(user.getThumbnail())
                 .build();
     }
 }

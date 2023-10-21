@@ -2,7 +2,7 @@
 hook:
   db:
     url: db-it7f7-kr.vpc-pub-cdb.ntruss.com
-    database: jw
+    database:
     username: hooklocal
     password: hooklocal1234!
     port: 3306

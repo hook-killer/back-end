@@ -1,5 +1,6 @@
 package HookKiller.server.board.controller;
 
+import HookKiller.server.board.dto.PostReplyRequestDto;
 import HookKiller.server.board.dto.ReplyResponseDto;
 import HookKiller.server.board.service.ReplyService;
 import HookKiller.server.common.type.LanguageType;
@@ -26,8 +27,8 @@ public class ReplyController {
   private final ReplyService replyService;
 
   @PostMapping
-  public void createReply(@RequestBody ReplyResponseDto responseDto) {
-    replyService.createReply(responseDto);
+  public void createReply(@RequestBody PostReplyRequestDto requestDto) {
+    replyService.createReply(requestDto);
   }
 
   @GetMapping("/{articleId}")

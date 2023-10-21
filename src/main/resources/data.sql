@@ -236,14 +236,14 @@ insert into tbl_article_content (article_id, language, title, content) values (7
 insert into tbl_article_content (article_id, language, title, content) values (7, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
 
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'FALSE', '2023-10-17 21:01:44', 1, '2023-10-17 21:01:44', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'FALSE', '2023-10-17 21:04:05', 1, '2023-10-17 21:04:05', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (2, "KO", 'FALSE', '2023-10-17 21:04:13', 1, '2023-10-17 21:04:13', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (3, "KO", 'FALSE', '2023-10-17 21:04:21', 1, '2023-10-17 21:04:21', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (4, "KO", 'FALSE', '2023-10-17 21:04:30', 1, '2023-10-17 21:04:30', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'FALSE', '2023-10-17 21:05:00', 1, '2023-10-17 21:05:00', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'FALSE', '2023-10-17 21:05:20', 1, '2023-10-17 21:05:20', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "EN", 'FALSE', '2023-10-17 21:05:33', 1, '2023-10-17 21:05:33', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-10-17 21:01:44', 1, '2023-10-17 21:01:44', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-10-17 21:04:05', 1, '2023-10-17 21:04:05', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (2, "KO", 'USABLE', '2023-10-17 21:04:13', 1, '2023-10-17 21:04:13', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (3, "KO", 'USABLE', '2023-10-17 21:04:21', 1, '2023-10-17 21:04:21', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (4, "KO", 'USABLE', '2023-10-17 21:04:30', 1, '2023-10-17 21:04:30', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-10-17 21:05:00', 1, '2023-10-17 21:05:00', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-10-17 21:05:20', 1, '2023-10-17 21:05:20', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "EN", 'USABLE', '2023-10-17 21:05:33', 1, '2023-10-17 21:05:33', 1);
 
 
 insert into tbl_reply_content (reply_id, language, content) values (1, "KO", '안녕하세요');
@@ -286,7 +286,7 @@ insert into tbl_reply_content (reply_id, language, content) values (8, "EN", 'I'
 insert into tbl_reply_content (reply_id, language, content) values (8, "CN", '我很伤心');
 insert into tbl_reply_content (reply_id, language, content) values (8, "JP", '私はとても悲しい');
 
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (7, 'KO', 'FALSE', '2023-10-18 13:17:02', 1, '2023-10-18 13:17:02', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (7, 'KO', 'USABLE', '2023-10-18 13:17:02', 1, '2023-10-18 13:17:02', 1);
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'KO', '응애응애 너무 졸린 점심이에요~~~~');
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'CN', '嗯嗯，中午太困了~~~~');
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'EN', 'It''s such a sleepy lunch~~~');

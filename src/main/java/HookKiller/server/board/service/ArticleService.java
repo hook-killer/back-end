@@ -236,7 +236,7 @@ public class ArticleService {
         Timestamp sevenDaysAgoTimestamp = Timestamp.from(sevenDaysAgoInstant);
 
         Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-
+        
         return articleRepository
                 .findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(board , PUBLIC, sevenDaysAgoTimestamp, currentTimestamp, PageRequest.of(page, limit))
                 .stream()

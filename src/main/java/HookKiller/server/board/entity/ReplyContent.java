@@ -41,7 +41,7 @@ public class ReplyContent {
     @Enumerated(EnumType.STRING)
     private LanguageType language;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     @Lob
     private String content;
 

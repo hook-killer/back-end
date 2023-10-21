@@ -41,9 +41,9 @@ public class SecurityConfig {
                 "/article/{articleId}",
                 "/article/popular/{boardId}",
 
-                "/reply/{articleId}",
+                "/reply/{articleId}"
         });
-        put(HttpMethod.POST, new String[]{
+        put(HttpMethod.POST, new String[] {
         });
         put(HttpMethod.PUT, new String[]{});
         put(HttpMethod.DELETE, new String[]{});

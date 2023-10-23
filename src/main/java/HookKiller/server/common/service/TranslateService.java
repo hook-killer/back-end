@@ -8,6 +8,7 @@ import HookKiller.server.properties.PapagoProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,6 +26,12 @@ public class TranslateService {
     private final PapagoProperties papagoProperties;
     private final ObjectMapper objectMapper;
     
+    @Qualifier("papagoTextTranslateTemplate")
+    private final RestTemplate textRestTemplate;
+    
+    @Qualifier("papagoHtmlTranslateTemplate")
+    private final RestTemplate htmlRestTemplate;
+    
     /**
      * @param source : 번역의 대상이 될 원래의 언어 종류
      * @param target : 번역 후 결과물로 나올 언어 종류
@@ -32,8 +39,6 @@ public class TranslateService {
      * @return : html 형식의 번역이 된 String
      */
     public String naverPapagoHtmlTranslate(LanguageType source, LanguageType target, String html) {
-        RestTemplate restTemplate = new RestTemplate();
-
         MultiValueMap<String, String> papagoRequestBody = new LinkedMultiValueMap<>();
         papagoRequestBody.add("source", source.getLanguageCode());
         papagoRequestBody.add("target", target.getLanguageCode());
@@ -46,7 +51,7 @@ public class TranslateService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(papagoRequestBody, papagoRequestHeaders);
 
         ResponseEntity<String> response =
-                restTemplate.postForEntity(URI.create(papagoProperties.getHtmlRequestUrl()), request, String.class);
+                htmlRestTemplate.postForEntity(URI.create(papagoProperties.getHtmlRequestUrl()), request, String.class);
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             log.info("result >>> {}", response.getBody());
             return response.getBody();
@@ -55,7 +60,6 @@ public class TranslateService {
     }
     
     public String naverPapagoTextTranslate(LanguageType source, LanguageType target, String content) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders papagoRequestHeaders = new HttpHeaders();
         papagoRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
         papagoProperties.getHeader().forEach(papagoRequestHeaders::set);
@@ -69,7 +73,7 @@ public class TranslateService {
         HttpEntity request = new HttpEntity<>(papagoRequestBody, papagoRequestHeaders);
 
         ResponseEntity<PapagoTextResponse> response =
-                restTemplate.postForEntity(URI.create(papagoProperties.getTextRequestUrl()), request, PapagoTextResponse.class);
+                textRestTemplate.postForEntity(URI.create(papagoProperties.getTextRequestUrl()), request, PapagoTextResponse.class);
 
         if (response.getStatusCode().equals(HttpStatus.OK)) {
             log.info("result >>> {}", response.getBody().getMessage().getResult().toString());

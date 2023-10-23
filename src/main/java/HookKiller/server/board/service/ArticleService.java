@@ -21,9 +21,12 @@ import HookKiller.server.user.entity.User;
 import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -32,9 +35,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static HookKiller.server.common.type.ArticleStatus.DELETE;
 import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
+import static HookKiller.server.common.type.LanguageType.*;
 
 @Slf4j
 @Service
@@ -88,7 +93,6 @@ public class ArticleService {
 
     /**
      * 게시물 등록
-     *
      * @param requestDto
      */
     @Transactional
@@ -96,6 +100,7 @@ public class ArticleService {
 
         User user = userUtils.getUser();
         Board board = boardRepository.findById(requestDto.getBoardId()).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
+        LanguageType orgLanguageType = requestDto.getOrgArticleLanguage();
 
         Article article = articleRepository.save(
                 Article.builder()
@@ -116,31 +121,40 @@ public class ArticleService {
                         .content(requestDto.getContent())
                         .build()
         );
-
-        requestDto
-                .getOrgArticleLanguage()
-                .getTranslateTargetLanguage()
-                .forEach(targetLanguage ->
-                        articleContentList.add(
-                                ArticleContent
-                                        .builder()
-                                        .article(article)
-                                        .language(targetLanguage)
-                                        .title(
-                                                translateService.naverPapagoTextTranslate(
-                                                        requestDto.getOrgArticleLanguage(), targetLanguage, requestDto.getTitle()
-                                                )
-                                        ).content(
-                                                translateService.naverPapagoHtmlTranslate(
-                                                        requestDto.getOrgArticleLanguage(), targetLanguage, requestDto.getContent()
-                                                )
-                                        ).build()
-                        )
-
-                );
+        
+        String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getContent());
+        String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getContent());
+        String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+        
+        articleContentList.add(buildArticleContentByLanguage(KO, article, requestDto, koResult));
+        articleContentList.add(buildArticleContentByLanguage(JP, article, requestDto, jpResult));
+        articleContentList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), article, requestDto, otherResult));
+        
         articleContentRepository.saveAll(articleContentList);
     }
-
+    
+    /**
+     * orgLanguage(source 언어 타입)를 languageType(target 언어 타입)으로 번역한 결과물을 가지고 ArticleContent로 만들기
+     * @param languageType target 언어 타입
+     * @param article content에 해당하는 article
+     * @param requestDto request로 온 내용물
+     * @param content target 언어로 번역된 ArticleContent
+     *
+     * @return ArticleConent
+     */
+    private ArticleContent buildArticleContentByLanguage(LanguageType languageType, Article article, PostArticleRequestDto requestDto, String content) {
+        return ArticleContent
+                .builder()
+                .article(article)
+                .language(languageType)
+                .title(
+                        translateService.naverPapagoTextTranslate(
+                                requestDto.getOrgArticleLanguage(), languageType, requestDto.getTitle()
+                        )
+                ).content(content)
+                .build();
+    }
+    
     /**
      * 1. 사용자가 정상적인 인가가 되지 않은 경우에는 `SecurityContextNotFoundException`이 발생한다.<br />
      * 2. 사용자가 DB에 존재하지 않는 경우에는 `UserNotFoundException`이 발생한다.<br />
@@ -150,7 +164,7 @@ public class ArticleService {
      * 6. Papago Translation을 실행하던 중 Exception이 발생하면 수정과정은 Rollback된다.
      * @param requestDto
      */
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateArticle(PostArticleRequestDto requestDto) {
         User user = userUtils.getUserIsStatusActive();
         Article article = articleRepository.findById(requestDto.getArticleId())
@@ -163,11 +177,15 @@ public class ArticleService {
         // 변경여부 확인을 위한 변수
         boolean chgTitle = false;
         boolean chgContent = false;
+        
+        LanguageType orgLanguageType = requestDto.getOrgArticleLanguage();
 
-        List<ArticleContent> contents = article.getArticleContent();
+        // 찾아온 article에 해당하는 원래 content
+        List<ArticleContent> contents = articleContentRepository.findAllByArticle(article);
 
         article.setUpdatedUser(user);
 
+        // OrgLanguageType을 바꾼 경우 본래 Article의 OrgLanguageType 변경
         if (!requestDto.getOrgArticleLanguage().equals(article.getOrgArticleLanguage()))
             article.setOrgArticleLanguage(requestDto.getOrgArticleLanguage());
 
@@ -176,29 +194,48 @@ public class ArticleService {
                 .findFirst()
                 .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION);
 
+        // title 혹은 content가 본래 articleContent의 것과 다른지 비교 후 다르다면 new Title or Content로 set
         if (requestDto.getNewTitle() != null && !requestDto.getNewTitle().equals(requestDto.getTitle())) {
             chgTitle = true;
             articleContent.setTitle(requestDto.getNewTitle());
         }
-        if (requestDto.getNewContent() != null && requestDto.getNewContent().equals(requestDto.getContent())) {
+        if (requestDto.getNewContent() != null && !requestDto.getNewContent().equals(requestDto.getContent())) {
             chgContent = true;
-            articleContent.setContent(requestDto.getContent());
+            articleContent.setContent(requestDto.getNewContent());
         }
 
-        if (chgTitle || chgContent) {
+        if (chgTitle) {
             final boolean finalChgTitle = chgTitle;
-            final boolean finalChgContent = chgContent;
             contents.stream()
                     .filter(content -> !content.equals(articleContent))
                     .forEach(content -> {
                                 if (finalChgTitle) {
-                                    translateService.naverPapagoTextTranslate(articleContent.getLanguage(), content.getLanguage(), articleContent.getTitle());
-                                }
-                                if (finalChgContent) {
-                                    translateService.naverPapagoHtmlTranslate(articleContent.getLanguage(), content.getLanguage(), articleContent.getContent());
+                                    content.setTitle(translateService.naverPapagoTextTranslate(articleContent.getLanguage(), content.getLanguage(), articleContent.getTitle()));
                                 }
                             }
                     );
+        }
+        
+        String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getNewContent());
+        String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getNewContent());
+        String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+        
+        log.info("KO : {}, JP : {}, EN : {}", koResult, jpResult, otherResult);
+        
+        if (chgContent) {
+            for (ArticleContent content : contents) {
+                if (content.getLanguage().equals(KO)) {
+                    content.setContent(koResult);
+                } else if (content.getLanguage().equals(JP)) {
+                    content.setContent(jpResult);
+                } else {
+                    if (content.getLanguage().equals(requestDto.getOrgArticleLanguage())) {
+                        content.setContent(requestDto.getNewContent());
+                    } else {
+                        content.setContent(otherResult);
+                    }
+                }
+            }
         }
     }
 

@@ -20,7 +20,6 @@ public class EditNoticeRequest {
     private String orgTitle;
     private String newTitle;
 
-
     private String orgContent;
     private String newContent;
 }

@@ -33,6 +33,7 @@ public class SecurityConfig {
         put(HttpMethod.GET, new String[]{
                 // Infra Path
                 "/health",
+                "/papago/test",
 
                 "/notice",
                 "/notice/{noticeArticleId}",
@@ -121,7 +122,7 @@ public class SecurityConfig {
                                 "/auth/oauth/kakao/register/**",
                                 "/mail/**",
                                 "/health",
-                                "/search/**"                          
+                                "/search/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, permitAllMappingList.get(HttpMethod.GET)).permitAll()
                         .requestMatchers(HttpMethod.POST, permitAllMappingList.get(HttpMethod.POST)).permitAll()

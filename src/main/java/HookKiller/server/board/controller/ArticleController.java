@@ -70,7 +70,6 @@ public class ArticleController {
     return ResponseEntity.ok(ArticleConstants.ARTICLE_UPDATE_SUCCESS_MSG);
   }
 
-
   /**
    * 게시물 삭제
    */

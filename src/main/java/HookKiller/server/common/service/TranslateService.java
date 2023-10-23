@@ -24,7 +24,13 @@ public class TranslateService {
 
     private final PapagoProperties papagoProperties;
     private final ObjectMapper objectMapper;
-
+    
+    /**
+     * @param source : 번역의 대상이 될 원래의 언어 종류
+     * @param target : 번역 후 결과물로 나올 언어 종류
+     * @param html : 번역의 대상이 되는 html
+     * @return : html 형식의 번역이 된 String
+     */
     public String naverPapagoHtmlTranslate(LanguageType source, LanguageType target, String html) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -32,14 +38,6 @@ public class TranslateService {
         papagoRequestBody.add("source", source.getLanguageCode());
         papagoRequestBody.add("target", target.getLanguageCode());
         papagoRequestBody.add("html", html);
-
-//     Map papagoRequestBody = objectMapper.convertValue(PapagoHtmlRequest.builder()
-//             .source(source.getLanguageCode())
-//             .target(target.getLanguageCode())
-//             .html(html)
-//             .build(), Map.class);
-
-//     HttpEntity request = new HttpEntity<>(papagoRequestBody, papagoRequestHeaders);
 
         HttpHeaders papagoRequestHeaders = new HttpHeaders();
         papagoRequestHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -55,7 +53,7 @@ public class TranslateService {
         }
         throw NaverErrorException.EXCEPTION;
     }
-
+    
     public String naverPapagoTextTranslate(LanguageType source, LanguageType target, String content) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders papagoRequestHeaders = new HttpHeaders();

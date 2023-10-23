@@ -2,6 +2,6 @@ spring:
   # 매번 data.sql 기반으로 업데이트 되기 떄문에 데이터 많이 추가해주세요~
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${hook.db.url}:${hook.db.port}/${hook.db.database}
+    url: jdbc:mysql://${hook.db.url}:${hook.db.port}/${hook.db.database}?serverTimezone=UTC&useLegacyDatetimeCode=false
     username: ${hook.db.username}
     password: ${hook.db.password}

@@ -33,9 +33,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static HookKiller.server.common.type.ArticleStatus.DELETE;
 import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
@@ -62,16 +60,20 @@ public class ArticleService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<ArticleRequestDto> getArticleList(int page, int articleLimit, Long boardId, LanguageType language) {
+    public Map<String, Object> getArticleList(int page, int articleLimit, Long boardId, LanguageType language) {
         // boardId로 board에 해당하는 Article들을 모두 뽑아온다
         Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-        Page<Article> articleList = articleRepository.findAllByBoardAndArticleStatusOrderByCreateAtDesc(board, PUBLIC, PageRequest.of(page, articleLimit));
-        return articleList.stream()
+        Page<Article> pageResult = articleRepository.findAllByBoardAndArticleStatusOrderByCreateAtDesc(board, PUBLIC, PageRequest.of(page, articleLimit));
+        Map<String, Object> result = new HashMap<>();
+        result.put("totalPage", pageResult.getTotalPages());
+        result.put("totalElements", pageResult.getTotalElements());
+        result.put("data", pageResult.stream()
                 .map(article ->
                         ArticleRequestDto.of(article, articleContentRepository
                                 .findByArticleAndLanguage(article, language)
                                 .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)))
-                .toList();
+                .toList());
+        return result;
     }
 
     /**

@@ -59,19 +59,6 @@ public class ArticleService {
      * @param language
      * @return
      */
-//    @Transactional(readOnly = true)
-//    public List<ArticleRequestDto> getArticleList(int page, int articleLimit, Long boardId, LanguageType language) {
-//        // boardId로 board에 해당하는 Article들을 모두 뽑아온다
-//        Board board = boardRepository.findById(boardId).orElseThrow(() -> BoardNotFoundException.EXCEPTION);
-//        Page<Article> articleList = articleRepository.findAllByBoardAndArticleStatusOrderByCreateAtDesc(board, PUBLIC, PageRequest.of(page, articleLimit));
-//        return articleList.stream()
-//                .map(article ->
-//                        ArticleRequestDto.of(article, articleContentRepository
-//                                .findByArticleAndLanguage(article, language)
-//                                .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION)))
-//                .toList();
-//    }
-
     @Transactional(readOnly = true)
     public Map<String, Object> getArticleList(int page, int articleLimit, Long boardId, LanguageType language) {
         // boardId로 board에 해당하는 Article들을 모두 뽑아온다

@@ -148,14 +148,12 @@ public class NoticeService {
                             buildArticleContentByLanguage(targetLanguage, noticeArticle, addNoticeRequest, addNoticeRequest.getContent())
                     ));
         } else {
-            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, addNoticeRequest.getContent());
-            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, addNoticeRequest.getContent());
-            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-
-            contentsList.add(buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, koResult));
-            contentsList.add(buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, jpResult));
-            contentsList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), noticeArticle, addNoticeRequest, koResult));
-
+            NoticeContent koreaContent = buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
+            NoticeContent japanContent = buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
+            NoticeContent otherContent = buildArticleContentByLanguage(orgLanguageType.equals(CN) ? EN : CN, noticeArticle, addNoticeRequest, koreaContent.getContent());
+            contentsList.add(koreaContent);
+            contentsList.add(japanContent);
+            contentsList.add(otherContent);
         }
         noticeContentRepository.saveAll(contentsList);
     }

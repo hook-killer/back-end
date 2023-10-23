@@ -26,7 +26,6 @@ public class TranslateService {
     private final ObjectMapper objectMapper;
     
     /**
-     * TODO : source, target이 CN, EN 사이의 조건부 번역 처리
      * @param source : 번역의 대상이 될 원래의 언어 종류
      * @param target : 번역 후 결과물로 나올 언어 종류
      * @param html : 번역의 대상이 되는 html

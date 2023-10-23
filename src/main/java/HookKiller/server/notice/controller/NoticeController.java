@@ -59,6 +59,7 @@ public class NoticeController {
     }
 
     /**
+     * TODO : 공지사항 등록이므로 Transactional 처리 불필요
      * 공지사항 등록
      */
     @PostMapping
@@ -68,6 +69,7 @@ public class NoticeController {
     }
 
     /**
+     * TODO : 공지사항 수정이므로 Transactional 처리 필요
      * 공지사항 수정
      */
     @PutMapping

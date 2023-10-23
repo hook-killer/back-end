@@ -53,6 +53,7 @@ public class ArticleController {
   }
 
   /**
+   * TODO : 게시물 등록이므로 Transactional 처리 불필요
    * 게시글 등록
    */
   @PostMapping
@@ -62,6 +63,7 @@ public class ArticleController {
   }
 
   /**
+   * TODO : 게시물 수정이므로 Transatcional 처리 필요
    * 게시물 수정
    */
   @PutMapping
@@ -69,7 +71,6 @@ public class ArticleController {
     articleService.updateArticle(requestDto);
     return ResponseEntity.ok(ArticleConstants.ARTICLE_UPDATE_SUCCESS_MSG);
   }
-
 
   /**
    * 게시물 삭제

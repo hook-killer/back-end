@@ -36,12 +36,13 @@ public class ArticleController {
    * 리스트 조회 조회
    */
   @GetMapping("/list/{boardId}")
-  public List<ArticleRequestDto> getArticleList(
+  public ResponseEntity<Object> getArticleList(
           @RequestParam(defaultValue = "0", required = false) int page,
           @RequestParam(defaultValue = "10", required = false) int articleLimit,
           @PathVariable Long boardId,
           HttpServletRequest request) {
-    return articleService.getArticleList(page, articleLimit, boardId, LanguageType.findTypeByRequest(request));
+    log.info("게시판 리스트 조회");
+    return ResponseEntity.ok(articleService.getArticleList(page, articleLimit, boardId, LanguageType.findTypeByRequest(request)));
   }
 
   /**

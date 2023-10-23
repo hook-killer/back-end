@@ -29,7 +29,6 @@ public class UserUtils {
         if (authentication == null) {
             throw SecurityContextNotFoundException.EXCEPTION;
         }
-        log.info("principal : {}", authentication.getPrincipal().toString());
         return Long.valueOf(authentication.getName());
     }
     public User getUser() {

@@ -40,7 +40,6 @@ public class ArticleLikeService {
         boolean result = articleLikeRepository.findByArticleAndUser(article, user).isPresent();
 
         log.info("IsUserArticleLike 조회 유저 >>> {} , 조회 요청 ArticleId >>> {}", user.getEmail(), article.getId());
-
         return CommonBooleanResultResponse.builder()
                 .result(result)
                 .message(result ? ArticleLikeConstants.EXISTS_ARTICLE_LIKE : ArticleLikeConstants.NOT_EXISTS_ARTICLE_LIKE)

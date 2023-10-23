@@ -30,7 +30,6 @@ public class JwtOIDCProvider {
 
     // 외부에서 돌릴 검증 로직
     public String getKidFromUnsignedTokenHeader(String token, String iss, String aud) {
-        log.error("getKidFromUnsignedTokenHeader들어옴!");
         return (String) getUnsignedTokenClaims(token, iss, aud).getHeader().get(KID);
     }
 

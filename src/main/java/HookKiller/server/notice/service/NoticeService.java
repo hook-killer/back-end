@@ -16,12 +16,15 @@ import HookKiller.server.user.entity.User;
 import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static HookKiller.server.common.type.ArticleStatus.DELETE;
 import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
@@ -60,8 +63,12 @@ public class NoticeService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<NoticeArticleDto> getNoticeList(int page, int articleLimit, LanguageType languageType) {
-        return noticeArticleRepository.findAllByStatusOrderByCreateAtDesc(PUBLIC, PageRequest.of(page, articleLimit))
+    public Map<String, Object> getNoticeList(int page, int articleLimit, LanguageType languageType) {
+        Page<NoticeArticle> pageResult = noticeArticleRepository.findAllByStatusOrderByCreateAtDesc(PUBLIC, PageRequest.of(page, articleLimit));
+        Map<String, Object> result = new HashMap<>();
+        result.put("totalPage", pageResult.getTotalPages());
+        result.put("totalElements", pageResult.getTotalElements());
+        result.put("data", pageResult
                 .stream()
                 .filter(noticeArticle -> noticeArticle.getContent().stream().anyMatch(noticeArticleContent -> noticeArticleContent.getLanguage().equals(languageType)))
                 .map(noticeArticle -> {
@@ -84,7 +91,8 @@ public class NoticeService {
                     listDtoResult.setUpdateAt(noticeArticle.getUpdateAt());
                     return listDtoResult;
                 })
-                .toList();
+                .toList());
+        return result;
     }
 
     /**

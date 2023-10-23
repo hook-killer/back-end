@@ -1,26 +1,22 @@
 package HookKiller.server.user.dto;
 
 import HookKiller.server.user.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 @Getter
+@Builder
+@AllArgsConstructor
 public class MyPageUserResponse {
-    private final Long userId;
-    private final String email;
-    private final String thumbnail;
-    private final String nickName;
-
-
-    @Builder
-    public MyPageUserResponse(Long userId, String email, String thumbnail, String nickName) {
-        this.userId = userId;
-        this.email = email;
-        this.thumbnail = thumbnail;
-        this.nickName = nickName;
-    }
-
-
+    private Long userId;
+    private String email;
+    private String thumbnail;
+    private String nickName;
+    private String createAt;
 
     public static MyPageUserResponse from(User user) {
         return MyPageUserResponse.builder()
@@ -28,6 +24,15 @@ public class MyPageUserResponse {
                 .email(user.getEmail())
                 .thumbnail(user.getThumbnail())
                 .nickName(user.getNickName())
+                .createAt(formatTimestamp(user.getCreateAt()))
                 .build();
+    }
+
+    private static String formatTimestamp(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(timestamp);
     }
 }

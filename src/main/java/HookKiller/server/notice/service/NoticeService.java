@@ -155,9 +155,9 @@ public class NoticeService {
             contentsList.add(buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, koResult));
             contentsList.add(buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, jpResult));
             contentsList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), noticeArticle, addNoticeRequest, otherResult));
-      
-            noticeContentRepository.saveAll(contentsList);
+
         }
+        noticeContentRepository.saveAll(contentsList);
     }
   
   /**

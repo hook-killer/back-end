@@ -150,7 +150,7 @@ public class NoticeService {
         } else {
             NoticeContent koreaContent = buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
             NoticeContent japanContent = buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
-            NoticeContent otherContent = buildArticleContentByLanguage(orgLanguageType.equals(CN) ? EN : CN, noticeArticle, addNoticeRequest, koreaContent.getContent());
+            NoticeContent otherContent = buildArticleContentByKoreaToTargetLang(orgLanguageType.equals(CN) ? EN : CN, noticeArticle, addNoticeRequest, koreaContent.getContent());
             contentsList.add(koreaContent);
             contentsList.add(japanContent);
             contentsList.add(otherContent);
@@ -181,6 +181,22 @@ public class NoticeService {
                 )
                 .build();
     }
+
+    private  NoticeContent buildArticleContentByKoreaToTargetLang(LanguageType languageType, NoticeArticle noticeArticle, AddNoticeRequest addNoticeRequest, String content) {
+        return NoticeContent
+                .builder()
+                .noticeArticle(noticeArticle)
+                .language(languageType)
+                .title(
+                        translateService.naverPapagoTextTranslate(
+                                addNoticeRequest.getLanguage(), languageType, addNoticeRequest.getTitle()
+                        )
+                ).content(
+                        translateService.naverPapagoHtmlTranslate(KO, languageType, content)
+                )
+                .build();
+    }
+
 
     /**
      * 게시물 수정

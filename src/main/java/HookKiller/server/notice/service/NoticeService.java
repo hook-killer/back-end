@@ -114,7 +114,7 @@ public class NoticeService {
     @Transactional
     public void saveNotice(AddNoticeRequest addNoticeRequest) {
         LanguageType orgLanguageType = addNoticeRequest.getLanguage();
-      
+
         //로그인한 사용자 획득
         User user = userUtils.getUser();
 
@@ -141,46 +141,62 @@ public class NoticeService {
                         .build()
         );
         if (orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) {
-          addNoticeRequest
-                  .getLanguage()
-                  .getTranslateTargetLanguage()
-                  .forEach(targetLanguage -> contentsList.add(
-                          buildArticleContentByLanguage(targetLanguage, noticeArticle, addNoticeRequest, addNoticeRequest.getContent())
-                  ));
+            addNoticeRequest
+                    .getLanguage()
+                    .getTranslateTargetLanguage()
+                    .forEach(targetLanguage -> contentsList.add(
+                            buildArticleContentByLanguage(targetLanguage, noticeArticle, addNoticeRequest, addNoticeRequest.getContent())
+                    ));
         } else {
-            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, addNoticeRequest.getContent());
-            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, addNoticeRequest.getContent());
-            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-            
-            contentsList.add(buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, koResult));
-            contentsList.add(buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, jpResult));
-            contentsList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), noticeArticle, addNoticeRequest, otherResult));
-
+            NoticeContent koreaContent = buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
+            NoticeContent japanContent = buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, addNoticeRequest.getContent());
+            NoticeContent otherContent = buildArticleContentByKoreaToTargetLang(orgLanguageType.equals(CN) ? EN : CN, noticeArticle, addNoticeRequest, koreaContent.getContent());
+            contentsList.add(koreaContent);
+            contentsList.add(japanContent);
+            contentsList.add(otherContent);
         }
         noticeContentRepository.saveAll(contentsList);
     }
-  
-  /**
-   * orgLanguage(source 언어 타입)를 languageType(target 언어 타입)으로 번역한 결과물을 가지고 ArticleContent로 만들기
-   * @param languageType target 언어 타입
-   * @param noticeArticle content에 해당하는 article
-   * @param addNoticeRequest request로 온 내용물
-   * @param content target 언어로 번역된 NoticeContent
-   *
-   * @return ArticleConent
-   */
-  private NoticeContent buildArticleContentByLanguage(LanguageType languageType, NoticeArticle noticeArticle, AddNoticeRequest addNoticeRequest, String content) {
-    return NoticeContent
-            .builder()
-            .noticeArticle(noticeArticle)
-            .language(languageType)
-            .title(
-                    translateService.naverPapagoTextTranslate(
-                            addNoticeRequest.getLanguage(), languageType, addNoticeRequest.getTitle()
-                    )
-            ).content(content)
-            .build();
-  }
+
+    /**
+     * orgLanguage(source 언어 타입)를 languageType(target 언어 타입)으로 번역한 결과물을 가지고 ArticleContent로 만들기
+     *
+     * @param languageType     target 언어 타입
+     * @param noticeArticle    content에 해당하는 article
+     * @param addNoticeRequest request로 온 내용물
+     * @param content          target 언어로 번역된 NoticeContent
+     * @return ArticleConent
+     */
+    private NoticeContent buildArticleContentByLanguage(LanguageType languageType, NoticeArticle noticeArticle, AddNoticeRequest addNoticeRequest, String content) {
+        return NoticeContent
+                .builder()
+                .noticeArticle(noticeArticle)
+                .language(languageType)
+                .title(
+                        translateService.naverPapagoTextTranslate(
+                                addNoticeRequest.getLanguage(), languageType, addNoticeRequest.getTitle()
+                        )
+                ).content(
+                        translateService.naverPapagoHtmlTranslate(addNoticeRequest.getLanguage(), languageType, content)
+                )
+                .build();
+    }
+
+    private  NoticeContent buildArticleContentByKoreaToTargetLang(LanguageType languageType, NoticeArticle noticeArticle, AddNoticeRequest addNoticeRequest, String content) {
+        return NoticeContent
+                .builder()
+                .noticeArticle(noticeArticle)
+                .language(languageType)
+                .title(
+                        translateService.naverPapagoTextTranslate(
+                                addNoticeRequest.getLanguage(), languageType, addNoticeRequest.getTitle()
+                        )
+                ).content(
+                        translateService.naverPapagoHtmlTranslate(KO, languageType, content)
+                )
+                .build();
+    }
+
 
     /**
      * 게시물 수정
@@ -198,33 +214,33 @@ public class NoticeService {
     public void updateNotice(EditNoticeRequest request) {
         //로그인한 사용자 획득
         User user = userUtils.getUser();
-  
+
         //관리자 권한 확인
         if (!user.getRole().equals(UserRole.ADMIN))
             throw NoticeNotAdminForbiddenException.EXCEPTION;
-  
+
         // 변경여부 확인을 위한 변수
         boolean chgTitle = false;
         boolean chgContent = false;
-        
+
         LanguageType orgLanguageType = request.getLanguage();
-  
+
         //게시물이 공개중이어야 수정가능함
         NoticeArticle article = noticeArticleRepository.findByIdAndStatus(request.getNoticeArticleId(), PUBLIC)
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
         List<NoticeContent> contents = noticeContentRepository.findAllByNoticeArticle(article);
-  
+
         article.setUpdatedUser(user);
-        
+
         //다른경우 변경
         if (!request.getLanguage().equals(article.getLanguage()))
             article.setLanguage(request.getLanguage());
-  
+
         NoticeContent choiceContent = contents.stream()
                 .filter(content -> request.getLanguage().equals(content.getLanguage()))
                 .findFirst()
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
-  
+
         if (request.getNewTitle() != null && !request.getNewTitle().equals(request.getOrgTitle())) {
             chgTitle = true;
             choiceContent.setTitle(request.getNewTitle());
@@ -233,7 +249,7 @@ public class NoticeService {
             chgContent = true;
             choiceContent.setContent(request.getNewContent());
         }
-  
+
         if (chgTitle) {
             //Lambda에서 활용하기 위한 final변수 변환
             final boolean finalChgTitle = chgTitle;
@@ -241,12 +257,12 @@ public class NoticeService {
                     .filter(content -> choiceContent != content)
                     .forEach(content -> {
                                 if (finalChgTitle) {
-                                  content.setTitle(translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle()));
+                                    content.setTitle(translateService.naverPapagoTextTranslate(choiceContent.getLanguage(), content.getLanguage(), choiceContent.getTitle()));
                                 }
                             }
                     );
         }
-        
+
         if (orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) {
             contents.stream()
                     .filter(content -> choiceContent != content)
@@ -255,24 +271,24 @@ public class NoticeService {
             String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, request.getNewContent());
             String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, request.getNewContent());
             String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-          
+
             if (chgContent) {
-              for (NoticeContent content : contents) {
-                if (content.getLanguage().equals(KO)) {
-                  content.setContent(koResult);
-                } else if (content.getLanguage().equals(JP)) {
-                  content.setContent(jpResult);
-                } else {
-                  if (content.getLanguage().equals(request.getLanguage())) {
-                    content.setContent(request.getNewContent());
-                  } else {
-                    content.setContent(otherResult);
-                  }
+                for (NoticeContent content : contents) {
+                    if (content.getLanguage().equals(KO)) {
+                        content.setContent(koResult);
+                    } else if (content.getLanguage().equals(JP)) {
+                        content.setContent(jpResult);
+                    } else {
+                        if (content.getLanguage().equals(request.getLanguage())) {
+                            content.setContent(request.getNewContent());
+                        } else {
+                            content.setContent(otherResult);
+                        }
+                    }
                 }
-              }
             }
         }
-        
+
     }
 
     /**

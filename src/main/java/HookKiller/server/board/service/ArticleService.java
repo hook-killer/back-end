@@ -21,10 +21,8 @@ import HookKiller.server.user.entity.User;
 import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +31,17 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static HookKiller.server.common.type.ArticleStatus.DELETE;
 import static HookKiller.server.common.type.ArticleStatus.PUBLIC;
-import static HookKiller.server.common.type.LanguageType.*;
+import static HookKiller.server.common.type.LanguageType.CN;
+import static HookKiller.server.common.type.LanguageType.EN;
+import static HookKiller.server.common.type.LanguageType.JP;
+import static HookKiller.server.common.type.LanguageType.KO;
 
 @Slf4j
 @Service
@@ -129,21 +133,19 @@ public class ArticleService {
                     .getOrgArticleLanguage()
                     .getTranslateTargetLanguage()
                     .forEach(targetLanguage -> articleContentList.add(
-                            buildArticleContentByLanguage(targetLanguage, article, requestDto, requestDto.getNewContent())
+                            buildArticleContentByLanguage(targetLanguage, article, requestDto, requestDto.getContent())
                     ));
-            
-            articleContentRepository.saveAll(articleContentList);
         } else {
-            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getContent());
-            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getContent());
-            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-            
-            articleContentList.add(buildArticleContentByLanguage(KO, article, requestDto, koResult));
-            articleContentList.add(buildArticleContentByLanguage(JP, article, requestDto, jpResult));
-            articleContentList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), article, requestDto, otherResult));
-            
-            articleContentRepository.saveAll(articleContentList);
+            ArticleContent koResult = buildArticleContentByLanguage(KO, article, requestDto, requestDto.getContent());
+            ArticleContent jpResult = buildArticleContentByLanguage(JP, article, requestDto, requestDto.getContent());
+            ArticleContent otherResult =  buildArticleContentByKoreaToTargetLang(orgLanguageType.equals(CN) ? EN : CN, article, requestDto, koResult.getContent());
+
+            articleContentList.add(koResult);
+            articleContentList.add(jpResult);
+            articleContentList.add(otherResult);
         }
+        articleContentRepository.saveAll(articleContentList);
+
     }
     
     /**
@@ -164,10 +166,29 @@ public class ArticleService {
                         translateService.naverPapagoTextTranslate(
                                 requestDto.getOrgArticleLanguage(), languageType, requestDto.getTitle()
                         )
-                ).content(content)
+                ).content(
+                        translateService.naverPapagoHtmlTranslate(requestDto.getOrgArticleLanguage(), languageType, content)
+                )
                 .build();
     }
-    
+
+
+    private ArticleContent buildArticleContentByKoreaToTargetLang(LanguageType languageType, Article article, PostArticleRequestDto requestDto, String content) {
+        return ArticleContent
+                .builder()
+                .article(article)
+                .language(languageType)
+                .title(
+                        translateService.naverPapagoTextTranslate(
+                                requestDto.getOrgArticleLanguage(), languageType, requestDto.getTitle()
+                        )
+                ).content(
+                        translateService.naverPapagoHtmlTranslate(KO, languageType, content)
+                )
+                .build();
+    }
+
+
     /**
      * 1. 사용자가 정상적인 인가가 되지 않은 경우에는 `SecurityContextNotFoundException`이 발생한다.<br />
      * 2. 사용자가 DB에 존재하지 않는 경우에는 `UserNotFoundException`이 발생한다.<br />

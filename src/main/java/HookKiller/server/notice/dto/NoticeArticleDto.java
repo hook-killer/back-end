@@ -14,6 +14,7 @@ import lombok.Getter;
 public class NoticeArticleDto extends AbstractTimeStamp {
 
     private Long id;
+    private LanguageType orgLanguage;
     private LanguageType language;
     private ArticleStatus status;
     private User createdUser;
@@ -24,6 +25,7 @@ public class NoticeArticleDto extends AbstractTimeStamp {
     public static NoticeArticleDto of(NoticeArticle noticeArticle, NoticeContent noticeContent) {
         NoticeArticleDto result = NoticeArticleDto.builder()
                 .id(noticeArticle.getId())
+                .orgLanguage(noticeArticle.getLanguage())
                 .language(noticeContent.getLanguage())
                 .status(noticeArticle.getStatus())
                 .createdUser(noticeArticle.getCreatedUser())

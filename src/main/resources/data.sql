@@ -70,139 +70,139 @@ insert into tbl_notice_content (notice_id, language, title, content) values (9, 
 insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-09-29 10:00:00", 1, "2023-09-30 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (10, "KO", "title10", "content10");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-01 10:00:00", 1, "2023-10-02 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-01 10:00:00", 1, "2023-08-02 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (11, "KO", "title11", "content11");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-02 10:00:00", 1, "2023-10-03 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-02 10:00:00", 1, "2023-08-03 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (12, "KO", "title12", "content12");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-03 10:00:00", 1, "2023-10-04 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-03 10:00:00", 1, "2023-08-04 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (13, "KO", "title13", "content13");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-04 10:00:00", 1, "2023-10-05 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-04 10:00:00", 1, "2023-08-05 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (14, "KO", "title14", "content14");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-05 10:00:00", 1, "2023-10-06 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-05 10:00:00", 1, "2023-08-06 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (15, "KO", "title15", "content15");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-06 10:00:00", 1, "2023-10-07 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-06 10:00:00", 1, "2023-08-07 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (16, "KO", "title16", "content16");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-08 10:00:00", 1, "2023-10-09 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-08 10:00:00", 1, "2023-08-09 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (17, "KO", "title17", "content17");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-10 10:00:00", 1, "2023-10-11 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-10 10:00:00", 1, "2023-08-11 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (18, "KO", "title18", "content18");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-12 10:00:00", 1, "2023-10-13 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-12 10:00:00", 1, "2023-08-13 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (19, "KO", "title19", "content19");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-13 10:00:00", 1, "2023-10-14 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-13 10:00:00", 1, "2023-08-14 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (20, "KO", "title20", "content20");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-15 10:00:00", 1, "2023-10-16 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-15 10:00:00", 1, "2023-08-16 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (21, "KO", "title21", "content21");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-17 10:00:00", 1, "2023-10-18 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-17 10:00:00", 1, "2023-08-18 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (22, "KO", "title22", "content22");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-19 10:00:00", 1, "2023-10-20 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-19 10:00:00", 1, "2023-08-20 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (23, "KO", "title23", "content23");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-21 10:00:00", 1, "2023-10-22 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-21 10:00:00", 1, "2023-08-22 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (24, "KO", "title24", "content24");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-23 10:00:00", 1, "2023-10-24 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-23 10:00:00", 1, "2023-08-24 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (25, "KO", "title25", "content25");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-25 10:00:00", 1, "2023-10-26 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-25 10:00:00", 1, "2023-08-26 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (26, "KO", "title26", "content26");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-27 10:00:00", 1, "2023-10-28 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-27 10:00:00", 1, "2023-08-28 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (27, "KO", "title27", "content27");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-29 10:00:00", 1, "2023-10-30 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-29 10:00:00", 1, "2023-08-30 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (28, "KO", "title28", "content28");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-31 10:00:00", 1, "2023-11-01 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-08-31 10:00:00", 1, "2023-07-01 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (29, "KO", "title29", "content29");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-02 10:00:00", 1, "2023-11-03 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-02 10:00:00", 1, "2023-07-03 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (30, "KO", "title30", "content30");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-04 10:00:00", 1, "2023-11-05 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-04 10:00:00", 1, "2023-07-05 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (31, "KO", "title31", "content31");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-06 10:00:00", 1, "2023-11-07 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-06 10:00:00", 1, "2023-07-07 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (32, "KO", "title32", "content32");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-08 10:00:00", 1, "2023-11-09 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-08 10:00:00", 1, "2023-07-09 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (33, "KO", "title33", "content33");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-10 10:00:00", 1, "2023-11-11 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-10 10:00:00", 1, "2023-07-11 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (34, "KO", "title34", "content34");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-12 10:00:00", 1, "2023-11-13 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-12 10:00:00", 1, "2023-07-13 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (35, "KO", "title35", "content35");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-14 10:00:00", 1, "2023-11-15 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-14 10:00:00", 1, "2023-07-15 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (36, "KO", "title36", "content36");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-16 10:00:00", 1, "2023-11-17 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-16 10:00:00", 1, "2023-07-17 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (37, "KO", "title37", "content37");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-18 10:00:00", 1, "2023-11-19 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-18 10:00:00", 1, "2023-07-19 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (38, "KO", "title38", "content38");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-20 10:00:00", 1, "2023-11-21 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-20 10:00:00", 1, "2023-07-21 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (39, "KO", "title39", "content39");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-22 10:00:00", 1, "2023-11-23 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-22 10:00:00", 1, "2023-07-23 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (40, "KO", "title40", "content40");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-24 10:00:00", 1, "2023-11-25 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-24 10:00:00", 1, "2023-07-25 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (41, "KO", "title41", "content41");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-26 10:00:00", 1, "2023-11-27 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-26 10:00:00", 1, "2023-07-27 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (42, "KO", "title42", "content42");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-11-28 10:00:00", 1, "2023-11-29 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-07-28 10:00:00", 1, "2023-07-29 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (43, "KO", "title43", "content43");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-01 10:00:00", 1, "2023-12-02 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-01 10:00:00", 1, "2023-06-02 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (44, "KO", "title44", "content44");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-02 10:00:00", 1, "2023-12-03 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-02 10:00:00", 1, "2023-06-03 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (45, "KO", "title45", "content45");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-04 10:00:00", 1, "2023-12-05 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-04 10:00:00", 1, "2023-06-05 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (46, "KO", "title46", "content46");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-06 10:00:00", 1, "2023-12-07 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-06 10:00:00", 1, "2023-06-07 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (47, "KO", "title47", "content47");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-08 10:00:00", 1, "2023-12-09 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-08 10:00:00", 1, "2023-06-09 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (48, "KO", "title48", "content48");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-10 10:00:00", 1, "2023-12-11 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-10 10:00:00", 1, "2023-06-11 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (49, "KO", "title49", "content49");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-12-12 10:00:00", 1, "2023-12-13 10:00:00", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-06-12 10:00:00", 1, "2023-06-13 10:00:00", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (50, "KO", "title50", "content50");
 
-insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-17 19:03:38", 1, "2023-10-17 19:03:38", 1);
+insert into tbl_notice_article (language, status, created_at, created_user_id, update_at, updated_user_id) values ("KO", "PUBLIC", "2023-10-22 19:03:38", 1, "2023-10-23 19:03:38", 1);
 insert into tbl_notice_content (notice_id, language, title, content) values (51, "KO", "응애응애", "<div>응애응애응애 너무 일이 많아요</div>");
 insert into tbl_notice_content (notice_id, language, title, content) values (51, "CN", "唧唧喳喳", "<div>嗯嗯嗯 有太多事情了</div>");
 insert into tbl_notice_content (notice_id, language, title, content) values (51, "EN", "Crying", "<div>There are so many things going on.</div>");
 insert into tbl_notice_content (notice_id, language, title, content) values (51, "JP", "応愛応愛", "<div>おぎゃあおぎゃあおぎゃあとてもお仕事が多いです</div>");
 
 
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-10-17 20:24:19', 1, '2023-10-17 20:24:19', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-10-17 20:24:41', 1, '2023-10-17 20:24:41', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-10-17 20:24:56', 1, '2023-10-17 20:24:56', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-10-17 20:25:20', 1, '2023-10-17 20:25:20', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-10-17 20:25:36', 1, '2023-10-17 20:25:36', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-10-17 20:26:00', 1, '2023-10-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
 
 insert into tbl_article_content (article_id, language, title, content) values (1,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
 insert into tbl_article_content (article_id, language, title, content) values (1,'CN', '是题目~', 'King钟元占领了！');
@@ -229,80 +229,80 @@ insert into tbl_article_content (article_id, language, title, content) values (6
 insert into tbl_article_content (article_id, language, title, content) values (6, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (6, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-18 11:54:24', 1, '2023-10-18 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (7, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (7, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (7, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (7, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-19 11:54:24', 1, '2023-10-19 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-19 11:54:24', 1, '2023-08-19 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (8, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (8, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (8, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (8, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-20 11:54:24', 1, '2023-10-20 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-20 11:54:24', 1, '2023-08-20 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (9, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (9, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (9, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (9, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-21 11:54:24', 1, '2023-10-21 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-21 11:54:24', 1, '2023-08-21 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (10, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (10, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (10, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (10, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-22 11:54:24', 1, '2023-10-22 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (11, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (11, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (11, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (11, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-23 11:54:24', 1, '2023-10-23 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (12, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (12, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (12, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (12, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-24 11:54:24', 1, '2023-10-24 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (13, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (13, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (13, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (13, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-25 11:54:24', 1, '2023-10-25 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (14, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (14, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (14, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (14, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-26 11:54:24', 1, '2023-10-26 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (15, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (15, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (15, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (15, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-27 11:54:24', 1, '2023-10-27 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (16, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (16, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (16, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (16, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-10-28 11:54:24', 1, '2023-10-28 11:54:24');
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
 insert into tbl_article_content (article_id, language, title, content) values (17, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (17, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
 insert into tbl_article_content (article_id, language, title, content) values (17, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (17, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-10-17 21:01:44', 1, '2023-10-17 21:01:44', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-10-17 21:04:05', 1, '2023-10-17 21:04:05', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (2, "KO", 'USABLE', '2023-10-17 21:04:13', 1, '2023-10-17 21:04:13', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (3, "KO", 'USABLE', '2023-10-17 21:04:21', 1, '2023-10-17 21:04:21', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (4, "KO", 'USABLE', '2023-10-17 21:04:30', 1, '2023-10-17 21:04:30', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-10-17 21:05:00', 1, '2023-10-17 21:05:00', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-10-17 21:05:20', 1, '2023-10-17 21:05:20', 1);
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "EN", 'USABLE', '2023-10-17 21:05:33', 1, '2023-10-17 21:05:33', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-08-17 21:01:44', 1, '2023-08-17 21:01:44', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-08-17 21:04:05', 1, '2023-08-17 21:04:05', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (2, "KO", 'USABLE', '2023-08-17 21:04:13', 1, '2023-08-17 21:04:13', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (3, "KO", 'USABLE', '2023-08-17 21:04:21', 1, '2023-08-17 21:04:21', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (4, "KO", 'USABLE', '2023-08-17 21:04:30', 1, '2023-08-17 21:04:30', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-08-17 21:05:00', 1, '2023-08-17 21:05:00', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "KO", 'USABLE', '2023-08-17 21:05:20', 1, '2023-08-17 21:05:20', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (5, "EN", 'USABLE', '2023-08-17 21:05:33', 1, '2023-08-17 21:05:33', 1);
 
 
 insert into tbl_reply_content (reply_id, language, content) values (1, "KO", '안녕하세요');
@@ -345,7 +345,7 @@ insert into tbl_reply_content (reply_id, language, content) values (8, "EN", 'I'
 insert into tbl_reply_content (reply_id, language, content) values (8, "CN", '我很伤心');
 insert into tbl_reply_content (reply_id, language, content) values (8, "JP", '私はとても悲しい');
 
-insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (7, 'KO', 'USABLE', '2023-10-18 13:17:02', 1, '2023-10-18 13:17:02', 1);
+insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (7, 'KO', 'USABLE', '2023-08-18 13:17:02', 1, '2023-08-18 13:17:02', 1);
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'KO', '응애응애 너무 졸린 점심이에요~~~~');
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'CN', '嗯嗯，中午太困了~~~~');
 insert into tbl_reply_content ( reply_id, language, content) values (9, 'EN', 'It''s such a sleepy lunch~~~');
@@ -353,10 +353,10 @@ insert into tbl_reply_content ( reply_id, language, content) values (9, 'JP', '�
 
 
 
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 1, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 2, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 3, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 4, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 5, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (3, 1, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
-insert into tbl_article_like (article_id, user_id, created_at, update_at) values (4, 1, '2023-10-18 13:42:36', '2023-10-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 1, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 2, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 3, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 4, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 5, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (3, 1, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+insert into tbl_article_like (article_id, user_id, created_at, update_at) values (4, 1, '2023-08-18 13:42:36', '2023-08-18 13:42:36');

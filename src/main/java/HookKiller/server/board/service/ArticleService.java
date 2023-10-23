@@ -122,15 +122,26 @@ public class ArticleService {
                         .build()
         );
         
-        String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getContent());
-        String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getContent());
-        String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-        
-        articleContentList.add(buildArticleContentByLanguage(KO, article, requestDto, koResult));
-        articleContentList.add(buildArticleContentByLanguage(JP, article, requestDto, jpResult));
-        articleContentList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), article, requestDto, otherResult));
-        
-        articleContentRepository.saveAll(articleContentList);
+        if (orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) {
+            requestDto
+                    .getOrgArticleLanguage()
+                    .getTranslateTargetLanguage()
+                    .forEach(targetLanguage -> articleContentList.add(
+                            buildArticleContentByLanguage(targetLanguage, article, requestDto, requestDto.getNewContent())
+                    ));
+            
+            articleContentRepository.saveAll(articleContentList);
+        } else {
+            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getContent());
+            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getContent());
+            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+            
+            articleContentList.add(buildArticleContentByLanguage(KO, article, requestDto, koResult));
+            articleContentList.add(buildArticleContentByLanguage(JP, article, requestDto, jpResult));
+            articleContentList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), article, requestDto, otherResult));
+            
+            articleContentRepository.saveAll(articleContentList);
+        }
     }
     
     /**
@@ -216,23 +227,27 @@ public class ArticleService {
                     );
         }
         
-        String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getNewContent());
-        String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getNewContent());
-        String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-        
-        log.info("KO : {}, JP : {}, EN : {}", koResult, jpResult, otherResult);
-        
-        if (chgContent) {
-            for (ArticleContent content : contents) {
-                if (content.getLanguage().equals(KO)) {
-                    content.setContent(koResult);
-                } else if (content.getLanguage().equals(JP)) {
-                    content.setContent(jpResult);
-                } else {
-                    if (content.getLanguage().equals(requestDto.getOrgArticleLanguage())) {
-                        content.setContent(requestDto.getNewContent());
+        if ((orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) && chgContent) {
+            contents.stream()
+                    .filter(content -> !content.equals(articleContent))
+                    .forEach(content -> content.setContent(translateService.naverPapagoHtmlTranslate(articleContent.getLanguage(), content.getLanguage(), requestDto.getNewContent())));
+        } else {
+            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, requestDto.getNewContent());
+            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, requestDto.getNewContent());
+            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+            
+            if (chgContent) {
+                for (ArticleContent content : contents) {
+                    if (content.getLanguage().equals(KO)) {
+                        content.setContent(koResult);
+                    } else if (content.getLanguage().equals(JP)) {
+                        content.setContent(jpResult);
                     } else {
-                        content.setContent(otherResult);
+                        if (content.getLanguage().equals(requestDto.getOrgArticleLanguage())) {
+                            content.setContent(requestDto.getNewContent());
+                        } else {
+                            content.setContent(otherResult);
+                        }
                     }
                 }
             }

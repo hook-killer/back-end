@@ -140,16 +140,24 @@ public class NoticeService {
                         .content(addNoticeRequest.getContent())
                         .build()
         );
+        if (orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) {
+          addNoticeRequest
+                  .getLanguage()
+                  .getTranslateTargetLanguage()
+                  .forEach(targetLanguage -> contentsList.add(
+                          buildArticleContentByLanguage(targetLanguage, noticeArticle, addNoticeRequest, addNoticeRequest.getContent())
+                  ));
+        } else {
+            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, addNoticeRequest.getContent());
+            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, addNoticeRequest.getContent());
+            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+            
+            contentsList.add(buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, koResult));
+            contentsList.add(buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, jpResult));
+            contentsList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), noticeArticle, addNoticeRequest, otherResult));
       
-      String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, addNoticeRequest.getContent());
-      String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, addNoticeRequest.getContent());
-      String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-      
-      contentsList.add(buildArticleContentByLanguage(KO, noticeArticle, addNoticeRequest, koResult));
-      contentsList.add(buildArticleContentByLanguage(JP, noticeArticle, addNoticeRequest, jpResult));
-      contentsList.add(buildArticleContentByLanguage((orgLanguageType.equals(CN) ? EN : CN), noticeArticle, addNoticeRequest, otherResult));
-
-        noticeContentRepository.saveAll(contentsList);
+            noticeContentRepository.saveAll(contentsList);
+        }
     }
   
   /**
@@ -239,25 +247,32 @@ public class NoticeService {
                     );
         }
         
-        String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, request.getNewContent());
-        String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, request.getNewContent());
-        String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
-      
-        if (chgContent) {
-          for (NoticeContent content : contents) {
-            if (content.getLanguage().equals(KO)) {
-              content.setContent(koResult);
-            } else if (content.getLanguage().equals(JP)) {
-              content.setContent(jpResult);
-            } else {
-              if (content.getLanguage().equals(request.getLanguage())) {
-                content.setContent(request.getNewContent());
-              } else {
-                content.setContent(otherResult);
+        if (orgLanguageType.equals(KO) || orgLanguageType.equals(JP)) {
+            contents.stream()
+                    .filter(content -> choiceContent != content)
+                    .forEach(content -> content.setContent(translateService.naverPapagoHtmlTranslate(choiceContent.getLanguage(), content.getLanguage(), request.getNewContent())));
+        } else {
+            String koResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, KO, request.getNewContent());
+            String jpResult = translateService.naverPapagoHtmlTranslate(orgLanguageType, JP, request.getNewContent());
+            String otherResult = translateService.naverPapagoHtmlTranslate(KO, orgLanguageType.equals(CN) ? EN : CN, koResult);
+          
+            if (chgContent) {
+              for (NoticeContent content : contents) {
+                if (content.getLanguage().equals(KO)) {
+                  content.setContent(koResult);
+                } else if (content.getLanguage().equals(JP)) {
+                  content.setContent(jpResult);
+                } else {
+                  if (content.getLanguage().equals(request.getLanguage())) {
+                    content.setContent(request.getNewContent());
+                  } else {
+                    content.setContent(otherResult);
+                  }
+                }
               }
             }
-          }
         }
+        
     }
 
     /**

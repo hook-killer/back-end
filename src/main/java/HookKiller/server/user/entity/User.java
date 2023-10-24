@@ -45,41 +45,12 @@ public class User extends AbstractTimeStamp {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-//    @Builder
-//    public User(String email, String password, String nickName, String role, String thumbnail, LoginType loginType, OauthInfo oauthInfo) {
-//        this.email = email;
-//        this.password = password;
-//        this.nickName = nickName;
-//        this.role = UserRole.valueOf(role);
-//        this.thumbnail = thumbnail;
-//        this.loginType = loginType;
-//        this.oauthInfo = oauthInfo;
-//    }
-//
-//    @Builder
-//    public User(String email, String password, String nickName, String role, LoginType loginType) {
-//        this.email = email;
-//        this.password = password;
-//        this.nickName = nickName;
-//        this.role = UserRole.valueOf(role);
-//        this.loginType = loginType;
-//    }
-//
-//    @Builder
-//    public User(String role, OauthInfo oauthInfo) {
-//        this.role = UserRole.valueOf(role);
-//        this.oauthInfo = oauthInfo;
-//    }
-
-    //    private Long certificateKeyId;
-
     private OauthInfo oauthInfo;
 
     private String verificationToken;
 
     @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_ACTIVE;
-
 
     @Builder
     public User(
@@ -112,9 +83,5 @@ public class User extends AbstractTimeStamp {
 
     public void setPassword(String password) {
         this.password = SecurityUtils.passwordEncoder.encode(password);
-    }
-
-    public void activeStatus() {
-        this.status = Status.ACTIVE;
     }
 }

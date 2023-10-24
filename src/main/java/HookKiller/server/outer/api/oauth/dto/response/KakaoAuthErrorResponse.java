@@ -1,4 +1,4 @@
-package HookKiller.server.outer.api.oauth.dto;
+package HookKiller.server.outer.api.oauth.dto.response;
 
 import HookKiller.server.common.exception.FeignException;
 import com.fasterxml.jackson.databind.ObjectMapper;

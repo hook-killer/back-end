@@ -17,7 +17,8 @@ public class OIDCPublicKeyDto {
      * n : 공개키의 모듈. 공개키는 모듈(n)과 지수(e)로 구성됨
      * e : 공개키의 지수. 공개키는 모듈(n)과 지수(e)로 구성됨
      */
-    
+
+    private String kty;
     private String kid;
     private String alg;
     private String use;

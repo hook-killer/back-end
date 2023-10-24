@@ -1,8 +1,8 @@
 package HookKiller.server.outer.api.oauth.client;
 
 import HookKiller.server.outer.api.oauth.config.KakaoAuthFeignConfig;
-import HookKiller.server.outer.api.oauth.dto.KakaoTokenResponse;
-import HookKiller.server.outer.api.oauth.dto.OIDCResponse;
+import HookKiller.server.outer.api.oauth.dto.response.KakaoTokenResponse;
+import HookKiller.server.outer.api.oauth.dto.response.OIDCResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

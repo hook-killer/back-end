@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
         KakaoOauthProperties.class,
         PapagoProperties.class,
         HookMailProperties.class,
+        GoogleOauthProperties.class
     }
 )
 @Configuration

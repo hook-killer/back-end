@@ -2,7 +2,7 @@ package HookKiller.server.outer.api.oauth.config;
 
 import HookKiller.server.common.dto.ErrorDetail;
 import HookKiller.server.common.exception.OuterServerException;
-import HookKiller.server.outer.api.oauth.dto.KakaoAuthErrorResponse;
+import HookKiller.server.outer.api.oauth.dto.response.KakaoAuthErrorResponse;
 import HookKiller.server.outer.api.oauth.exception.KakaoAuthErrorCode;
 import feign.Response;
 import feign.codec.ErrorDecoder;

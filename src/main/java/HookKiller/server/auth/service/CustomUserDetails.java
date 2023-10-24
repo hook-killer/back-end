@@ -20,7 +20,6 @@ public record CustomUserDetails(String userId, String role, String nickname) imp
     
     @Override
     public String getPassword() {
-        // TODO : getPassword는 나중에 쓴다면 다시 작성
         return this.userId;
     }
     

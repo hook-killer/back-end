@@ -2,14 +2,18 @@ package HookKiller.server.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class OIDCDto {
     /**
-     * issuer ex https://kauth.kakao.com
+     * issuer
+     * kakao : https://kauth.kakao.com
+     * google: https://accounts.google.com
      */
     private String iss;
     /**
@@ -23,7 +27,11 @@ public class OIDCDto {
     
     private String email;
     
-    private String kakaoNickName;
+    private String nickName;
     
-    private String kakaoThumbnailImg;
+    private String thumbnailImg;
+
+    private String name;
+
+    private String picture;
 }

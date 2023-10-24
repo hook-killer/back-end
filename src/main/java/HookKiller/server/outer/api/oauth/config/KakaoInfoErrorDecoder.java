@@ -12,9 +12,6 @@ public class KakaoInfoErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
-//        System.out.println("response.reason() = " + response.reason());
-//        System.out.println("response.status() = " + response.status());
-//        System.out.println("response.toString() = " + response.toString());
         if (response.status() >= 400) {
             switch (response.status()) {
                 case 401:

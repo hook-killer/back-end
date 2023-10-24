@@ -43,11 +43,6 @@ public class AuthController {
         return authService.loginExecute(body);
     }
     
-    @GetMapping("/login/test")
-    public boolean loginTest(@RequestParam String accessToken) {
-        return authService.loginExecuteTest(accessToken);
-    }
-    
     @PostMapping("/logout")
     public boolean logout() {
         return true;
@@ -87,8 +82,7 @@ public class AuthController {
 //    }
 
     @GetMapping("/oauth/kakao")
-    public OAuthResponse registerUserForTest(@RequestParam String code) {
-        log.error("oauth KaKao Code >>> {}", code);
+    public OAuthResponse registerUserForKakao(@RequestParam String code) {
         return authService.registerUserKakaoCode(code);
     }
     
@@ -97,11 +91,10 @@ public class AuthController {
     public OAuthResponse registerUser(
             @RequestParam("id_token") String token) {
         return userService.registerUserByOIDCToken(token);
+
+    @GetMapping("/oauth/google")
+    public OAuthResponse registerUserForGoogle(@RequestParam String code) {
+        return authService.registerGoogleUser(code);
     }
-    
-    // 받은 idToken을 이용해서 우리가 쓰는 accessToken 발급받기
-    @PostMapping("/oauth/kakao/login")
-    public OAuthResponse oauthLogin(@RequestParam String idToken) {
-        return authService.loginUserByIdToken(idToken);
-    }
+
 }

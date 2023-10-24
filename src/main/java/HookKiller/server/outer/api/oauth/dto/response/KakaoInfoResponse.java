@@ -1,4 +1,4 @@
-package HookKiller.server.outer.api.oauth.dto;
+package HookKiller.server.outer.api.oauth.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

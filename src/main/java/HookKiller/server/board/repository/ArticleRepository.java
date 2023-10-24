@@ -23,6 +23,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   
   Page<Article> findAllByCreatedUserOrderByCreateAtDesc(User user, Pageable pageable);
 
+  Page<Article> findAllByCreatedUserAndArticleStatusOrderByCreateAtDesc(User user, ArticleStatus status, Pageable pageable);
+
   Page<Article> findAllByBoardAndArticleStatusAndCreateAtBetweenOrderByLikeCountDesc(
           Board board, ArticleStatus status, Timestamp startTimestamp, Timestamp endTimestamp, Pageable pageable
   );

@@ -14,4 +14,6 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
   List<Reply> findAllByArticleAndReplyStatus(Article article, ReplyStatus replyStatus);
 
   Page<Reply> findAllByCreatedUserOrderByCreateAtDesc(User user, Pageable pageable);
+
+  Page<Reply> findAllByCreatedUserAndReplyStatusOrderByCreateAtDesc(User user, ReplyStatus replyStatus, Pageable pageable);
 }

@@ -59,6 +59,7 @@ public class AuthService {
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
                 .role(user.getRole().getValue())
                 .nickName(user.getNickName())
+                .thumbnail(user.getThumbnail())
                 .build();
 
         return ResponseEntity.ok(res);

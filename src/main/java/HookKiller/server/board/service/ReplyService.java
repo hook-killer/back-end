@@ -42,7 +42,6 @@ public class ReplyService {
     public void createReply(PostReplyRequestDto requestDto) {
         User user = userUtils.getUser();
 
-        log.error("requestDTO : {}", requestDto.toString());
         Reply reply = replyRepository.save(
                 Reply.builder()
                         .replyStatus(USABLE)

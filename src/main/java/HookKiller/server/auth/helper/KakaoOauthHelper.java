@@ -28,7 +28,6 @@ public class KakaoOauthHelper {
   private final OIDCHelper oidcHelper;
   
   public KakaoTokenResponse getOauthToken(String code, String referer) {
-    log.info("referer 1 : {}", referer);
     return kakaoOauthClient.kakaoAuth(
             kakaoOauthProperties.getKakaoClientId(),
             referer ,

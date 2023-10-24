@@ -1,6 +1,7 @@
 package HookKiller.server.notice.entity;
 
 import HookKiller.server.common.type.LanguageType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +43,8 @@ public class NoticeContent {
     private String title;
 
     @Lob
+    @NotNull
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
     @Builder

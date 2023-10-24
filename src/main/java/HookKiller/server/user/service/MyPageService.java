@@ -9,8 +9,10 @@ import HookKiller.server.board.repository.ArticleLikeRepository;
 import HookKiller.server.board.repository.ArticleRepository;
 import HookKiller.server.board.repository.ReplyContentRepository;
 import HookKiller.server.board.repository.ReplyRepository;
+import HookKiller.server.board.type.ReplyStatus;
 import HookKiller.server.common.dto.CommonBooleanResultResponse;
 import HookKiller.server.common.exception.BadTypeRequestException;
+import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.dto.MyPageUserUpdateRequest;
@@ -76,7 +78,7 @@ public class MyPageService {
         User user = userUtils.getUser();
         Pageable pageable = PageRequest.of(page, limit);
         if(searchType.equalsIgnoreCase("ARTICLE")) {
-            return articleRepository.findAllByCreatedUserOrderByCreateAtDesc(user, pageable)
+            return articleRepository.findAllByCreatedUserAndArticleStatusOrderByCreateAtDesc(user, ArticleStatus.PUBLIC, pageable)
                     .stream().map(
                             article -> ArticleRequestDto.of(article, articleContentRepository
                                     .findByArticleAndLanguage(article, language)
@@ -85,7 +87,7 @@ public class MyPageService {
         }
 
         if(searchType.equalsIgnoreCase("REPLY")){
-            return replyRepository.findAllByCreatedUserOrderByCreateAtDesc(user, pageable)
+            return replyRepository.findAllByCreatedUserAndReplyStatusOrderByCreateAtDesc(user, ReplyStatus.USABLE, pageable)
                     .stream()
                     .map(reply ->
                             ReplyResponseDto.of(

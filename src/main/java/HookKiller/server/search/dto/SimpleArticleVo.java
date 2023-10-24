@@ -20,8 +20,6 @@ public class SimpleArticleVo {
   
   private String title;
   
-  private String content;
-  
   private Integer likeCount;
   
   public static SimpleArticleVo from(ArticleInterface articleInterface) {
@@ -29,7 +27,6 @@ public class SimpleArticleVo {
             .articleId(articleInterface.getId())
             .createdUserNickName(articleInterface.getNickName())
             .title(articleInterface.getTitle())
-            .content(articleInterface.getContent())
             .likeCount(articleInterface.getLikeCount())
             .build();
   }

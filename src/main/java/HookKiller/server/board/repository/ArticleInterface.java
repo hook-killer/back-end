@@ -6,7 +6,5 @@ public interface ArticleInterface {
   String getNickName();
   
   String getTitle();
-  
-  String getContent();
   int getLikeCount();
 }

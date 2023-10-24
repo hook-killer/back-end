@@ -31,7 +31,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   );
 
   @Query(
-          value = "select a.id, u.nick_name as nickName, ac.title,, a.like_count as likeCount  " +
+          value = "select a.id, u.nick_name as nickName, ac.title, a.like_count as likeCount " +
                   "from tbl_article a " +
                   "join tbl_article_content ac " +
                   "on a.id = ac.article_id " +

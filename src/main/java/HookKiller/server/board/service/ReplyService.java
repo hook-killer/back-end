@@ -7,6 +7,7 @@ import HookKiller.server.board.entity.Reply;
 import HookKiller.server.board.entity.ReplyContent;
 import HookKiller.server.board.exception.ArticleContentNotFoundException;
 import HookKiller.server.board.exception.ReplyContentNotFoundException;
+import HookKiller.server.board.exception.ReplyDeleteUnauthorizedUserException;
 import HookKiller.server.board.repository.ArticleRepository;
 import HookKiller.server.board.repository.ReplyContentRepository;
 import HookKiller.server.board.repository.ReplyRepository;
@@ -15,6 +16,8 @@ import HookKiller.server.common.type.ArticleStatus;
 import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.common.util.UserUtils;
 import HookKiller.server.user.entity.User;
+import HookKiller.server.user.repository.UserRepository;
+import HookKiller.server.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ import java.util.List;
 
 import static HookKiller.server.board.type.ReplyStatus.USABLE;
 import static HookKiller.server.board.type.ReplyStatus.DELETED;
+import static HookKiller.server.user.type.UserRole.*;
 
 
 @Slf4j
@@ -37,6 +41,7 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final ReplyContentRepository replyContentRepository;
     private final TranslateService translateService;
+    private final UserRepository userRepository;
 
     @Transactional
     public void createReply(PostReplyRequestDto requestDto) {
@@ -98,16 +103,20 @@ public class ReplyService {
     }
 
     /**
-     * TODO : 관리자도 삭제 가능하게 만들기
-     *
      * @param replyId
      */
     @Transactional
     public void deleteReply(Long replyId) {
-        replyRepository
-                .findById(replyId)
-                .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
-                .updateStatus(DELETED);
+        User user = userUtils.getUser();
+        
+        Reply reply = replyRepository.findById(replyId)
+                .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION);
+        
+        if (reply.getCreatedUser().equals(user) || user.getRole().equals(ADMIN)) {
+            reply.updateStatus(DELETED);
+        } else {
+            throw ReplyDeleteUnauthorizedUserException.EXCEPTION;
+        }
     }
 
 }

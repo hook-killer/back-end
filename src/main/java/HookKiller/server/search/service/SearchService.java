@@ -4,6 +4,7 @@ import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.repository.ArticleContentRepository;
 import HookKiller.server.board.repository.ArticleRepository;
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.search.dto.SimpleArticleVo;
 import HookKiller.server.user.entity.User;
 import HookKiller.server.user.repository.UserRepository;
@@ -23,15 +24,15 @@ public class SearchService {
   private final ArticleRepository articleRepository;
   private final ArticleContentRepository articleContentRepository;
   
-  public List<SimpleArticleVo> getSearchResult(String word, PageRequest pageRequest) {
-    return articleRepository.retrieveArticleListDown(word, pageRequest)
+  public List<SimpleArticleVo> getSearchResult(LanguageType languageType, String word, PageRequest pageRequest) {
+    return articleRepository.retrieveArticleListDown(languageType.name(), word, pageRequest)
             .stream()
             .map(SimpleArticleVo::from)
             .toList();
   }
   
-  public List<SimpleArticleVo> getAllSearchResultByWord(String word) {
-    return articleRepository.retrieveAllArticleByWord(word).stream().map(SimpleArticleVo::from).toList();
+  public List<SimpleArticleVo> getAllSearchResultByWord(LanguageType languageType, String word) {
+    return articleRepository.retrieveAllArticleByWord(languageType.name(), word).stream().map(SimpleArticleVo::from).toList();
   }
 }
 

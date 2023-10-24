@@ -1,21 +1,18 @@
-package HookKiller.server.outer.api.oauth.dto;
+package HookKiller.server.outer.api.oauth.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@ToString
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class KakaoTokenResponse {
+public class GoogleTokenResponse {
 
     private String accessToken;
-    private String refreshToken;
+    private String expiresIn;
+    private String scope;
     private String tokenType;
-    private String idToken;
+
 }

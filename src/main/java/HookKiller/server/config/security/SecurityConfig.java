@@ -117,10 +117,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/auth/**",
                                 "/auth/oauth/**",
+                                "/auth/oauth/google/**",
                                 "/auth/oauth/kakao/**",
-                                "/auth/oauth/kakao/link/**",
-                                "/auth/oauth/kakao/register/**",
-                                "/mail/**",
+                                "/verifyEmail",
                                 "/health",
                                 "/search/**"
                         ).permitAll()

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -35,13 +36,11 @@ public class JwtOIDCProvider {
 
     private Jwt<Header, Claims> getUnsignedTokenClaims(String token, String iss, String aud) {
         try {
-            log.info("iss : {}, aud : {}", iss, aud);
             Jwt<Header, Claims> headerClaimsJwt = Jwts.parserBuilder()
                     .requireAudience(aud)
                     .requireIssuer(iss)
                     .build()
                     .parseClaimsJwt(getParseUnsignedToken(token));
-            log.info("headerClaimsJwt : {}", headerClaimsJwt.toString());
             return headerClaimsJwt;
         } catch (ExpiredJwtException e) {
             log.info("jwt 생성 유효시간 초과");
@@ -57,7 +56,6 @@ public class JwtOIDCProvider {
     private String getParseUnsignedToken(String token) {
         String[] splitToken = token.split("\\.");
         if (splitToken.length != 3) throw InvalidTokenException.EXCEPTION;
-        log.info("splitToken : {}", splitToken[1]);
         return splitToken[0] + "." + splitToken[1] + ".";
     }
 
@@ -68,7 +66,6 @@ public class JwtOIDCProvider {
                     .setSigningKey(getRSAPublicKey(modulus, exponent))
                     .build()
                     .parseClaimsJws(token);
-            log.info("getOIDCTokenJws : {}", claimsJws.toString());
             return claimsJws;
         } catch (ExpiredJwtException e) {
             throw ExpiredTokenException.EXCEPTION;
@@ -78,17 +75,16 @@ public class JwtOIDCProvider {
     }
 
     public OIDCDto getOIDCTokenBody(String token, String modulus, String exponent) {
-        log.info("JwtOIDCProvider의 getOIDCTokenBody 들어옴");
         Claims body = getOIDCTokenJws(token, modulus, exponent).getBody();
-        log.info("OIDC Token의 body : {}", body.toString());
         OIDCDto dto = new OIDCDto(
                 body.getIssuer(),
                 body.getAudience(),
                 body.getSubject(),
                 body.get("email", String.class),
                 body.get("nickname", String.class),
-                body.get("picture", String.class));
-        log.info("OIDC Token으로 만든 OIDCDto : {}", dto.toString());
+                body.get("picture", String.class),
+                body.get("name", String.class),
+                body.get("thumbnailImg", String.class));
         return dto;
     }
 

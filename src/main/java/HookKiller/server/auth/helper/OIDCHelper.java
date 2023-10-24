@@ -3,7 +3,7 @@ package HookKiller.server.auth.helper;
 import HookKiller.server.common.dto.OIDCDto;
 import HookKiller.server.jwt.JwtOIDCProvider;
 import HookKiller.server.outer.api.oauth.dto.OIDCPublicKeyDto;
-import HookKiller.server.outer.api.oauth.dto.OIDCResponse;
+import HookKiller.server.outer.api.oauth.dto.response.OIDCResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,6 @@ public class OIDCHelper {
                         .filter(o -> o.getKid().equals(kid))
                         .findFirst()
                         .orElseThrow();
-        
-        log.info("OIDCPublicKeyDto : {}", oidcPublicKeyDto.toString());
 
         return jwtOIDCProvider.getOIDCTokenBody(
                 token, oidcPublicKeyDto.getN(), oidcPublicKeyDto.getE());

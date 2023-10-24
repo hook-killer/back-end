@@ -3,7 +3,7 @@ package HookKiller.server.user.service;
 import HookKiller.server.auth.dto.OIDCUserInfo;
 import HookKiller.server.auth.dto.request.SingUpRequest;
 import HookKiller.server.auth.dto.response.OAuthResponse;
-import HookKiller.server.auth.helper.KakaoOauthHelper;
+import HookKiller.server.auth.helper.OauthHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
 import HookKiller.server.common.dto.MailRequest;
 import HookKiller.server.common.service.MailHelper;
@@ -31,7 +31,7 @@ import static HookKiller.server.user.type.UserRole.USER;
 public class UserService {
     
     private final UserRepository userRepository;
-    private final KakaoOauthHelper kakaoOauthHelper;
+    private final OauthHelper oauthHelper;
     private final TokenGenerateHelper tokenGenerateHelper;
     private final MailHelper mailHelper;
 
@@ -57,7 +57,7 @@ public class UserService {
     
     @Transactional
     public OAuthResponse registerUserByOIDCToken(String idToken) {
-        OIDCUserInfo oidcUserInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
+        OIDCUserInfo oidcUserInfo = oauthHelper.getKakaoInfoByIdToken(idToken);
         userRepository.findByEmail(oidcUserInfo.getEmail()).ifPresent(user -> {
             throw AlreadyExistUserException.EXCEPTION;
         });

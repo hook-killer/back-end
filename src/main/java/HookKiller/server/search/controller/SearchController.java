@@ -1,7 +1,9 @@
 package HookKiller.server.search.controller;
 
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.search.dto.SimpleArticleVo;
 import HookKiller.server.search.service.SearchService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -22,15 +24,17 @@ public class SearchController {
   
   @GetMapping("/{word}")
   public List<SimpleArticleVo> searchArticles(
+          HttpServletRequest request,
           @PathVariable String word,
           @RequestParam int offset,
           @RequestParam int limit) {
-    return searchService.getSearchResult(word, PageRequest.of(offset, limit));
+    return searchService.getSearchResult(LanguageType.findTypeByRequest(request), word, PageRequest.of(offset, limit));
   }
   
   @GetMapping("/all/{word}")
   public List<SimpleArticleVo> searchAllArticlesByWord(
+          HttpServletRequest request,
           @PathVariable String word) {
-    return searchService.getAllSearchResultByWord(word);
+    return searchService.getAllSearchResultByWord(LanguageType.findTypeByRequest(request), word);
   }
 }

@@ -4,6 +4,7 @@ import HookKiller.server.board.entity.Article;
 import HookKiller.server.board.entity.Board;
 
 import HookKiller.server.common.type.ArticleStatus;
+import HookKiller.server.common.type.LanguageType;
 import HookKiller.server.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,24 +31,24 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   );
 
   @Query(
-          value = "select a.id, u.nick_name as nickName, ac.title, ac.content, a.like_count as likeCount  " +
+          value = "select a.id, u.nick_name as nickName, ac.title, a.like_count as likeCount " +
                   "from tbl_article a " +
                   "join tbl_article_content ac " +
                   "on a.id = ac.article_id " +
                   "join tbl_user u " +
                   "on a.created_user_id = u.id " +
-                  "where (ac.title like concat('%', :word, '%') or ac.content like concat('%', :word, '%')) and a.article_status='PUBLIC'", nativeQuery = true
+                  "where ac.title like concat('%', :word, '%') and a.article_status='PUBLIC' and a.org_article_language=:lang", nativeQuery = true
   )
-  Page<ArticleInterface> retrieveArticleListDown(@Param(value = "word") String word, Pageable pageable);
+  Page<ArticleInterface> retrieveArticleListDown(@Param(value = "lang") String languageType, @Param(value = "word") String word, Pageable pageable);
 
   @Query(
-          value = "select a.id, u.nick_name as nickName, ac.title, ac.content, a.like_count as likeCount  " +
+          value = "select a.id, u.nick_name as nickName, ac.title, a.like_count as likeCount  " +
                   "from tbl_article a " +
                   "join tbl_article_content ac " +
                   "on a.id = ac.article_id " +
                   "join tbl_user u " +
                   "on a.created_user_id = u.id " +
-                  "where (ac.title like concat('%', :word, '%') or ac.content like concat('%', :word, '%')) and a.article_status='PUBLIC'", nativeQuery = true
+                  "where ac.title like concat('%', :word, '%') and a.article_status='PUBLIC' and a.org_article_language=:lang", nativeQuery = true
   )
-  List<ArticleInterface> retrieveAllArticleByWord(@Param(value = "word") String word);
+  List<ArticleInterface> retrieveAllArticleByWord(@Param(value = "lang") String languageType, @Param(value = "word") String word);
 }

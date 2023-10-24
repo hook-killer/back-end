@@ -5,6 +5,7 @@ import HookKiller.server.auth.dto.request.AuthRequest;
 import HookKiller.server.auth.dto.response.AuthResponse;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.exception.PasswordIncorrectException;
+import HookKiller.server.auth.exception.StatusNotVerificationException;
 import HookKiller.server.auth.exception.UserNotFoundException;
 import HookKiller.server.auth.helper.OauthHelper;
 import HookKiller.server.auth.helper.TokenGenerateHelper;
@@ -47,13 +48,14 @@ public class AuthService {
 
         if (user.getStatus().equals(Status.NOT_ACTIVE)) {
             mailHelper.sendVerificationMail(MailRequest.builder().email(user.getEmail()).verificationToken(user.getVerificationToken()).build());
-            return ResponseEntity.ok(AuthResponse.builder().build());
+            throw StatusNotVerificationException.EXCEPTION;
         }
 
         AuthResponse res = AuthResponse.builder()
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
                 .role(user.getRole().getValue())
                 .nickName(user.getNickName())
+                .thumbnail(user.getThumbnail())
                 .build();
 
         return ResponseEntity.ok(res);

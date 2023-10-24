@@ -198,32 +198,36 @@ insert into tbl_notice_content (notice_id, language, title, content) values (51,
 
 
 insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
-insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
-
 insert into tbl_article_content (article_id, language, title, content) values (1,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
 insert into tbl_article_content (article_id, language, title, content) values (1,'CN', '是题目~', 'King钟元占领了！');
 insert into tbl_article_content (article_id, language, title, content) values (1,'EN', 'It''s the title', 'King Jongwon has taken over!');
 insert into tbl_article_content (article_id, language, title, content) values (1,'KO', '제목입니다~', '킹종원이 점령했다!');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
 insert into tbl_article_content (article_id, language, title, content) values (2,'KO', '응애응애', '엉엉엉어엉엉엉');
 insert into tbl_article_content (article_id, language, title, content) values (2,'JP', '応愛応愛', 'わんわんわんわんわんわんわんわん');
 insert into tbl_article_content (article_id, language, title, content) values (2,'CN', '唧唧喳喳', '呜呜呜呜呜呜呜');
 insert into tbl_article_content (article_id, language, title, content) values (2,'EN', 'Crying', '(Crying)');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
 insert into tbl_article_content (article_id, language, title, content) values (3,'KO', '근우야!!!!!', '잘하자');
 insert into tbl_article_content (article_id, language, title, content) values (3, 'JP', 'グンウ！！！！！', '頑張ろう');
 insert into tbl_article_content (article_id, language, title, content) values (3, 'CN', '根宇！！！！！', '好好做吧。');
 insert into tbl_article_content (article_id, language, title, content) values (3, 'EN', 'Geunwoo!!!!!', 'Let''s do well.');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
 insert into tbl_article_content (article_id, language, title, content) values (4, 'KO', '오리엔탈', '<div>유니티</div>');
 insert into tbl_article_content (article_id, language, title, content) values (4, 'EN', 'Oriental', '<div>UNI.T.</div>');
 insert into tbl_article_content (article_id, language, title, content) values (4, 'CN', '东方', '<div>男女通用</div>');
 insert into tbl_article_content (article_id, language, title, content) values (4, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
 insert into tbl_article_content (article_id, language, title, content) values (5, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
 insert into tbl_article_content (article_id, language, title, content) values (5, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
 insert into tbl_article_content (article_id, language, title, content) values (5, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
 insert into tbl_article_content (article_id, language, title, content) values (5, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
 insert into tbl_article_content (article_id, language, title, content) values (6, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (6, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
 insert into tbl_article_content (article_id, language, title, content) values (6, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
@@ -295,6 +299,481 @@ insert into tbl_article_content (article_id, language, title, content) values (1
 insert into tbl_article_content (article_id, language, title, content) values (17, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
 insert into tbl_article_content (article_id, language, title, content) values (17, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
 
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (18,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
+insert into tbl_article_content (article_id, language, title, content) values (18,'CN', '是题目~', 'King钟元占领了！');
+insert into tbl_article_content (article_id, language, title, content) values (18,'EN', 'It''s the title', 'King Jongwon has taken over!');
+insert into tbl_article_content (article_id, language, title, content) values (18,'KO', '제목입니다~', '킹종원이 점령했다!');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (19,'KO', '응애응애', '엉엉엉어엉엉엉');
+insert into tbl_article_content (article_id, language, title, content) values (19,'JP', '応愛応愛', 'わんわんわんわんわんわんわんわん');
+insert into tbl_article_content (article_id, language, title, content) values (19,'CN', '唧唧喳喳', '呜呜呜呜呜呜呜');
+insert into tbl_article_content (article_id, language, title, content) values (19,'EN', 'Crying', '(Crying)');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (20,'KO', '근우야!!!!!', '잘하자');
+insert into tbl_article_content (article_id, language, title, content) values (20, 'JP', 'グンウ！！！！！', '頑張ろう');
+insert into tbl_article_content (article_id, language, title, content) values (20, 'CN', '根宇！！！！！', '好好做吧。');
+insert into tbl_article_content (article_id, language, title, content) values (20, 'EN', 'Geunwoo!!!!!', 'Let''s do well.');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (21, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (21, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (21, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (21, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (22, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (22, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (22, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (22, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (23, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (23, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (23, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (23, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (24, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (24, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (24, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (24, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (25, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (25, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (25, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (25, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (26, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (26, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (26, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (26, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (27, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (27, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (27, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (27, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (28, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (28, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (28, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (28, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (29, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (29, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (29, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (29, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (30, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (30, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (30, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (30, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (31, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (31, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (31, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (31, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (32,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
+insert into tbl_article_content (article_id, language, title, content) values (32,'CN', '是题目~', 'King钟元占领了！');
+insert into tbl_article_content (article_id, language, title, content) values (32,'EN', 'It''s the title', 'King Jongwon has taken over!');
+insert into tbl_article_content (article_id, language, title, content) values (32,'KO', '제목입니다~', '킹종원이 점령했다!');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (33,'KO', '응애응애', '엉엉엉어엉엉엉');
+insert into tbl_article_content (article_id, language, title, content) values (33,'JP', '応愛応愛', 'わんわんわんわんわんわんわんわん');
+insert into tbl_article_content (article_id, language, title, content) values (33,'CN', '唧唧喳喳', '呜呜呜呜呜呜呜');
+insert into tbl_article_content (article_id, language, title, content) values (33,'EN', 'Crying', '(Crying)');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (34,'KO', '근우야!!!!!', '잘하자');
+insert into tbl_article_content (article_id, language, title, content) values (34, 'JP', 'グンウ！！！！！', '頑張ろう');
+insert into tbl_article_content (article_id, language, title, content) values (34, 'CN', '根宇！！！！！', '好好做吧。');
+insert into tbl_article_content (article_id, language, title, content) values (34, 'EN', 'Geunwoo!!!!!', 'Let''s do well.');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (35, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (35, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (35, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (35, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (36, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (36, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (36, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (36, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (37, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (37, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (37, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (37, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (38, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (38, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (38, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (38, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (39, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (39, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (39, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (39, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (40, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (40, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (40, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (40, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (41, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (41, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (41, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (41, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (42, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (42, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (42, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (42, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (43, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (43, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (43, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (43, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (44, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (44, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (44, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (44, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (45, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (45, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (45, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (45, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (46,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
+insert into tbl_article_content (article_id, language, title, content) values (46,'CN', '是题目~', 'King钟元占领了！');
+insert into tbl_article_content (article_id, language, title, content) values (46,'EN', 'It''s the title', 'King Jongwon has taken over!');
+insert into tbl_article_content (article_id, language, title, content) values (46,'KO', '제목입니다~', '킹종원이 점령했다!');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (47,'KO', '응애응애', '엉엉엉어엉엉엉');
+insert into tbl_article_content (article_id, language, title, content) values (47,'JP', '応愛応愛', 'わんわんわんわんわんわんわんわん');
+insert into tbl_article_content (article_id, language, title, content) values (47,'CN', '唧唧喳喳', '呜呜呜呜呜呜呜');
+insert into tbl_article_content (article_id, language, title, content) values (47,'EN', 'Crying', '(Crying)');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (48,'KO', '근우야!!!!!', '잘하자');
+insert into tbl_article_content (article_id, language, title, content) values (48, 'JP', 'グンウ！！！！！', '頑張ろう');
+insert into tbl_article_content (article_id, language, title, content) values (48, 'CN', '根宇！！！！！', '好好做吧。');
+insert into tbl_article_content (article_id, language, title, content) values (48, 'EN', 'Geunwoo!!!!!', 'Let''s do well.');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (49, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (49, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (49, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (49, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (50, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (50, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (50, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (50, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (51, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (51, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (51, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (51, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (52, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (52, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (52, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (52, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (53, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (53, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (53, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (53, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (54, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (54, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (54, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (54, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (55, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (55, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (55, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (55, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (56, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (56, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (56, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (56, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (57, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (57, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (57, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (57, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (58, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (58, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (58, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (58, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (59, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (59, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (59, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (59, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (60, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (60, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (60, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (60, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (61, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (61, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (61, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (61, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (62, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (62, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (62, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (62, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (63, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (63, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (63, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (63, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (64, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (64, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (64, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (64, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (65, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (65, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (65, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (65, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (66, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (66, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (66, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (66, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (67, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (67, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (67, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (67, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (68, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (68, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (68, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (68, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (5, "KO", 1, '2023-08-17 20:24:19', 1, '2023-08-17 20:24:19', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (69,'JP', 'タイトルです~', 'キングジョンウォンが占領した！');
+insert into tbl_article_content (article_id, language, title, content) values (69,'CN', '是题目~', 'King钟元占领了！');
+insert into tbl_article_content (article_id, language, title, content) values (69,'EN', 'It''s the title', 'King Jongwon has taken over!');
+insert into tbl_article_content (article_id, language, title, content) values (69,'KO', '제목입니다~', '킹종원이 점령했다!');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 1, '2023-08-17 20:24:41', 1, '2023-08-17 20:24:41', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (70,'KO', '응애응애', '엉엉엉어엉엉엉');
+insert into tbl_article_content (article_id, language, title, content) values (70,'JP', '応愛応愛', 'わんわんわんわんわんわんわんわん');
+insert into tbl_article_content (article_id, language, title, content) values (70,'CN', '唧唧喳喳', '呜呜呜呜呜呜呜');
+insert into tbl_article_content (article_id, language, title, content) values (70,'EN', 'Crying', '(Crying)');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (1, "KO", 2, '2023-08-17 20:24:56', 1, '2023-08-17 20:24:56', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (71,'KO', '근우야!!!!!', '잘하자');
+insert into tbl_article_content (article_id, language, title, content) values (71, 'JP', 'グンウ！！！！！', '頑張ろう');
+insert into tbl_article_content (article_id, language, title, content) values (71, 'CN', '根宇！！！！！', '好好做吧。');
+insert into tbl_article_content (article_id, language, title, content) values (71, 'EN', 'Geunwoo!!!!!', 'Let''s do well.');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 2, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (72, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (72, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (72, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (72, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 3, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (73, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (73, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (73, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (73, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:26:00', 1, '2023-08-17 20:26:00', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (74, 'KO', '미쯔야~', '<b>사랑해 ~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (74, 'JP', 'ミツヤ~', '<b>愛してる~~~~~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (74, 'CN', '米子呀~', '<b>爱你~~~~~~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (74, 'EN', 'It''s Mitzu', '<b>I love you!</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-18 11:54:24', 1, '2023-08-18 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (75, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (75, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (75, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (75, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-22 11:54:24', 1, '2023-08-22 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (76, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (76, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (76, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (76, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-23 11:54:24', 1, '2023-08-23 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (77, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (77, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (77, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (77, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-24 11:54:24', 1, '2023-08-24 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (78, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (78, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (78, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (78, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-25 11:54:24', 1, '2023-08-25 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (79, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (79, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (79, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (79, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-26 11:54:24', 1, '2023-08-26 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (80, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (80, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (80, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (80, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-27 11:54:24', 1, '2023-08-27 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (81, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (81, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (81, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (81, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count ,board_id, article_status, org_article_language, created_user_id, created_at, updated_user_id, update_at) values (0, 1, 'PUBLIC', 'KO', 1, '2023-08-28 11:54:24', 1, '2023-08-28 11:54:24');
+insert into tbl_article_content (article_id, language, title, content) values (82, 'KO', '너무귀여운 우리 응애미쯔', '<b>사랑해 ~~~~~~~알라쀼~~~</b>');
+insert into tbl_article_content (article_id, language, title, content) values (82, 'EN', 'It''s Mitzu', '<b>I love you! I love you!</b>');
+insert into tbl_article_content (article_id, language, title, content) values (82, 'CN', '米子呀~', '<b>我爱你~~~~~~~~阿拉法乌。</b>');
+insert into tbl_article_content (article_id, language, title, content) values (82, 'JP', 'ミツヤ~', '<b>愛してる~~~~~アラピュ~~~</b>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (83, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (83, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (83, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (83, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (84, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (84, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (84, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (84, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (85, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (85, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (85, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (85, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (86, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (86, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (86, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (86, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (87, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (87, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (87, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (87, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (88, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (88, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (88, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (88, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (89, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (89, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (89, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (89, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (90, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (90, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (90, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (90, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (91, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (91, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (91, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (91, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (92, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (92, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (92, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (92, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (93, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (93, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (93, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (93, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (94, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (94, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (94, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (94, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:20', 1, '2023-08-17 20:25:20', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (95, 'KO', '오리엔탈', '<div>유니티</div>');
+insert into tbl_article_content (article_id, language, title, content) values (95, 'EN', 'Oriental', '<div>UNI.T.</div>');
+insert into tbl_article_content (article_id, language, title, content) values (95, 'CN', '东方', '<div>男女通用</div>');
+insert into tbl_article_content (article_id, language, title, content) values (95, 'JP', 'オリエンタル', '<div>ユニティ</div>');
+
+insert into tbl_article (like_count, org_article_language, board_id, created_at, created_user_id, update_at, updated_user_id, article_status) values (0, "KO", 1, '2023-08-17 20:25:36', 1, '2023-08-17 20:25:36', 1, 'PUBLIC');
+insert into tbl_article_content (article_id, language, title, content) values (96, 'KO', '엘라스틴했어요', '<p>배고파요 흑흑흑</p>');
+insert into tbl_article_content (article_id, language, title, content) values (96, 'JP', 'エラスチンしました', '<p>お腹すきました。フフフフ</p>');
+insert into tbl_article_content (article_id, language, title, content) values (96, 'CN', '弹力弹力了', '<p>好饿啊 呜呜呜</p>');
+insert into tbl_article_content (article_id, language, title, content) values (96, 'EN', 'It was Elastin', '<p>I''m hungry.</p>');
+
+
 insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-08-17 21:01:44', 1, '2023-08-17 21:01:44', 1);
 insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (1, "KO", 'USABLE', '2023-08-17 21:04:05', 1, '2023-08-17 21:04:05', 1);
 insert into tbl_reply (article_id, org_reply_language, reply_status, created_at, created_user_id, update_at, updated_user_id) values (2, "KO", 'USABLE', '2023-08-17 21:04:13', 1, '2023-08-17 21:04:13', 1);
@@ -360,3 +839,4 @@ insert into tbl_article_like (article_id, user_id, created_at, update_at) values
 insert into tbl_article_like (article_id, user_id, created_at, update_at) values (2, 5, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
 insert into tbl_article_like (article_id, user_id, created_at, update_at) values (3, 1, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
 insert into tbl_article_like (article_id, user_id, created_at, update_at) values (4, 1, '2023-08-18 13:42:36', '2023-08-18 13:42:36');
+

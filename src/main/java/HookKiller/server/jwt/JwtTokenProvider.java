@@ -49,7 +49,6 @@ public class JwtTokenProvider {
     }
     
     private Claims getAllClaimsFromToken(String token) {
-        log.debug("TokenUtil SecretKey >>> {} ", jwtProperties.getSecretKey());
         return Jwts.parser().setSigningKey(jwtProperties.getSecretKey()).parseClaimsJws(token).getBody();
     }
 
@@ -82,8 +81,6 @@ public class JwtTokenProvider {
     // JWT accessToken 생성
     private String doGenerateAccessToken(Long id, Date issuedAt, Date accessExpiresIn, String role) {
         
-        log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", jwtProperties.getSecretKey(), jwtProperties.getAccessExp());
-        
         final Key encodeKey = getSecertKey();
         
         return Jwts.builder()
@@ -94,17 +91,6 @@ public class JwtTokenProvider {
                 .claim(TYPE.getValue(), ACCESS_TOKEN)
                 .claim(TOKEN_ROLE.getValue(), role)
                 .signWith(encodeKey)
-                .compact();
-    }
-    // UsernamePasswordAuthenticationToken
-    private String doGenerateAccessToken(String email, Map<String, String> claims) {
-        log.debug("doGenerateToken : SecretKey >>> {}, AccessKey >>> {}", jwtProperties.getSecretKey(), jwtProperties.getAccessExp());
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(email)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getAccessExp() * 1000))
-                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey())
                 .compact();
     }
 
@@ -142,10 +128,8 @@ public class JwtTokenProvider {
     }
 
     public AccessTokenDetail parseAccessToken(String token) {
-        log.info("accessToken 파싱중...");
         if (isAccessToken(token)) {
             Claims claims = getJws(token).getBody();
-            log.info("claim의 body를 가져옴 : {}", claims.toString());
             return AccessTokenDetail.builder()
                     .userId(Long.parseLong(claims.getSubject()))
                     .role((String) claims.get(TOKEN_ROLE.getValue()))

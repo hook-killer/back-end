@@ -1,7 +1,7 @@
 package HookKiller.server.outer.api.oauth.client;
 
 import HookKiller.server.outer.api.oauth.config.KakaoInfoClientConfig;
-import HookKiller.server.outer.api.oauth.dto.KakaoInfoResponse;
+import HookKiller.server.outer.api.oauth.dto.response.KakaoInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

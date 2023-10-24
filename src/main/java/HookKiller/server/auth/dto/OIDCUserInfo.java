@@ -14,12 +14,18 @@ public class OIDCUserInfo {
   private String nickName;
   
   private String thumbnailImg;
-  
+
+  private String picture;
+
+  private String name;
+
   @Builder
-  public OIDCUserInfo(OauthInfo oauthInfo, String email, String nickName, String thumbnailImg) {
+  public OIDCUserInfo(OauthInfo oauthInfo, String email, String nickName, String thumbnailImg, String picture, String name) {
     this.oauthInfo = oauthInfo;
     this.email = email;
     this.nickName = nickName;
     this.thumbnailImg = thumbnailImg;
+    this.picture = picture;
+    this.name = name;
   }
 }

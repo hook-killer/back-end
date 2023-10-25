@@ -20,7 +20,7 @@ public record CustomUserDetails(String userId, String role, String nickname) imp
     
     @Override
     public String getPassword() {
-        return this.userId;
+        return null;
     }
     
     @Override

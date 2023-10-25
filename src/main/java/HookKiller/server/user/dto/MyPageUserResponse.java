@@ -22,7 +22,7 @@ public class MyPageUserResponse {
         return MyPageUserResponse.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
-                .thumbnail(user.getThumbnail())
+                .thumbnail(user.getThumbNail())
                 .nickName(user.getNickName())
                 .createAt(formatTimestamp(user.getCreateAt()))
                 .build();

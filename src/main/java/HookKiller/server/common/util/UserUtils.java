@@ -26,6 +26,7 @@ public class UserUtils {
 
     public static Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.error("들어와요? >>> {}",authentication);
         if (authentication == null) {
             throw SecurityContextNotFoundException.EXCEPTION;
         }

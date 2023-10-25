@@ -31,7 +31,4 @@ public class OIDCDto {
     
     private String thumbnailImg;
 
-    private String name;
-
-    private String picture;
 }

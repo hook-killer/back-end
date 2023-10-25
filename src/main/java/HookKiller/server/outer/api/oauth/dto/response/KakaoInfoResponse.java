@@ -45,6 +45,10 @@ public class KakaoInfoResponse {
             private String profileImageUrl;
             private boolean isDefaultImage;
         }
+
+        public String getProfileImageUrl() {
+            return profile.getProfileImageUrl();
+        }
     }
 
     public String getId() {
@@ -57,6 +61,10 @@ public class KakaoInfoResponse {
 
     public String getNickName() {
         return kakaoAccount.getProfile().getNickname();
+    }
+
+    public String getProfileUrl() {
+        return kakaoAccount.getProfileImageUrl();
     }
 }
 

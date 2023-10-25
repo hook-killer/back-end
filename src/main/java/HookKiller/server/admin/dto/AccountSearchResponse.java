@@ -26,7 +26,7 @@ public class AccountSearchResponse {
         return AccountSearchResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .thumbnail(user.getThumbnail())
+                .thumbnail(user.getThumbNail())
                 .nickName(user.getNickName())
                 .role(user.getRole())
                 .status(user.getStatus())

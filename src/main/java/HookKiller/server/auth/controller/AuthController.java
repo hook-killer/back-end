@@ -46,6 +46,7 @@ public class AuthController {
 
     @GetMapping("/oauth/kakao")
     public OAuthResponse registerUserForKakao(@RequestParam String code) {
+        log.info("code >>> {}", code);
         return authService.registerUserKakaoCode(code);
     }
 

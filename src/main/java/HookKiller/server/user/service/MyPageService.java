@@ -2,9 +2,6 @@ package HookKiller.server.user.service;
 
 import HookKiller.server.board.dto.ArticleRequestDto;
 import HookKiller.server.board.dto.ReplyResponseDto;
-import HookKiller.server.board.entity.Article;
-import HookKiller.server.board.entity.ArticleLike;
-import HookKiller.server.board.entity.Reply;
 import HookKiller.server.board.exception.ArticleContentNotFoundException;
 import HookKiller.server.board.exception.ReplyContentNotFoundException;
 import HookKiller.server.board.repository.ArticleContentRepository;
@@ -23,15 +20,11 @@ import HookKiller.server.user.dto.MyPageUserResponse;
 import HookKiller.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static HookKiller.server.common.util.SecurityUtils.passwordEncoder;
 
@@ -59,59 +52,42 @@ public class MyPageService {
         // 변경이 존재하는 경우에만 변경한다.
         if (request.getPassword() != null && !passwordEncoder.matches(request.getPassword(), user.getPassword()))
             user.setPassword(request.getPassword());
-        if (request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
+        if(request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
             user.setNickName(request.getNickName());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public CommonBooleanResultResponse updateUserThumbnailPath(MyPageUserUpdateRequest request) {
         User user = userUtils.getUser();
-<<<<<<< Updated upstream
-        log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbnail());
-        if (request.getThumbnail() == null)
-=======
         log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbNail());
         if(request.getThumbnail() == null)
->>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
-        if (request.getThumbnail().trim().equals(""))
+        if(request.getThumbnail().trim().equals(""))
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
-<<<<<<< Updated upstream
-        if (user.getThumbnail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbnail())) {
-            user.setThumbnail(request.getThumbnail());
-=======
         if(user.getThumbNail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbNail())) {
             user.setThumbNail(request.getThumbnail());
->>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(true).message("수정이 완료되었습니다.").build();
         }
         return CommonBooleanResultResponse.builder().result(false).message("동일한 Path라 수정이 불가능합니다.").build();
     }
 
 
+
     @Transactional(readOnly = true)
-    public Map<String, Object> getMyCreatedList(int page, int limit, String searchType, LanguageType language) {
+    public Object getMyCreatedList(int page, int limit, String searchType, LanguageType language) {
         User user = userUtils.getUser();
         Pageable pageable = PageRequest.of(page, limit);
-        Map<String, Object> result = new HashMap<>();
-
-        if (searchType.equalsIgnoreCase("ARTICLE")) {
-            Page<Article> articleResult = articleRepository.findAllByCreatedUserAndArticleStatusOrderByCreateAtDesc(user, ArticleStatus.PUBLIC, pageable);
-            result.put("totalPage", articleResult.getTotalPages());
-            result.put("totalElements", articleResult.getTotalElements());
-            result.put("data", articleResult.stream().map(
-                    article -> ArticleRequestDto.of(article, articleContentRepository
-                            .findByArticleAndLanguage(article, language)
-                            .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION))
-            ).toList());
-            return result;
+        if(searchType.equalsIgnoreCase("ARTICLE")) {
+            return articleRepository.findAllByCreatedUserAndArticleStatusOrderByCreateAtDesc(user, ArticleStatus.PUBLIC, pageable)
+                    .stream().map(
+                            article -> ArticleRequestDto.of(article, articleContentRepository
+                                    .findByArticleAndLanguage(article, language)
+                                    .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION))
+                    ).toList();
         }
 
-        if (searchType.equalsIgnoreCase("REPLY")) {
-            Page<Reply> replyResult = replyRepository.findAllByCreatedUserAndReplyStatusOrderByCreateAtDesc(user, ReplyStatus.USABLE, pageable);
-            result.put("totalPage", replyResult.getTotalPages());
-            result.put("totalElements", replyResult.getTotalElements());
-            result.put("data", replyResult
+        if(searchType.equalsIgnoreCase("REPLY")){
+            return replyRepository.findAllByCreatedUserAndReplyStatusOrderByCreateAtDesc(user, ReplyStatus.USABLE, pageable)
                     .stream()
                     .map(reply ->
                             ReplyResponseDto.of(
@@ -119,25 +95,21 @@ public class MyPageService {
                                     replyContentRepository.findByReplyAndLanguage(reply, language)
                                             .orElseThrow(() -> ReplyContentNotFoundException.EXCEPTION)
                             )
-                    ).toList());
-
-            return result;
+                    ).toList();
         }
 
-        if (searchType.equalsIgnoreCase("LIKE")) {
-            Page<ArticleLike> likeResult = articleLikeRepository.findAllByUserOrderByCreateAtDesc(user, pageable);
-            result.put("totalPage", likeResult.getTotalPages());
-            result.put("totalElements", likeResult.getTotalElements());
-            result.put("data", likeResult
+        if(searchType.equalsIgnoreCase("LIKE")) {
+            return articleLikeRepository
+                    .findAllByUserOrderByCreateAtDesc(user, pageable)
                     .map(articleLike -> ArticleRequestDto.of(articleLike.getArticle(), articleContentRepository
                             .findByArticleAndLanguage(articleLike.getArticle(), language)
                             .orElseThrow(() -> ArticleContentNotFoundException.EXCEPTION))
-                    ).toList());
-            return result;
+                    ).toList();
         }
 
         throw BadTypeRequestException.EXCEPTION;
     }
+
 
 
 }

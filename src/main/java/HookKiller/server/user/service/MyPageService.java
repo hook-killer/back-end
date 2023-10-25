@@ -59,7 +59,7 @@ public class MyPageService {
         // 변경이 존재하는 경우에만 변경한다.
         if (request.getPassword() != null && !passwordEncoder.matches(request.getPassword(), user.getPassword()))
             user.setPassword(request.getPassword());
-        if(request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
+        if (request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
             user.setNickName(request.getNickName());
     }
 

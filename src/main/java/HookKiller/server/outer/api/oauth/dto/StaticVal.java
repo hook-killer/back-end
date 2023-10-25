@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum StaticVal {
 
+    /*
+        에러코드 관련 변수
+     */
     BAD_REQUEST(400),
     UNAUTHORIZED(401),
     FORBIDDEN(403),

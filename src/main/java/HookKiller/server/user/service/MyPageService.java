@@ -66,13 +66,23 @@ public class MyPageService {
     @Transactional(propagation = Propagation.REQUIRED)
     public CommonBooleanResultResponse updateUserThumbnailPath(MyPageUserUpdateRequest request) {
         User user = userUtils.getUser();
+<<<<<<< Updated upstream
         log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbnail());
         if (request.getThumbnail() == null)
+=======
+        log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbNail());
+        if(request.getThumbnail() == null)
+>>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
         if (request.getThumbnail().trim().equals(""))
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
+<<<<<<< Updated upstream
         if (user.getThumbnail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbnail())) {
             user.setThumbnail(request.getThumbnail());
+=======
+        if(user.getThumbNail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbNail())) {
+            user.setThumbNail(request.getThumbnail());
+>>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(true).message("수정이 완료되었습니다.").build();
         }
         return CommonBooleanResultResponse.builder().result(false).message("동일한 Path라 수정이 불가능합니다.").build();

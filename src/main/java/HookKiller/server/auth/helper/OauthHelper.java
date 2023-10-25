@@ -1,13 +1,12 @@
 package HookKiller.server.auth.helper;
 
 import HookKiller.server.auth.dto.OIDCUserInfo;
+import HookKiller.server.auth.dto.response.KakaoUserInfoDto;
 import HookKiller.server.common.dto.OIDCDto;
 import HookKiller.server.outer.api.oauth.client.GoogleOauthClient;
+import HookKiller.server.outer.api.oauth.client.KakaoInfoClient;
 import HookKiller.server.outer.api.oauth.client.KakaoOauthClient;
-import HookKiller.server.outer.api.oauth.dto.response.GoogleInfoResponse;
-import HookKiller.server.outer.api.oauth.dto.response.GoogleTokenResponse;
-import HookKiller.server.outer.api.oauth.dto.response.KakaoTokenResponse;
-import HookKiller.server.outer.api.oauth.dto.response.OIDCResponse;
+import HookKiller.server.outer.api.oauth.dto.response.*;
 import HookKiller.server.properties.GoogleOauthProperties;
 import HookKiller.server.properties.KakaoOauthProperties;
 import HookKiller.server.user.entity.OauthInfo;
@@ -23,6 +22,7 @@ public class OauthHelper {
 
     private final KakaoOauthProperties kakaoOauthProperties;
     private final KakaoOauthClient kakaoOauthClient;
+    private final KakaoInfoClient kakaoInfoClient;
 
     private final GoogleOauthProperties googleOauthProperties;
     private final GoogleOauthClient googleOauthClient;
@@ -65,6 +65,18 @@ public class OauthHelper {
                 .email(oidcDecodePayload.getEmail())
                 .nickName(oidcDecodePayload.getNickName())
                 .thumbnailImg(oidcDecodePayload.getThumbnailImg())
+                .build();
+    }
+
+    public KakaoUserInfoDto getKakaoUserInfo(String oauthAccessToken) {
+        KakaoInfoResponse response = kakaoInfoClient.kakaoUserInfo("Bearer " + oauthAccessToken);
+
+        return KakaoUserInfoDto.builder()
+                .oauthProvider(OauthProvider.KAKAO)
+                .userName(response.getNickName())
+                .profileImage(response.getProfileUrl())
+                .email(response.getEmail())
+                .oauthId(response.getId())
                 .build();
     }
 

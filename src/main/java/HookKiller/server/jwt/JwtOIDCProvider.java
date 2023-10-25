@@ -82,9 +82,7 @@ public class JwtOIDCProvider {
                 body.getSubject(),
                 body.get("email", String.class),
                 body.get("nickname", String.class),
-                body.get("picture", String.class),
-                body.get("name", String.class),
-                body.get("thumbnailImg", String.class));
+                body.get("picture", String.class));
         return dto;
     }
 

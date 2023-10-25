@@ -40,7 +40,7 @@ public class User extends AbstractTimeStamp {
 
     private String nickName;
 
-    private String thumbnail;
+    private String thumbNail;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -57,7 +57,7 @@ public class User extends AbstractTimeStamp {
                 String email,
                 String password,
                 String nickName,
-                String thumbnail,
+                String thumbNail,
                 UserRole role,
                 OauthInfo oauthInfo,
                 LoginType loginType,
@@ -66,7 +66,7 @@ public class User extends AbstractTimeStamp {
         this.email = email;
         this.password = SecurityUtils.passwordEncoder.encode(password);
         this.nickName = nickName;
-        this.thumbnail = thumbnail;
+        this.thumbNail = thumbNail;
         this.role = role;
         this.status = status;
         this.oauthInfo = oauthInfo;

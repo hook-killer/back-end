@@ -3,6 +3,7 @@ package HookKiller.server.auth.service;
 import HookKiller.server.auth.dto.OIDCUserInfo;
 import HookKiller.server.auth.dto.request.AuthRequest;
 import HookKiller.server.auth.dto.response.AuthResponse;
+import HookKiller.server.auth.dto.response.KakaoUserInfoDto;
 import HookKiller.server.auth.dto.response.OAuthResponse;
 import HookKiller.server.auth.exception.PasswordIncorrectException;
 import HookKiller.server.auth.exception.StatusNotVerificationException;
@@ -55,15 +56,16 @@ public class AuthService {
                 .token(jwtTokenProvider.generateAccessToken(user.getId(), user.getRole().getValue()))
                 .role(user.getRole().getValue())
                 .nickName(user.getNickName())
-                .thumbnail(user.getThumbnail())
+                .thumbNail(user.getThumbNail())
                 .build();
 
         return ResponseEntity.ok(res);
     }
 
     public OAuthResponse registerUserKakaoCode(String code) {
-        String idToken = oauthHelper.getOauthTokenKakao(code).getIdToken();
-        OIDCUserInfo userInfo = oauthHelper.getKakaoInfoByIdToken(idToken);
+        String accessToken = oauthHelper.getOauthTokenKakao(code).getAccessToken();
+        log.info("AceessToken >>> {}", accessToken);
+        KakaoUserInfoDto userInfo = oauthHelper.getKakaoUserInfo(accessToken);
 
         User user =
                 userRepository.findByEmail(userInfo.getEmail())
@@ -72,12 +74,12 @@ public class AuthService {
                                         .orElse(userRepository.save(User.builder()
                                                 .email(userInfo.getEmail())
                                                 .password(UUID.randomUUID().toString())
-                                                .nickName(userInfo.getNickName())
-                                                .thumbnail(userInfo.getThumbnailImg())
+                                                .nickName(userInfo.getUserName())
+                                                .thumbNail(userInfo.getProfileImage())
                                                 .loginType(LoginType.KAKAO)
                                                 .role(UserRole.USER)
                                                 .status(Status.ACTIVE)
-                                                .oauthInfo(userInfo.getOauthInfo())
+                                                .oauthInfo(userInfo.toOauthInfo())
                                                 .build())));
 
 
@@ -96,7 +98,7 @@ public class AuthService {
                                                 .email(userInfo.getEmail())
                                                 .password(UUID.randomUUID().toString())
                                                 .nickName(userInfo.getName())
-                                                .thumbnail(userInfo.getPicture())
+                                                .thumbNail(userInfo.getPicture())
                                                 .loginType(LoginType.GOOGLE)
                                                 .role(UserRole.USER)
                                                 .status(Status.ACTIVE)

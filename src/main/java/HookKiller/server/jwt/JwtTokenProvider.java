@@ -130,6 +130,7 @@ public class JwtTokenProvider {
     public AccessTokenDetail parseAccessToken(String token) {
         if (isAccessToken(token)) {
             Claims claims = getJws(token).getBody();
+            log.error("claims?>>> {}", claims);
             return AccessTokenDetail.builder()
                     .userId(Long.parseLong(claims.getSubject()))
                     .role((String) claims.get(TOKEN_ROLE.getValue()))

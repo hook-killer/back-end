@@ -40,7 +40,7 @@ public class UserService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw AlreadyExistUserException.EXCEPTION;
         }
-        User user =User.builder()
+        User user = User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickName(request.getNickName())
@@ -65,8 +65,8 @@ public class UserService {
                 .email(oidcUserInfo.getEmail())
                 .password(UUID.randomUUID().toString())
                 .nickName(oidcUserInfo.getNickName())
-                .thumbnail(oidcUserInfo.getThumbnailImg())
-                .loginType(LoginType.DEFAULT)
+                .thumbNail(oidcUserInfo.getThumbnailImg())
+                .loginType(LoginType.KAKAO)
                 .role(UserRole.valueOf("USER"))
                 .oauthInfo(oidcUserInfo.getOauthInfo())
                 .build()));

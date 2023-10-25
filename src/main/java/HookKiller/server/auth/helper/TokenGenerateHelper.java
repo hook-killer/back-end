@@ -40,7 +40,7 @@ public class TokenGenerateHelper {
                 .email(user.getEmail())
                 .role(user.getRole().getValue())
                 .nickName(user.getNickName())
-                .thumbnail(user.getThumbnail())
+                .thumbnail(user.getThumbNail())
                 .build();
     }
 }

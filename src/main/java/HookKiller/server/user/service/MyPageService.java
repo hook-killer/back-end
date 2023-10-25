@@ -59,30 +59,20 @@ public class MyPageService {
         // 변경이 존재하는 경우에만 변경한다.
         if (request.getPassword() != null && !passwordEncoder.matches(request.getPassword(), user.getPassword()))
             user.setPassword(request.getPassword());
-        if (request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
+        if(request.getNickName() != null && !user.getNickName().equals(request.getNickName()))
             user.setNickName(request.getNickName());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public CommonBooleanResultResponse updateUserThumbnailPath(MyPageUserUpdateRequest request) {
         User user = userUtils.getUser();
-<<<<<<< Updated upstream
-        log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbnail());
-        if (request.getThumbnail() == null)
-=======
         log.error("request Thumnail >>> {} , userThumnail >>> {}", request.getThumbnail(), user.getThumbNail());
         if(request.getThumbnail() == null)
->>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
-        if (request.getThumbnail().trim().equals(""))
+        if(request.getThumbnail().trim().isEmpty())
             return CommonBooleanResultResponse.builder().result(false).message("요청 Path가 없습니다.").build();
-<<<<<<< Updated upstream
-        if (user.getThumbnail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbnail())) {
-            user.setThumbnail(request.getThumbnail());
-=======
         if(user.getThumbNail() == null || !request.getThumbnail().equalsIgnoreCase(user.getThumbNail())) {
             user.setThumbNail(request.getThumbnail());
->>>>>>> Stashed changes
             return CommonBooleanResultResponse.builder().result(true).message("수정이 완료되었습니다.").build();
         }
         return CommonBooleanResultResponse.builder().result(false).message("동일한 Path라 수정이 불가능합니다.").build();

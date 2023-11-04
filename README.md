@@ -6,15 +6,21 @@
 
 - [README](#readme)
   - [Index](#index)
-  - [Tech Stack](#tech-stack)
+  - [1️⃣Tech Stack](#1️⃣tech-stack)
     - [Application](#application)
     - [Service](#service)
     - [CI / CD](#ci--cd)
     - [ETC](#etc)
-  - [ERD](#erd)
-  - [Endpoint 정리](#endpoint-정리)
+  - [2️⃣ERD](#2️⃣erd)
+  - [3️⃣Endpoint 정리](#3️⃣endpoint-정리)
+  - [4️⃣실행 방법](#4️⃣실행-방법)
+    - [주의사항](#주의사항)
+    - [필수 Plugin, 준비사항](#필수-plugin-준비사항)
+    - [Annotation Processor](#annotation-processor)
+    - [필요 VMOptions](#필요-vmoptions)
+    - [Run](#run)
 
-## Tech Stack
+## 1️⃣Tech Stack
 
 ### Application
 
@@ -56,14 +62,54 @@
 ![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white)
 ![PostMan](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=Postman&logoColor=white)
 
-## ERD
+## 2️⃣ERD
 
 [![ERD](https://github.com/hook-killer/document/blob/main/ERD/ERD_v231027.png?raw=true)](https://dbdocs.io/donsonioc2010/Hook_killer)
 
-## Endpoint 정리
+## 3️⃣Endpoint 정리
 
 > [!NOTE]  
 > 내용이 많아 위키로 기록을 하였습니다.
 > 위키 링크만 참조하는점 양해 부탁드립니다.
 
 - [Endpoint 링크 바로가기](https://github.com/hook-killer/back-end/wiki/EndPoint-%EB%A6%AC%EC%8A%A4%ED%8A%B8)
+
+## 4️⃣실행 방법
+
+### 주의사항
+
+> [!WARNING]
+> 해당 방법은 Mac을 기반하여 Intellij를 기준으로 설명이 되어있습니다.  
+> 또한 문서의 설명은 [Intellij 설정방법](<https://github.com/hook-killer/document/blob/main/Tool/BE-%EC%84%A4%EC%A0%95%EB%B0%A9%EB%B2%95(Intellij).md>)를 토대로 제작되었습니다.
+
+### 필수 Plugin, 준비사항
+
+- LomBok
+- OpenJDK 17
+
+### Annotation Processor
+
+1. Mac을 기준으로 `Intellij IDEA` → `Settings`클릭
+2. `Build, Execution, Deployment` → `CompilerAnnotation Processors`
+3. `Enable annotation processing` 체크표시
+
+### 필요 VMOptions
+
+> [!WARNING]  
+> 6개의 항목 모두 비밀키로, 현재는 사용이 불가능합니다.  
+> 구글 계정을 사용하실 경우, 이메일과 앱 비밀번호를,  
+> Storage Object의 경우 NCP의 Object Strage Key를,  
+> papago의 API키는 NCP에서 발급받아 입력하시기 바랍니다.
+
+```java
+-Dnaver.storage.access-key=yXOrGQFmk7BfURVyU5Dw
+-Dnaver.storage.secret-key=bv0q1CSqr8kPEjZmyTA5qSreGz4FWUTJtJFObiO6
+-Dspring.mail.username=${자신의 구글 계정을 기록하세요}
+-Dspring.mail.password=${자신의 구글 앱 패스워드를 기록하세요}
+-Dpapago.header.X-NCP-APIGW-API-KEY-ID=ybakk0x770
+-Dpapago.header.X-NCP-APIGW-API-KEY=DQxOkhtAKEqN61A5vGrp5mYW1j66Qi7vR0R7fJh5
+```
+
+### Run
+
+- `HookKiller.server`위치의 `ServerApplication.java`의 Main메소드를 Run하시면 됩니다.
